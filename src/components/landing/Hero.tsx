@@ -10,7 +10,6 @@ const HERO_STATIONS = [
     mood: "something mellow",
     title: "Texas Sun",
     artist: "Khruangbin & Leon Bridges",
-    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/bf/16/c0/bf16c024-e9ed-c77a-ecae-8bfefbf3f6ef/656605151566.jpg/600x600bb.jpg",
     bpm: "92 BPM",
     valence: "88%",
     spotifyUrl: "https://open.spotify.com/search/Texas%20Sun%20Khruangbin",
@@ -20,7 +19,6 @@ const HERO_STATIONS = [
     mood: "need a pick-me-up",
     title: "Levitating",
     artist: "Dua Lipa",
-    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/4a/01/a3/4a01a355-6b58-e395-5847-a417643b1854/190295240455.jpg/600x600bb.jpg",
     bpm: "103 BPM",
     valence: "94%",
     spotifyUrl: "https://open.spotify.com/search/Levitating%20Dua%20Lipa",
@@ -30,7 +28,6 @@ const HERO_STATIONS = [
     mood: "late-night drive",
     title: "Slow Dancing in the Dark",
     artist: "Joji",
-    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/c3/0f/59/c30f5926-4447-49d6-32d8-bf5b271d7986/859728343759_cover.jpg/600x600bb.jpg",
     bpm: "88.5 BPM",
     valence: "72%",
     spotifyUrl: "https://open.spotify.com/search/Slow%20Dancing%20in%20the%20Dark%20Joji",
@@ -56,7 +53,6 @@ export function Hero() {
         id: currentStation.title,
         name: currentStation.title,
         artist: currentStation.artist,
-        albumImageUrl: currentStation.cover,
         spotifyUrl: currentStation.spotifyUrl,
       });
     }
@@ -137,7 +133,7 @@ export function Hero() {
             </div>
           </motion.div>
 
-          {/* Right Column: Interactive Live Radio Station Tuner Card */}
+          {/* Right Column: Interactive Live Player Card */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -161,19 +157,39 @@ export function Hero() {
                 </button>
               </div>
 
-              {/* Station Song Info & 1-Click Interactive Play Button */}
+              {/* Station Song Info & Animated Music Symbol Icon Box */}
               <div className="flex items-center gap-4 py-2">
-                <div className="relative w-16 h-16 rounded-2xl overflow-hidden border border-[#26264A] shadow-lg shrink-0">
-                  <img
-                    src={currentStation.cover}
-                    alt={currentStation.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <button
-                    onClick={handleTogglePlay}
-                    className="absolute inset-0 bg-black/40 hover:bg-black/20 flex items-center justify-center transition-colors"
-                  >
-                    <div className="w-9 h-9 rounded-full bg-[#1DB954] text-black flex items-center justify-center shadow-lg">
+                
+                {/* Glowing Spotify Music Playing Icon Box */}
+                <div
+                  onClick={handleTogglePlay}
+                  className="relative w-16 h-16 rounded-2xl bg-[#052317] border-2 border-[#10B981]/40 flex items-center justify-center shadow-[0_0_20px_rgba(29,185,84,0.3)] shrink-0 cursor-pointer overflow-hidden group/box"
+                >
+                  {/* Glowing Sound Pulse Rings */}
+                  <div className="absolute inset-0 bg-[#1DB954]/10 rounded-2xl animate-pulse" />
+
+                  {/* Animated Soundwave Bars inside Box */}
+                  <div className="flex items-end gap-1 h-7 z-10">
+                    <motion.span
+                      className="w-1 bg-[#1DB954] rounded-full"
+                      animate={{ height: isPlaying ? ["20%", "100%", "40%", "100%"] : ["40%", "80%", "40%"] }}
+                      transition={{ duration: 0.6, repeat: Infinity, repeatType: "mirror" }}
+                    />
+                    <motion.span
+                      className="w-1 bg-[#1ed760] rounded-full"
+                      animate={{ height: isPlaying ? ["60%", "20%", "100%", "30%"] : ["80%", "30%", "80%"] }}
+                      transition={{ duration: 0.5, repeat: Infinity, repeatType: "mirror" }}
+                    />
+                    <motion.span
+                      className="w-1 bg-[#10B981] rounded-full"
+                      animate={{ height: isPlaying ? ["100%", "40%", "80%", "20%"] : ["50%", "90%", "50%"] }}
+                      transition={{ duration: 0.7, repeat: Infinity, repeatType: "mirror" }}
+                    />
+                  </div>
+
+                  {/* Play / Pause Icon Overlay on Hover */}
+                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover/box:opacity-100 flex items-center justify-center transition-opacity z-20">
+                    <div className="w-8 h-8 rounded-full bg-[#1DB954] text-black flex items-center justify-center shadow-lg">
                       <svg className="w-4 h-4 fill-current ml-0.5" viewBox="0 0 24 24">
                         {isCurrentPlaying ? (
                           <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
@@ -182,7 +198,7 @@ export function Hero() {
                         )}
                       </svg>
                     </div>
-                  </button>
+                  </div>
                 </div>
 
                 <div className="flex-1 min-w-0">
