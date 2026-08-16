@@ -179,6 +179,32 @@ if (error) {
 }
 
 function RecommendationCard({ rec, index, moodColor, onPlay, playerReady }: { rec: any; index: number; moodColor?: string; onPlay: (rec: any) => void; playerReady: boolean }) {
+  const initialImage = rec.track.albumImageUrl || rec.track.album?.images?.[0]?.url;
+  const [imgSrc, setImgSrc] = useState<string | null>(initialImage);
+  const [imgError, setImgError] = useState(false);
+
+  useEffect(() => {
+    setImgSrc(rec.track.albumImageUrl || rec.track.album?.images?.[0]?.url);
+    setImgError(false);
+  }, [rec.track]);
+
+  const handleImgError = () => {
+    if (!imgError) {
+      setImgError(true);
+      const query = encodeURIComponent(`${rec.track.name} ${rec.track.artist || ""}`);
+      fetch(`https://itunes.apple.com/search?term=${query}&media=music&limit=1`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.results?.[0]?.artworkUrl100) {
+            setImgSrc(data.results[0].artworkUrl100.replace("100x100bb", "600x600bb"));
+          } else {
+            setImgSrc(null);
+          }
+        })
+        .catch(() => setImgSrc(null));
+    }
+  };
+
   return (
     <motion.article
       initial={{ opacity: 0, y: 20 }}
@@ -187,26 +213,27 @@ function RecommendationCard({ rec, index, moodColor, onPlay, playerReady }: { re
       className="group relative"
       whileHover={{ y: -4 }}
     >
-      <div className="relative aspect-square rounded-xl overflow-hidden bg-white/5 border border-white/10">
+      <div className="relative aspect-square rounded-xl overflow-hidden bg-slate-900 border border-white/10">
         <div
-          className="absolute inset-0 bg-gradient-to-br"
+          className="absolute inset-0 bg-gradient-to-br z-10 pointer-events-none"
           style={{
             background: moodColor
               ? `linear-gradient(135deg, ${moodColor}20, ${moodColor}08, transparent)`
               : undefined,
           }}
         />
-        {(rec.track.albumImageUrl || rec.track.album?.images?.[0]?.url) ? (
+        {imgSrc ? (
           <img
-            src={rec.track.albumImageUrl || rec.track.album?.images?.[0]?.url}
+            src={imgSrc}
             alt={rec.track.name}
+            onError={handleImgError}
             className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-5xl sm:text-6xl font-bold text-white/10" aria-hidden="true">
-              {rec.track.artist?.charAt(0) || "?"}
-            </div>
+          <div className="absolute inset-0 flex flex-col items-center justify-center p-4 bg-slate-900/90 text-center">
+            <span className="text-3xl mb-1">🎵</span>
+            <span className="text-xs font-semibold text-white truncate max-w-full">{rec.track.name}</span>
+            <span className="text-[10px] text-muted-foreground truncate max-w-full">{rec.track.artist}</span>
           </div>
         )}
         <motion.div
