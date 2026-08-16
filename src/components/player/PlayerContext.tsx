@@ -589,6 +589,10 @@ async function getAccessToken(): Promise<string> {
   throw new Error("Failed to get access token");
 }
 
+export function usePlayerOptional() {
+  return useContext(PlayerContext);
+}
+
 export function usePlayer() {
   const context = useContext(PlayerContext);
   if (!context) {

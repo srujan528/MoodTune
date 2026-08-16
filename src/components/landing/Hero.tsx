@@ -2,13 +2,69 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { usePlayerOptional } from "@/components/player/PlayerContext";
+
+const HERO_STATIONS = [
+  {
+    freq: "104.5 MHz",
+    mood: "something mellow",
+    title: "Texas Sun",
+    artist: "Khruangbin & Leon Bridges",
+    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/bf/16/c0/bf16c024-e9ed-c77a-ecae-8bfefbf3f6ef/656605151566.jpg/600x600bb.jpg",
+    bpm: "92 BPM",
+    valence: "88%",
+    spotifyUrl: "https://open.spotify.com/search/Texas%20Sun%20Khruangbin",
+  },
+  {
+    freq: "108.2 MHz",
+    mood: "need a pick-me-up",
+    title: "Levitating",
+    artist: "Dua Lipa",
+    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/4a/01/a3/4a01a355-6b58-e395-5847-a417643b1854/190295240455.jpg/600x600bb.jpg",
+    bpm: "103 BPM",
+    valence: "94%",
+    spotifyUrl: "https://open.spotify.com/search/Levitating%20Dua%20Lipa",
+  },
+  {
+    freq: "96.4 MHz",
+    mood: "late-night drive",
+    title: "Slow Dancing in the Dark",
+    artist: "Joji",
+    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/c3/0f/59/c30f5926-4447-49d6-32d8-bf5b271d7986/859728343759_cover.jpg/600x600bb.jpg",
+    bpm: "88.5 BPM",
+    valence: "72%",
+    spotifyUrl: "https://open.spotify.com/search/Slow%20Dancing%20in%20the%20Dark%20Joji",
+  },
+];
 
 export function Hero() {
-  const [mounted, setMounted] = useState(false);
+  const player = usePlayerOptional();
+  const playTrack = player?.playTrack || (() => {});
+  const pauseTrack = player?.pauseTrack || (() => {});
+  const currentTrack = player?.currentTrack;
+  const isPlaying = player?.isPlaying || false;
+  const [stationIdx, setStationIdx] = useState(0);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const currentStation = HERO_STATIONS[stationIdx];
+  const isCurrentPlaying = currentTrack?.name === currentStation.title && isPlaying;
+
+  const handleTogglePlay = () => {
+    if (isCurrentPlaying) {
+      pauseTrack();
+    } else {
+      playTrack({
+        id: currentStation.title,
+        name: currentStation.title,
+        artist: currentStation.artist,
+        albumImageUrl: currentStation.cover,
+        spotifyUrl: currentStation.spotifyUrl,
+      });
+    }
+  };
+
+  const handleNextStation = () => {
+    setStationIdx((prev) => (prev + 1) % HERO_STATIONS.length);
+  };
 
   return (
     <section className="relative overflow-hidden bg-[#080811] text-white pt-20 pb-16 lg:pt-28 lg:pb-24 border-b border-[#16162A]">
@@ -81,47 +137,95 @@ export function Hero() {
             </div>
           </motion.div>
 
-          {/* Right Column: Floating Live Player Card */}
+          {/* Right Column: Interactive Live Radio Station Tuner Card */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="lg:col-span-5"
           >
-            <div className="p-6 rounded-3xl bg-[#0E0E1B] border-2 border-[#1E1E38] shadow-2xl space-y-4 text-left relative overflow-hidden">
+            <div className="p-6 rounded-3xl bg-[#0E0E1B] border-2 border-[#1E1E38] shadow-2xl space-y-4 text-left relative overflow-hidden group">
+              
+              {/* Card Sub-Header & Live Frequency */}
               <div className="flex items-center justify-between font-mono text-xs text-slate-400 border-b border-[#1E1E38] pb-3">
-                <span className="text-[#1DB954] font-bold">NOW TUNING INTO</span>
-                <span className="uppercase text-slate-300">something mellow</span>
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#1DB954] animate-ping" />
+                  <span className="text-[#1DB954] font-bold">NOW TUNING INTO</span>
+                </div>
+                <button
+                  onClick={handleNextStation}
+                  className="uppercase text-xs font-bold text-[#1DB954] hover:text-[#1ed760] transition-colors flex items-center gap-1 bg-[#052317] px-2.5 py-1 rounded-md border border-[#10B981]/30 cursor-pointer"
+                >
+                  <span>{currentStation.freq}</span>
+                  <span>↻</span>
+                </button>
               </div>
 
+              {/* Station Song Info & 1-Click Interactive Play Button */}
               <div className="flex items-center gap-4 py-2">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-600 via-emerald-800 to-indigo-900 border border-[#26264A] flex items-center justify-center shadow-lg relative overflow-hidden">
-                  <div className="absolute inset-0 bg-black/30" />
-                  <svg className="w-8 h-8 text-white/80 relative z-10" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
-                  </svg>
+                <div className="relative w-16 h-16 rounded-2xl overflow-hidden border border-[#26264A] shadow-lg shrink-0">
+                  <img
+                    src={currentStation.cover}
+                    alt={currentStation.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <button
+                    onClick={handleTogglePlay}
+                    className="absolute inset-0 bg-black/40 hover:bg-black/20 flex items-center justify-center transition-colors"
+                  >
+                    <div className="w-9 h-9 rounded-full bg-[#1DB954] text-black flex items-center justify-center shadow-lg">
+                      <svg className="w-4 h-4 fill-current ml-0.5" viewBox="0 0 24 24">
+                        {isCurrentPlaying ? (
+                          <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                        ) : (
+                          <path d="M8 5v14l11-7z" />
+                        )}
+                      </svg>
+                    </div>
+                  </button>
                 </div>
 
                 <div className="flex-1 min-w-0">
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#1DB954] block mb-0.5">
-                    MOODTUNE SIGNAL
-                  </span>
-                  <h4 className="text-lg font-bold text-white truncate">Texas Sun</h4>
-                  <p className="text-xs text-slate-400 truncate">Khruangbin & Leon Bridges</p>
+                  <div className="flex items-center gap-2 mb-0.5">
+                    <span className="text-[10px] font-mono uppercase tracking-widest text-[#1DB954] font-bold">
+                      {currentStation.mood}
+                    </span>
+                  </div>
+                  <h4 className="text-lg font-bold text-white truncate">{currentStation.title}</h4>
+                  <p className="text-xs text-slate-400 truncate">{currentStation.artist}</p>
                 </div>
               </div>
 
-              {/* Animated Sound Bars */}
+              {/* Live Frequency Station Dial Buttons */}
+              <div className="grid grid-cols-3 gap-2 pt-1 font-mono text-[10px]">
+                {HERO_STATIONS.map((st, idx) => (
+                  <button
+                    key={st.freq}
+                    onClick={() => setStationIdx(idx)}
+                    className={`py-1.5 px-2 rounded-xl text-center border transition-all ${
+                      stationIdx === idx
+                        ? "bg-[#1DB954] text-black font-bold border-[#1DB954] shadow-[0_0_15px_rgba(29,185,84,0.4)]"
+                        : "bg-[#121222] text-slate-400 border-[#232342] hover:text-white"
+                    }`}
+                  >
+                    {st.freq}
+                  </button>
+                ))}
+              </div>
+
+              {/* Animated Equalizer Sound Bars */}
               <div className="flex items-end gap-1 h-8 pt-2">
                 {Array.from({ length: 28 }).map((_, i) => (
                   <motion.div
                     key={i}
                     className="flex-1 rounded-full bg-[#1DB954]"
                     animate={{
-                      height: ["20%", "90%", "35%", "75%", "20%"],
+                      height: isCurrentPlaying
+                        ? ["15%", "100%", "30%", "85%", "15%"]
+                        : ["20%", "60%", "30%", "70%", "20%"],
                     }}
                     transition={{
-                      duration: 0.6 + (i % 5) * 0.15,
+                      duration: isCurrentPlaying ? 0.4 + (i % 4) * 0.1 : 0.8 + (i % 5) * 0.15,
                       repeat: Infinity,
                       repeatType: "mirror",
                     }}
