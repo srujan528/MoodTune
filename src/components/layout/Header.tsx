@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { ParticlePortalModal } from "@/components/ui/ParticlePortalModal";
 
 interface HeaderProps {
   user?: {
@@ -14,6 +15,8 @@ interface HeaderProps {
 export function Header({ user: userProp }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const [user, setUser] = useState(userProp || null);
+  const [showPortal, setShowPortal] = useState(false);
+  const [portalTarget, setPortalTarget] = useState("/auth/spotify");
 
   useEffect(() => {
     if (userProp !== undefined) {
@@ -42,76 +45,93 @@ export function Header({ user: userProp }: HeaderProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleConnectSpotify = (e: React.MouseEvent, url: string) => {
+    e.preventDefault();
+    setPortalTarget(url);
+    setShowPortal(true);
+  };
+
   return (
-    <header
-      className={`sticky top-0 z-50 w-full transition-all duration-200 ${
-        scrolled
-          ? "bg-[#080811]/95 backdrop-blur-md border-b border-[#16162A]"
-          : "bg-[#080811] border-b border-[#16162A]/50"
-      }`}
-      aria-label="Main navigation"
-    >
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6 lg:px-8">
-        {/* Logo with Spotify Green Animated Equalizer Icon */}
-        <div className="flex items-center gap-8">
-          <Link href="/" className="flex items-center gap-2.5" aria-label="MoodTune Home">
-            <div className="flex items-end gap-0.5 h-4">
-              <span className="w-1 h-2.5 bg-[#1DB954] animate-pulse" />
-              <span className="w-1 h-4 bg-[#1ed760] animate-pulse delay-75" />
-              <span className="w-1 h-2 bg-[#10B981] animate-pulse delay-150" />
-            </div>
-            <span className="text-xl font-bold text-white tracking-tight">MoodTune</span>
-          </Link>
+    <>
+      <ParticlePortalModal
+        isOpen={showPortal}
+        targetUrl={portalTarget}
+        title="CONNECTING TO SPOTIFY"
+      />
 
-          <div className="hidden md:flex md:items-center md:gap-6 text-sm font-medium text-slate-400">
-            <Link href="#how-it-works" className="hover:text-white transition-colors">
-              How it works
+      <header
+        className={`sticky top-0 z-50 w-full transition-all duration-200 ${
+          scrolled
+            ? "bg-[#080811]/95 backdrop-blur-md border-b border-[#16162A]"
+            : "bg-[#080811] border-b border-[#16162A]/50"
+        }`}
+        aria-label="Main navigation"
+      >
+        <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6 lg:px-8">
+          {/* Logo with Spotify Green Animated Equalizer Icon */}
+          <div className="flex items-center gap-8">
+            <Link href="/" className="flex items-center gap-2.5" aria-label="MoodTune Home">
+              <div className="flex items-end gap-0.5 h-4">
+                <span className="w-1 h-2.5 bg-[#1DB954] animate-pulse" />
+                <span className="w-1 h-4 bg-[#1ed760] animate-pulse delay-75" />
+                <span className="w-1 h-2 bg-[#10B981] animate-pulse delay-150" />
+              </div>
+              <span className="text-xl font-bold text-white tracking-tight">MoodTune</span>
             </Link>
-            <Link href="/demo" className="hover:text-white transition-colors">
-              Try demo
-            </Link>
+
+            <div className="hidden md:flex md:items-center md:gap-6 text-sm font-medium text-slate-400">
+              <Link href="#how-it-works" className="hover:text-white transition-colors">
+                How it works
+              </Link>
+              <Link href="/demo" className="hover:text-white transition-colors">
+                Try demo
+              </Link>
+            </div>
           </div>
-        </div>
 
-        {/* Right Nav Actions */}
-        <div className="flex items-center gap-4">
-          {user ? (
-            <div className="flex items-center gap-3">
-              {user.spotify_avatar_url ? (
-                <img
-                  src={user.spotify_avatar_url}
-                  alt=""
-                  className="w-7 h-7 rounded-full border border-[#1DB954]"
-                />
-              ) : null}
-              <span className="text-sm font-semibold text-[#1DB954] hidden sm:block">
-                {user.spotify_display_name || user.full_name || "User"}
-              </span>
-              <Link href="/logout" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">
-                Sign out
-              </Link>
-            </div>
-          ) : (
-            <>
-              <a
-                href="/auth/spotify"
-                className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-[#1DB954] hover:bg-[#1ed760] text-black transition-colors shadow-sm"
-              >
-                Connect Spotify
-              </a>
-              <Link href="/login" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">
-                Sign in
-              </Link>
-              <Link
-                href="#mood-discovery"
-                className="px-5 py-2.5 rounded-xl bg-[#1DB954] hover:bg-[#1ed760] text-black text-sm font-bold transition-all duration-200 shadow-[0_0_20px_rgba(29,185,84,0.4)]"
-              >
-                Find my vibe
-              </Link>
-            </>
-          )}
-        </div>
-      </nav>
-    </header>
+          {/* Right Nav Actions */}
+          <div className="flex items-center gap-4">
+            {user ? (
+              <div className="flex items-center gap-3">
+                {user.spotify_avatar_url ? (
+                  <img
+                    src={user.spotify_avatar_url}
+                    alt=""
+                    className="w-7 h-7 rounded-full border border-[#1DB954]"
+                  />
+                ) : null}
+                <span className="text-sm font-semibold text-[#1DB954] hidden sm:block">
+                  {user.spotify_display_name || user.full_name || "User"}
+                </span>
+                <Link href="/logout" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">
+                  Sign out
+                </Link>
+              </div>
+            ) : (
+              <>
+                <button
+                  onClick={(e) => handleConnectSpotify(e, "/auth/spotify")}
+                  className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-[#1DB954] hover:bg-[#1ed760] text-black transition-colors shadow-sm cursor-pointer"
+                >
+                  Connect Spotify
+                </button>
+                <button
+                  onClick={(e) => handleConnectSpotify(e, "/login")}
+                  className="text-sm font-medium text-slate-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  Sign in
+                </button>
+                <Link
+                  href="#mood-discovery"
+                  className="px-5 py-2.5 rounded-xl bg-[#1DB954] hover:bg-[#1ed760] text-black text-sm font-bold transition-all duration-200 shadow-[0_0_20px_rgba(29,185,84,0.4)]"
+                >
+                  Find my vibe
+                </Link>
+              </>
+            )}
+          </div>
+        </nav>
+      </header>
+    </>
   );
 }

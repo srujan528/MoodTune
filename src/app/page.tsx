@@ -11,7 +11,6 @@ import {
 } from "@/components/landing";
 import { BentoGridSection } from "@/components/landing/BentoGridSection";
 import { AcousticMorphingCanvas } from "@/components/landing/AcousticMorphingCanvas";
-import { AcousticParticleCanvas } from "@/components/landing/AcousticParticleCanvas";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import { PlayerProvider } from "@/components/player/PlayerContext";
 
@@ -31,7 +30,6 @@ export default function LandingPage() {
           <MoodSelector onMoodSelect={handleMoodSelect} selectedMoodId={selectedMoodId} />
         </div>
         <AcousticMorphingCanvas />
-        <AcousticParticleCanvas />
         {selectedMoodId && <RecommendationReveal selectedMoodId={selectedMoodId} />}
         {selectedMoodId && <PlaylistPreview selectedMoodId={selectedMoodId} />}
         <BentoGridSection />
