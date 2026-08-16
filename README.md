@@ -1,20 +1,20 @@
-# MoodTune 🎧 — AI-Powered Mood Music Recommendation Platform
+# MoodTune — AI-Powered Mood Music Recommendation Platform
 
-> Discover music tuned to your exact emotional frequency. Powered by Next.js 16 (Turbopack), Supabase, OpenAI/AI Intelligence, and the Spotify Web API.
-
----
-
-## ✨ Features
-
-- 🎨 **10 Acoustic Mood Profiles**: Instantly switch between *Just Vibing*, *Need a Pick-Me-Up*, *Something Mellow*, *In My Feelings*, *Late-Night Drive*, *Locked In*, *Getting Things Done*, *Need Some Energy*, *Slow Sunday*, and *Feeling Good*.
-- ⚡ **AI "Why These Tracks?" Insights**: Generates personalized AI explanations detailing acoustic valence, BPM tempo curves, and emotional harmony for every recommendation.
-- 🎵 **Spotify Web Playback SDK & Audio Preview**: Stream real-time 30-second song previews for guest sessions, and connect your **Spotify Premium** account for direct full-track Web SDK streaming inside the app.
-- 🌌 **ReactBits-Inspired Animated UI**: Features custom spring-physics cursor tracking (`CustomCursor`), glowing radial spotlights (`SpotlightCard`), perimeter border beams (`BorderBeam`), liquid aurora mesh gradients (`AuroraBackground`), and an interactive Bento Grid.
-- 🔐 **Supabase Authentication & History**: Save mood sessions, track listening history, and manage saved favorite tracks across devices.
+Discover music tuned to your exact emotional frequency. Powered by Next.js 16 (Turbopack), Supabase, AI Intelligence, and the Spotify Web API.
 
 ---
 
-## 🛠️ Tech Stack
+## Features
+
+- **10 Acoustic Mood Profiles**: Switch between *Just Vibing*, *Need a Pick-Me-Up*, *Something Mellow*, *In My Feelings*, *Late-Night Drive*, *Locked In*, *Getting Things Done*, *Need Some Energy*, *Slow Sunday*, and *Feeling Good*.
+- **AI "Why These Tracks?" Insights**: Generates personalized AI explanations detailing acoustic valence, BPM tempo curves, and emotional harmony for every recommendation.
+- **Spotify Web Playback SDK & Audio Preview**: Stream real-time 30-second song previews for guest sessions, and connect your Spotify Premium account for direct full-track Web SDK streaming inside the app.
+- **ReactBits-Inspired Animated UI**: Features custom spring-physics cursor tracking (`CustomCursor`), glowing radial spotlights (`SpotlightCard`), perimeter border beams (`BorderBeam`), liquid aurora mesh gradients (`AuroraBackground`), and an interactive Bento Grid.
+- **Supabase Authentication & History**: Save mood sessions, track listening history, and manage saved favorite tracks across devices.
+
+---
+
+## Tech Stack
 
 - **Framework**: [Next.js 16.3 (Turbopack)](https://nextjs.org/)
 - **Language**: [TypeScript](https://www.typescriptlang.org/)
@@ -25,12 +25,12 @@
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### 1. Prerequisites
 
 - Node.js (v18+ recommended)
-- npm or pnpm or yarn
+- npm, pnpm, or yarn
 - A Spotify Developer account ([Spotify Dashboard](https://developer.spotify.com/dashboard))
 - A Supabase account ([Supabase Console](https://database.new))
 
@@ -40,15 +40,15 @@
 
 Create a `.env.local` file in the root directory:
 
-```bash
+```env
 # App Configuration
 NEXT_PUBLIC_APP_URL=http://127.0.0.1:3000
 NEXT_PUBLIC_APP_NAME=MoodTune
 
 # Supabase Credentials
-NEXT_PUBLIC_SUPABASE_URL=https://your-supabase-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
-SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
 
 # Spotify Developer Credentials
 SPOTIFY_CLIENT_ID=your_spotify_client_id
@@ -77,23 +77,23 @@ npm run dev
 npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser to view the landing page!
+Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
 
 ---
 
-## 🔑 Spotify Developer Setup
+## Spotify Developer Setup
 
 1. Go to the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard) and create a new App.
 2. Under **App Settings**, add the following to **Redirect URIs**:
    - `http://127.0.0.1:3000/auth/spotify/callback`
    - `https://your-app-domain.vercel.app/auth/spotify/callback` (for production)
-3. Copy the **Client ID** and **Client Secret** into your `.env.local` file.
+3. Copy your **Client ID** and **Client Secret** into your `.env.local` file.
 
 ---
 
-## 🌐 Deploying on Vercel
+## Deploying on Vercel
 
-MoodTune is pre-configured for **1-click Vercel deployment** via `vercel.json`:
+MoodTune is pre-configured for Vercel deployment via `vercel.json`:
 
 1. Push your repository to GitHub.
 2. Import the repository into [Vercel](https://vercel.com/new).
@@ -102,6 +102,6 @@ MoodTune is pre-configured for **1-click Vercel deployment** via `vercel.json`:
 
 ---
 
-## 📄 License
+## License
 
-MIT License. Built with ❤️ for music enthusiasts.
+MIT License. Built for music enthusiasts.
