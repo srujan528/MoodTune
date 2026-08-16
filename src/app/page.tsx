@@ -10,7 +10,9 @@ import {
   FinalCTA,
 } from "@/components/landing";
 import { BentoGridSection } from "@/components/landing/BentoGridSection";
+import { AcousticMorphingCanvas } from "@/components/landing/AcousticMorphingCanvas";
 import { CustomCursor } from "@/components/ui/CustomCursor";
+import { PlayerProvider } from "@/components/player/PlayerContext";
 
 export default function LandingPage() {
   const [selectedMoodId, setSelectedMoodId] = useState<string | null>(null);
@@ -20,17 +22,20 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="bg-[#07080E] text-foreground min-h-screen selection:bg-violet-500/30 selection:text-violet-200 overflow-x-hidden">
-      <CustomCursor />
-      <Hero />
-      <div id="mood-selector">
-        <MoodSelector onMoodSelect={handleMoodSelect} selectedMoodId={selectedMoodId} />
+    <PlayerProvider>
+      <div className="bg-[#07080E] text-foreground min-h-screen selection:bg-violet-500/30 selection:text-violet-200 overflow-x-hidden">
+        <CustomCursor />
+        <Hero />
+        <div id="mood-selector">
+          <MoodSelector onMoodSelect={handleMoodSelect} selectedMoodId={selectedMoodId} />
+        </div>
+        <AcousticMorphingCanvas />
+        {selectedMoodId && <RecommendationReveal selectedMoodId={selectedMoodId} />}
+        {selectedMoodId && <PlaylistPreview selectedMoodId={selectedMoodId} />}
+        <BentoGridSection />
+        <HowItWorks selectedMoodId={selectedMoodId} />
+        <FinalCTA selectedMoodId={selectedMoodId} />
       </div>
-      {selectedMoodId && <RecommendationReveal selectedMoodId={selectedMoodId} />}
-      {selectedMoodId && <PlaylistPreview selectedMoodId={selectedMoodId} />}
-      <BentoGridSection />
-      <HowItWorks selectedMoodId={selectedMoodId} />
-      <FinalCTA selectedMoodId={selectedMoodId} />
-    </div>
+    </PlayerProvider>
   );
 }
