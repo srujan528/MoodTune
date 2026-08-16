@@ -75,7 +75,7 @@ export function PlaylistPreview({ selectedMoodId }: { selectedMoodId: string | n
         <div className="flex items-center justify-between">
           <div>
             <h2 id="playlist-heading" className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-              Your <span className="text-[#10B981]">{moodConfig.label}</span> mix
+              Your <span className="text-[#1DB954]">{moodConfig.label}</span> mix
             </h2>
             <p className="text-xs text-slate-400">
               {data.tracks.length} tracks • Ready to stream
@@ -83,7 +83,7 @@ export function PlaylistPreview({ selectedMoodId }: { selectedMoodId: string | n
           </div>
           <button
             onClick={handlePlayFirst}
-            className="px-5 py-2.5 rounded-xl bg-[#6E36E4] hover:bg-[#7E46F4] text-white text-sm font-semibold transition-all duration-200 flex items-center gap-2 shadow-md"
+            className="px-5 py-2.5 rounded-xl bg-[#1DB954] hover:bg-[#1ed760] text-black text-sm font-bold transition-all duration-200 flex items-center gap-2 shadow-[0_0_20px_rgba(29,185,84,0.4)]"
           >
             <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
               <path d="M8 5v14l11-7z" />
@@ -138,7 +138,7 @@ function PlaylistTrackItem({
   return (
     <div
       onClick={onTogglePlay}
-      className="p-3.5 rounded-xl bg-[#0E0E1B] border border-[#1C1C32] hover:border-[#2D2D50] hover:bg-[#141428] cursor-pointer flex items-center justify-between transition-colors group"
+      className="p-3.5 rounded-xl bg-[#0E0E1B] border border-[#1C1C32] hover:border-[#1DB954]/50 hover:bg-[#141428] cursor-pointer flex items-center justify-between transition-colors group"
     >
       <div className="flex items-center gap-3.5">
         <span className="text-xs font-mono text-slate-500 w-4 text-center">{index}</span>
@@ -153,7 +153,7 @@ function PlaylistTrackItem({
           className="w-10 h-10 rounded-lg object-cover"
         />
         <div>
-          <h4 className="font-bold text-white text-sm group-hover:text-[#8B5CF6] transition-colors">{track.title}</h4>
+          <h4 className="font-bold text-white text-sm group-hover:text-[#1DB954] transition-colors">{track.title}</h4>
           <p className="text-xs text-slate-400">{track.artist}</p>
         </div>
       </div>
@@ -163,7 +163,7 @@ function PlaylistTrackItem({
             e.stopPropagation();
             onTogglePlay();
           }}
-          className="w-8 h-8 rounded-full bg-[#6E36E4]/20 text-[#8B5CF6] hover:bg-[#6E36E4] hover:text-white flex items-center justify-center transition-colors"
+          className="w-8 h-8 rounded-full bg-[#1DB954]/20 text-[#1DB954] hover:bg-[#1DB954] hover:text-black flex items-center justify-center transition-colors"
         >
           <svg className="w-4 h-4 fill-current ml-0.5" viewBox="0 0 24 24">
             {isCurrentPlaying ? (

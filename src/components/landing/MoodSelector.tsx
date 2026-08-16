@@ -57,8 +57,8 @@ export function MoodSelector({
         {/* Selected Mood Status Bar at Bottom */}
         <div className="pt-8 flex items-center gap-4 border-t border-[#18182E] text-xs font-mono tracking-wider text-slate-400">
           <span className="uppercase text-slate-500">SELECTED</span>
-          <span className="text-[#6E36E4]">——————</span>
-          <span className="text-[#10B981] font-bold text-sm">
+          <span className="text-[#1DB954]">——————</span>
+          <span className="text-[#1DB954] font-bold text-sm">
             {selectedConfig ? selectedConfig.label : "Something mellow"}
           </span>
         </div>

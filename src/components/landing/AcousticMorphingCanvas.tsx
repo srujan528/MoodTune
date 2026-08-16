@@ -1,43 +1,42 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
-import { motion, useMotionValue, useTransform } from "framer-motion";
+import React, { useState, useRef } from "react";
+import { motion } from "framer-motion";
 import { usePlayer } from "@/components/player/PlayerContext";
 
-// Sample tracks mapped across the 2D Valence vs Energy spectrum
 const SPECTRUM_TRACKS = [
   {
     id: "levitating",
     name: "Levitating",
     artist: "Dua Lipa",
     album: "Future Nostalgia",
-    valence: 90, // High Valence
-    energy: 88,  // High Energy
-    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/4a/01/a3/4a01a355-6b58-e395-5847-a417643b1854/190295240455.jpg/600x600bb.jpg",
+    valence: 90,
+    energy: 88,
+    cover: "https://i.scdn.co/image/ab67616d0000b2732049e6f332968396d2e3a1f8",
     previewUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3",
     quadrant: "High Energy • Euphoric",
-    color: "#EC4899",
+    color: "#1DB954",
   },
   {
     id: "blinding-lights",
     name: "Blinding Lights",
     artist: "The Weeknd",
     album: "After Hours",
-    valence: 45, // Low-Mid Valence
-    energy: 92,  // High Energy
-    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/91/92/7d/91927d6d-2d4e-1288-66a9-83c9d7d42cf8/20UMGIM07412.rgb.jpg/600x600bb.jpg",
+    valence: 45,
+    energy: 92,
+    cover: "https://i.scdn.co/image/ab67616d0000b2738863bc11d2aa12b54f5a8636",
     previewUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
     quadrant: "High Energy • Intense Drive",
-    color: "#818CF8",
+    color: "#10B981",
   },
   {
     id: "texas-sun",
     name: "Texas Sun",
     artist: "Khruangbin & Leon Bridges",
     album: "Texas Sun",
-    valence: 82, // High Valence
-    energy: 35,  // Low Energy
-    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/bf/16/c0/bf16c024-e9ed-c77a-ecae-8bfefbf3f6ef/656605151566.jpg/600x600bb.jpg",
+    valence: 82,
+    energy: 35,
+    cover: "https://i.scdn.co/image/ab67616d0000b273aa55d14fa0c5f21d374465d6",
     previewUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
     quadrant: "Low Energy • Cozy Warmth",
     color: "#F59E0B",
@@ -47,12 +46,12 @@ const SPECTRUM_TRACKS = [
     name: "Chamber of Reflection",
     artist: "Mac DeMarco",
     album: "Salad Days",
-    valence: 32, // Low Valence
-    energy: 40,  // Low Energy
-    cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/eb/03/49/eb0349ca-4700-1c09-7d88-b4b9b9909fb5/817949019688.jpg/600x600bb.jpg",
+    valence: 32,
+    energy: 40,
+    cover: "https://i.scdn.co/image/ab67616d0000b2738f657a79e43f114c0a5e81d7",
     previewUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3",
     quadrant: "Low Energy • Melancholic Solitude",
-    color: "#10B981",
+    color: "#3B82F6",
   },
 ];
 
@@ -60,7 +59,8 @@ export function AcousticMorphingCanvas() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ xPercent: 50, yPercent: 50 });
   const [activeTrack, setActiveTrack] = useState(SPECTRUM_TRACKS[0]);
-  const { playTrack, currentTrack, isPlaying } = usePlayer();
+  const [imgSrc, setImgSrc] = useState(activeTrack.cover);
+  const { playTrack, pauseTrack, currentTrack, isPlaying } = usePlayer();
 
   const handleDrag = (_: any, info: any) => {
     if (!containerRef.current) return;
@@ -93,24 +93,32 @@ export function AcousticMorphingCanvas() {
       }
     });
 
-    setActiveTrack((prev) => (prev.id === closest.id ? prev : closest));
+    if (activeTrack.id !== closest.id) {
+      setActiveTrack(closest);
+      setImgSrc(closest.cover);
+    }
   };
 
+  const isCurrentPlaying = currentTrack?.name === activeTrack.name && isPlaying;
+
   const handlePlayActive = () => {
-    playTrack({
-      id: activeTrack.id,
-      name: activeTrack.name,
-      artist: activeTrack.artist,
-      album: activeTrack.album,
-      albumImageUrl: activeTrack.cover,
-      previewUrl: activeTrack.previewUrl,
-    });
+    if (isCurrentPlaying) {
+      pauseTrack();
+    } else {
+      playTrack({
+        id: activeTrack.name,
+        name: activeTrack.name,
+        artist: activeTrack.artist,
+        album: activeTrack.album,
+        albumImageUrl: activeTrack.cover,
+      });
+    }
   };
 
   return (
-    <div id="vibe-canvas" className="w-full max-w-5xl mx-auto my-12 font-sans">
+    <div id="vibe-canvas" className="w-full max-w-5xl mx-auto my-12 font-sans px-4">
       <div className="text-left mb-6 space-y-2">
-        <div className="inline-flex items-center gap-2 text-xs font-mono tracking-widest text-[#10B981] uppercase bg-[#052317] px-3.5 py-1 rounded-full border border-[#10B981]/30">
+        <div className="inline-flex items-center gap-2 text-xs font-mono tracking-widest text-[#1DB954] uppercase bg-[#052317] px-3.5 py-1 rounded-full border border-[#10B981]/30">
           <span>DYNAMIC 2D ACOUSTIC RADAR</span>
         </div>
         <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
@@ -138,10 +146,10 @@ export function AcousticMorphingCanvas() {
             <div className="absolute top-4 left-4 text-[10px] font-mono text-slate-400 uppercase tracking-widest pointer-events-none">
               INTENSE DRIVE
             </div>
-            <div className="absolute top-4 right-4 text-[10px] font-mono text-[#EC4899] uppercase tracking-widest pointer-events-none">
+            <div className="absolute top-4 right-4 text-[10px] font-mono text-[#1DB954] uppercase tracking-widest pointer-events-none">
               PURE EUPHORIA
             </div>
-            <div className="absolute bottom-4 left-4 text-[10px] font-mono text-[#10B981] uppercase tracking-widest pointer-events-none">
+            <div className="absolute bottom-4 left-4 text-[10px] font-mono text-[#3B82F6] uppercase tracking-widest pointer-events-none">
               MELANCHOLIC SOLITUDE
             </div>
             <div className="absolute bottom-4 right-4 text-[10px] font-mono text-[#F59E0B] uppercase tracking-widest pointer-events-none">
@@ -188,7 +196,7 @@ export function AcousticMorphingCanvas() {
             </div>
             <div>
               <span className="text-slate-500 block">ZONE</span>
-              <span className="text-[#10B981] font-bold text-xs">{activeTrack.quadrant}</span>
+              <span className="text-[#1DB954] font-bold text-xs">{activeTrack.quadrant}</span>
             </div>
           </div>
 
@@ -196,8 +204,13 @@ export function AcousticMorphingCanvas() {
           <div className="p-6 rounded-3xl bg-[#0E0E1B] border-2 border-[#26264A] space-y-5 shadow-2xl relative overflow-hidden">
             <div className="flex items-center gap-4">
               <img
-                src={activeTrack.cover}
+                src={imgSrc}
                 alt={activeTrack.name}
+                onError={() =>
+                  setImgSrc(
+                    "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&auto=format&fit=crop&q=80"
+                  )
+                }
                 className="w-20 h-20 rounded-2xl object-cover border border-[#26264A] shadow-md"
               />
               <div className="flex-1 min-w-0">
@@ -231,16 +244,20 @@ export function AcousticMorphingCanvas() {
             {/* Play Button */}
             <button
               onClick={handlePlayActive}
-              className="w-full py-3.5 rounded-xl text-white font-semibold text-sm transition-all duration-300 flex items-center justify-center gap-2 shadow-lg"
+              className="w-full py-3.5 rounded-xl text-black font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 shadow-lg"
               style={{
                 backgroundColor: activeTrack.color,
                 boxShadow: `0 0 25px ${activeTrack.color}60`,
               }}
             >
               <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z" />
+                {isCurrentPlaying ? (
+                  <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                ) : (
+                  <path d="M8 5v14l11-7z" />
+                )}
               </svg>
-              <span>PLAY MATCHED TRACK</span>
+              <span>{isCurrentPlaying ? "PAUSE MATCHED TRACK" : "PLAY MATCHED TRACK"}</span>
             </button>
           </div>
         </div>

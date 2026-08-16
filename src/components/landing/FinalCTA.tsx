@@ -13,7 +13,7 @@ export function FinalCTA({ selectedMoodId }: { selectedMoodId?: string | null })
       <div 
         className="absolute inset-0 opacity-[0.1] pointer-events-none"
         style={{
-          backgroundImage: `linear-gradient(#26264A 1px, transparent 1px), linear-gradient(90deg, #26264A 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(#1DB95415 1px, transparent 1px), linear-gradient(90deg, #1DB95415 1px, transparent 1px)`,
           backgroundSize: `48px 48px`,
         }}
       />
@@ -26,7 +26,7 @@ export function FinalCTA({ selectedMoodId }: { selectedMoodId?: string | null })
           transition={{ duration: 0.8 }}
           className="space-y-6"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#121224] border border-[#232344] text-xs font-mono tracking-widest uppercase text-[#8B5CF6]">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#052317] border border-[#10B981]/30 text-xs font-mono tracking-widest uppercase text-[#1DB954]">
             <span>START YOUR SESSION</span>
           </div>
 
@@ -35,7 +35,7 @@ export function FinalCTA({ selectedMoodId }: { selectedMoodId?: string | null })
             className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-[1.1]"
           >
             Find something that <br />
-            <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-amber-300 bg-clip-text text-transparent italic font-serif font-normal">
+            <span className="bg-gradient-to-r from-[#1DB954] via-emerald-300 to-teal-200 bg-clip-text text-transparent italic font-serif font-normal">
               fits the moment.
             </span>
           </h2>
@@ -47,7 +47,7 @@ export function FinalCTA({ selectedMoodId }: { selectedMoodId?: string | null })
           <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
             <a
               href="#mood-discovery"
-              className="px-8 py-4 rounded-xl bg-[#6E36E4] hover:bg-[#7E46F4] text-white font-semibold text-base transition-all duration-300 shadow-[0_0_30px_rgba(110,54,228,0.5)]"
+              className="px-8 py-4 rounded-xl bg-[#1DB954] hover:bg-[#1ed760] text-black font-bold text-base transition-all duration-300 shadow-[0_0_30px_rgba(29,185,84,0.4)]"
             >
               Find my vibe
             </a>

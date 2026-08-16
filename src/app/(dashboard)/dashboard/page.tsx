@@ -2,14 +2,19 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { MoodSelector } from "@/components/landing";
-import { RecommendationDisplay } from "@/components/dashboard/RecommendationDisplay";
-import { PlaylistDisplay } from "@/components/dashboard/PlaylistDisplay";
-import { MoodHistory } from "@/components/dashboard/MoodHistory";
-import { SavedTracks } from "@/components/dashboard/SavedTracks";
+import {
+  Hero,
+  MoodSelector,
+  RecommendationReveal,
+  PlaylistPreview,
+  HowItWorks,
+  FinalCTA,
+} from "@/components/landing";
+import { BentoGridSection } from "@/components/landing/BentoGridSection";
+import { AcousticMorphingCanvas } from "@/components/landing/AcousticMorphingCanvas";
+import { CustomCursor } from "@/components/ui/CustomCursor";
 import { NowPlayingBar } from "@/components/dashboard/NowPlayingBar";
-import { PlayerProvider, usePlayer } from "@/components/player/PlayerContext";
-import { getMoodConfig, MOOD_IDS } from "@/config/mood-config";
+import { PlayerProvider } from "@/components/player/PlayerContext";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -25,18 +30,15 @@ export default function DashboardPage() {
         if (res.ok) {
           const data = await res.json();
           setUser(data);
-        } else {
-          router.push("/");
         }
       } catch (error) {
         console.error("Error fetching user:", error);
-        router.push("/");
       } finally {
         setLoading(false);
       }
     }
     fetchUser();
-  }, [router]);
+  }, []);
 
   const createMoodSession = useCallback(async (moodId: string) => {
     setMoodSessionLoading(moodId);
@@ -66,38 +68,30 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+      <div className="min-h-screen bg-[#080811] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#1DB954]" />
       </div>
     );
   }
 
   return (
     <PlayerProvider>
-      <div className="min-h-screen bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-foreground">
-              Welcome back, {user?.spotify_display_name || user?.full_name || "there"}!
-            </h1>
-            <p className="text-muted-foreground mt-1">What are you in the mood for?</p>
-          </div>
-
-          <MoodSelector onMoodSelect={handleMoodSelect} selectedMoodId={selectedMoodId} moodSessionLoading={moodSessionLoading} />
-
-          {selectedMoodId && (
-            <div className="mt-8 space-y-8">
-              <RecommendationDisplay moodId={selectedMoodId} />
-              <PlaylistDisplay moodId={selectedMoodId} />
-            </div>
-          )}
-
-          <div className="mt-12 grid gap-8 md:grid-cols-2">
-            <MoodHistory onRevisitMood={handleMoodSelect} />
-            <SavedTracks />
-          </div>
+      <div className="bg-[#07080E] text-foreground min-h-screen selection:bg-[#1DB954]/30 selection:text-[#1DB954] overflow-x-hidden pb-24">
+        <CustomCursor />
+        <Hero />
+        <div id="mood-selector">
+          <MoodSelector
+            onMoodSelect={handleMoodSelect}
+            selectedMoodId={selectedMoodId}
+            moodSessionLoading={moodSessionLoading}
+          />
         </div>
-
+        <AcousticMorphingCanvas />
+        {selectedMoodId && <RecommendationReveal selectedMoodId={selectedMoodId} />}
+        {selectedMoodId && <PlaylistPreview selectedMoodId={selectedMoodId} />}
+        <BentoGridSection />
+        <HowItWorks selectedMoodId={selectedMoodId} />
+        <FinalCTA selectedMoodId={selectedMoodId} />
         <NowPlayingBar />
       </div>
     </PlayerProvider>

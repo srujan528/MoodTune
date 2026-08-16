@@ -52,13 +52,13 @@ export function Header({ user: userProp }: HeaderProps) {
       aria-label="Main navigation"
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6 lg:px-8">
-        {/* Logo with Animated Equalizer Icon */}
+        {/* Logo with Spotify Green Animated Equalizer Icon */}
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center gap-2.5" aria-label="MoodTune Home">
             <div className="flex items-end gap-0.5 h-4">
-              <span className="w-1 h-2.5 bg-[#6E36E4] animate-pulse" />
-              <span className="w-1 h-4 bg-[#8B5CF6] animate-pulse delay-75" />
-              <span className="w-1 h-2 bg-[#EC4899] animate-pulse delay-150" />
+              <span className="w-1 h-2.5 bg-[#1DB954] animate-pulse" />
+              <span className="w-1 h-4 bg-[#1ed760] animate-pulse delay-75" />
+              <span className="w-1 h-2 bg-[#10B981] animate-pulse delay-150" />
             </div>
             <span className="text-xl font-bold text-white tracking-tight">MoodTune</span>
           </Link>
@@ -81,18 +81,12 @@ export function Header({ user: userProp }: HeaderProps) {
                 <img
                   src={user.spotify_avatar_url}
                   alt=""
-                  className="w-7 h-7 rounded-full border border-[#6E36E4]"
+                  className="w-7 h-7 rounded-full border border-[#1DB954]"
                 />
               ) : null}
-              <span className="text-sm font-medium text-slate-200 hidden sm:block">
+              <span className="text-sm font-semibold text-[#1DB954] hidden sm:block">
                 {user.spotify_display_name || user.full_name || "User"}
               </span>
-              <a
-                href="/auth/spotify"
-                className="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-[#1DB954] hover:bg-[#1ed760] text-black transition-colors shadow-sm"
-              >
-                Connect Spotify
-              </a>
               <Link href="/logout" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">
                 Sign out
               </Link>
@@ -110,7 +104,7 @@ export function Header({ user: userProp }: HeaderProps) {
               </Link>
               <Link
                 href="#mood-discovery"
-                className="px-5 py-2.5 rounded-xl bg-[#6E36E4] hover:bg-[#7E46F4] text-white text-sm font-semibold transition-all duration-200 shadow-[0_0_20px_rgba(110,54,228,0.4)]"
+                className="px-5 py-2.5 rounded-xl bg-[#1DB954] hover:bg-[#1ed760] text-black text-sm font-bold transition-all duration-200 shadow-[0_0_20px_rgba(29,185,84,0.4)]"
               >
                 Find my vibe
               </Link>

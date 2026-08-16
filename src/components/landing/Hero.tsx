@@ -16,13 +16,13 @@ export function Hero() {
       <div 
         className="absolute inset-0 opacity-[0.15] pointer-events-none"
         style={{
-          backgroundImage: `linear-gradient(#26264A 1px, transparent 1px), linear-gradient(90deg, #26264A 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(#1DB95415 1px, transparent 1px), linear-gradient(90deg, #1DB95415 1px, transparent 1px)`,
           backgroundSize: `48px 48px`,
         }}
       />
 
-      {/* Subtle Ambient Radial Glow */}
-      <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-purple-900/15 rounded-full blur-[140px] pointer-events-none" />
+      {/* Ambient Spotify Green Radial Glow */}
+      <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-[#1DB954]/10 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -34,19 +34,19 @@ export function Hero() {
           {/* Small Top Badge / Equalizer Indicator */}
           <div className="inline-flex items-center gap-3 text-xs font-mono tracking-widest text-slate-400 uppercase">
             <span>NOW PLAYING / YOUR MOOD</span>
-            <span className="text-[#6E36E4] font-bold">——————</span>
+            <span className="text-[#1DB954] font-bold">——————</span>
             <div className="flex items-end gap-0.5 h-3">
-              <span className="w-0.5 h-2 bg-[#6E36E4] animate-pulse" />
-              <span className="w-0.5 h-3 bg-[#8B5CF6] animate-pulse delay-75" />
-              <span className="w-0.5 h-1.5 bg-[#EC4899] animate-pulse delay-150" />
+              <span className="w-0.5 h-2 bg-[#1DB954] animate-pulse" />
+              <span className="w-0.5 h-3 bg-[#1ed760] animate-pulse delay-75" />
+              <span className="w-0.5 h-1.5 bg-[#10B981] animate-pulse delay-150" />
             </div>
           </div>
 
-          {/* Main Headline from Lovable */}
+          {/* Main Headline */}
           <h1 className="text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight leading-[1.05] text-white">
             Music that gets <br />
             your{" "}
-            <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-amber-300 bg-clip-text text-transparent italic font-serif font-normal">
+            <span className="bg-gradient-to-r from-[#1DB954] via-emerald-300 to-teal-200 bg-clip-text text-transparent italic font-serif font-normal">
               mood.
             </span>
           </h1>
@@ -60,7 +60,7 @@ export function Hero() {
           <div className="flex flex-wrap items-center gap-4 pt-2">
             <a
               href="#mood-discovery"
-              className="px-8 py-4 rounded-xl bg-[#6E36E4] hover:bg-[#7E46F4] text-white font-semibold text-base transition-all duration-300 shadow-[0_0_30px_rgba(110,54,228,0.5)] hover:shadow-[0_0_40px_rgba(126,70,244,0.7)]"
+              className="px-8 py-4 rounded-xl bg-[#1DB954] hover:bg-[#1ed760] text-black font-bold text-base transition-all duration-300 shadow-[0_0_30px_rgba(29,185,84,0.4)] hover:shadow-[0_0_40px_rgba(29,185,84,0.6)]"
             >
               Find my vibe
             </a>
