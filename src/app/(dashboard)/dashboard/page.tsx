@@ -85,7 +85,7 @@ export default function DashboardPage() {
         </div>
         <PlaylistPreview selectedMoodId={selectedMoodId} />
         <HowItWorks selectedMoodId={selectedMoodId} />
-        <FinalCTA selectedMoodId={selectedMoodId} />
+        <FinalCTA selectedMoodId={selectedMoodId} isLoggedIn={true} />
         <NowPlayingBar />
       </div>
     </PlayerProvider>

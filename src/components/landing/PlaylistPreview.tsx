@@ -25,12 +25,84 @@ const PLAYLIST_DATA: Record<string, {
       { id: "5", title: "Archie, Marry Me", artist: "Alvvays", duration: "3:15", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/4a/01/a3/4a01a355-6b58-e395-5847-a417643b1854/190295240455.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Archie%20Marry%20Me%20Alvvays" },
     ],
   },
+  "need-pick-me-up": {
+    mood: "Need a pick-me-up",
+    tracks: [
+      { id: "1", title: "Levitating", artist: "Dua Lipa", duration: "3:23", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/4a/01/a3/4a01a355-6b58-e395-5847-a417643b1854/190295240455.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Levitating%20Dua%20Lipa" },
+      { id: "2", title: "As It Was", artist: "Harry Styles", duration: "2:47", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/be/89/3e/be893e15-5460-394c-cb14-ee1855a8be90/196589006935.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/As%20It%20Was%20Harry%20Styles" },
+      { id: "3", title: "About Damn Time", artist: "Lizzo", duration: "3:10", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/d5/43/d8/d543d838-8c17-1065-274e-6e270a48a90d/075679744418.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/About%20Damn%20Time%20Lizzo" },
+      { id: "4", title: "Good as Hell", artist: "Lizzo", duration: "2:39", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/d5/43/d8/d543d838-8c17-1065-274e-6e270a48a90d/075679744418.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Good%20as%20Hell%20Lizzo" },
+      { id: "5", title: "Dog Days Are Over", artist: "Florence + The Machine", duration: "4:12", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/bf/f6/28/bff628e8-d6cb-022e-a5bf-8547a4b08709/15UMGIM81958.rgb.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Dog%20Days%20Are%20Over" },
+    ],
+  },
   "something-mellow": {
     mood: "Something mellow",
     tracks: [
       { id: "1", title: "Texas Sun", artist: "Khruangbin & Leon Bridges", duration: "4:12", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/bf/16/c0/bf16c024-e9ed-c77a-ecae-8bfefbf3f6ef/656605151566.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Texas%20Sun%20Khruangbin" },
       { id: "2", title: "Chamber of Reflection", artist: "Mac DeMarco", duration: "3:48", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/eb/03/49/eb0349ca-4700-1c09-7d88-b4b9b9909fb5/817949019688.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Chamber%20of%20Reflection%20Mac%20DeMarco" },
       { id: "3", title: "Space Song", artist: "Beach House", duration: "5:21", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/ee/17/ef/ee17efdb-01eb-c5a4-ee4f-56df01691238/098787114068.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Space%20Song%20Beach%20House" },
+      { id: "4", title: "Sunsetz", artist: "Cigarettes After Sex", duration: "3:34", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/cc/26/54/cc26543d-8339-f408-8892-4b17b94921ff/720841214620.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Sunsetz%20Cigarettes%20After%20Sex" },
+      { id: "5", title: "Japanese Denim", artist: "Daniel Caesar", duration: "4:30", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/d9/38/2e/d9382e88-6625-635e-c4bb-eaefc60965e6/artwork.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Japanese%20Denim" },
+    ],
+  },
+  "in-my-feelings": {
+    mood: "In my feelings",
+    tracks: [
+      { id: "1", title: "Someone Like You", artist: "Adele", duration: "4:45", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/31/3d/8c/313d8c1c-3b3b-8515-3d96-5f80bfebc6f0/886443315629.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Someone%20Like%20You%20Adele" },
+      { id: "2", title: "When the Party's Over", artist: "Billie Eilish", duration: "3:16", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/bf/b1/7d/bfb17d3b-e01d-5b8d-294b-9e450b7b1341/19UMGIM08436.rgb.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/When%20the%20Party's%20Over%20Billie%20Eilish" },
+      { id: "3", title: "The Night We Met", artist: "Lord Huron", duration: "3:28", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/71/84/0d/71840d58-95d8-30bb-a3e9-74d11e5f8f85/15UMGIM09731.rgb.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/The%20Night%20We%20Met%20Lord%20Huron" },
+      { id: "4", title: "All I Want", artist: "Kodaline", duration: "5:05", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/eb/03/49/eb0349ca-4700-1c09-7d88-b4b9b9909fb5/817949019688.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/All%20I%20Want%20Kodaline" },
+      { id: "5", title: "Driver's License", artist: "Olivia Rodrigo", duration: "4:02", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/be/89/3e/be893e15-5460-394c-cb14-ee1855a8be90/196589006935.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Drivers%20License%20Olivia%20Rodrigo" },
+    ],
+  },
+  "late-night-drive": {
+    mood: "Late-night drive",
+    tracks: [
+      { id: "1", title: "Slow Dancing in the Dark", artist: "Joji", duration: "3:29", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/c3/0f/59/c30f5926-4447-49d6-32d8-bf5b271d7986/859728343759_cover.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Slow%20Dancing%20in%20the%20Dark%20Joji" },
+      { id: "2", title: "Call Out My Name", artist: "The Weeknd", duration: "3:48", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/1e/85/55/1e8555c8-1e4a-9040-5221-5a02568600d8/18UMGIM19246.rgb.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Call%20Out%20My%20Name%20The%20Weeknd" },
+      { id: "3", title: "Apocalypse", artist: "Cigarettes After Sex", duration: "4:50", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/cc/26/54/cc26543d-8339-f408-8892-4b17b94921ff/720841214620.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Apocalypse%20Cigarettes%20After%20Sex" },
+      { id: "4", title: "Midnight City", artist: "M83", duration: "4:03", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/4a/01/a3/4a01a355-6b58-e395-5847-a417643b1854/190295240455.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Midnight%20City%20M83" },
+      { id: "5", title: "Nightcall", artist: "Kavinsky", duration: "4:19", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/bf/f6/28/bff628e8-d6cb-022e-a5bf-8547a4b08709/15UMGIM81958.rgb.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Nightcall%20Kavinsky" },
+    ],
+  },
+  "locked-in": {
+    mood: "Locked in",
+    tracks: [
+      { id: "1", title: "Resonance", artist: "HOME", duration: "3:32", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/eb/03/49/eb0349ca-4700-1c09-7d88-b4b9b9909fb5/817949019688.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Resonance%20HOME" },
+      { id: "2", title: "Weightless", artist: "Marconi Union", duration: "8:00", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/ee/17/ef/ee17efdb-01eb-c5a4-ee4f-56df01691238/098787114068.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Weightless%20Marconi%20Union" },
+      { id: "3", title: "Clair de Lune", artist: "Flight Facilities", duration: "7:38", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/bf/16/c0/bf16c024-e9ed-c77a-ecae-8bfefbf3f6ef/656605151566.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Clair%20de%20Lune" },
+    ],
+  },
+  "getting-things-done": {
+    mood: "Getting things done",
+    tracks: [
+      { id: "1", title: "Da Funk", artist: "Daft Punk", duration: "5:28", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/4a/01/a3/4a01a355-6b58-e395-5847-a417643b1854/190295240455.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Da%20Funk%20Daft%20Punk" },
+      { id: "2", title: "Starboy", artist: "The Weeknd", duration: "3:50", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/1e/85/55/1e8555c8-1e4a-9040-5221-5a02568600d8/18UMGIM19246.rgb.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Starboy%20The%20Weeknd" },
+      { id: "3", title: "Electric Feel", artist: "MGMT", duration: "3:49", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/bf/f6/28/bff628e8-d6cb-022e-a5bf-8547a4b08709/15UMGIM81958.rgb.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Electric%20Feel%20MGMT" },
+    ],
+  },
+  "need-some-energy": {
+    mood: "Need some energy",
+    tracks: [
+      { id: "1", title: "Blinding Lights", artist: "The Weeknd", duration: "3:20", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/1e/85/55/1e8555c8-1e4a-9040-5221-5a02568600d8/18UMGIM19246.rgb.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Blinding%20Lights%20The%20Weeknd" },
+      { id: "2", title: "Can't Hold Us", artist: "Macklemore & Ryan Lewis", duration: "4:18", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/4a/01/a3/4a01a355-6b58-e395-5847-a417643b1854/190295240455.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Cant%20Hold%20Us" },
+      { id: "3", title: "Uptown Funk", artist: "Mark Ronson & Bruno Mars", duration: "4:30", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/d5/43/d8/d543d838-8c17-1065-274e-6e270a48a90d/075679744418.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Uptown%20Funk" },
+    ],
+  },
+  "slow-sunday": {
+    mood: "Slow Sunday",
+    tracks: [
+      { id: "1", title: "Banana Pancakes", artist: "Jack Johnson", duration: "3:12", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/bf/16/c0/bf16c024-e9ed-c77a-ecae-8bfefbf3f6ef/656605151566.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Banana%20Pancakes%20Jack%20Johnson" },
+      { id: "2", title: "Sunday Morning", artist: "Maroon 5", duration: "4:02", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/be/89/3e/be893e15-5460-394c-cb14-ee1855a8be90/196589006935.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Sunday%20Morning%20Maroon%205" },
+      { id: "3", title: "Put Your Records On", artist: "Corinne Bailey Rae", duration: "3:35", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/d9/38/2e/d9382e88-6625-635e-c4bb-eaefc60965e6/artwork.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Put%20Your%20Records%20On" },
+    ],
+  },
+  "feeling-good": {
+    mood: "Feeling good",
+    tracks: [
+      { id: "1", title: "Sunroof", artist: "Nicky Youre & dazy", duration: "2:43", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/4a/01/a3/4a01a355-6b58-e395-5847-a417643b1854/190295240455.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Sunroof%20Nicky%20Youre" },
+      { id: "2", title: "Happy", artist: "Pharrell Williams", duration: "3:53", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/d5/43/d8/d543d838-8c17-1065-274e-6e270a48a90d/075679744418.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Happy%20Pharrell" },
+      { id: "3", title: "Walking On Sunshine", artist: "Katrina and The Waves", duration: "3:58", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/bf/f6/28/bff628e8-d6cb-022e-a5bf-8547a4b08709/15UMGIM81958.rgb.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Walking%20On%20Sunshine" },
     ],
   },
 };
@@ -93,7 +165,7 @@ export function PlaylistPreview({ selectedMoodId }: { selectedMoodId: string | n
                     CURATED SIGNAL
                   </span>
                   <h3 className="text-2xl font-black tracking-tight">{moodConfig.label}</h3>
-                  <p className="text-xs text-white/70 font-mono">10 TRACKS • 38 MIN</p>
+                  <p className="text-xs text-white/70 font-mono">{data.tracks.length} TRACKS • READY TO STREAM</p>
                 </div>
               </div>
             </div>
