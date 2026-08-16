@@ -2,65 +2,13 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { usePlayerOptional } from "@/components/player/PlayerContext";
-
-const HERO_STATIONS = [
-  {
-    freq: "104.5 MHz",
-    mood: "something mellow",
-    title: "Texas Sun",
-    artist: "Khruangbin & Leon Bridges",
-    bpm: "92 BPM",
-    valence: "88%",
-    spotifyUrl: "https://open.spotify.com/search/Texas%20Sun%20Khruangbin",
-  },
-  {
-    freq: "108.2 MHz",
-    mood: "need a pick-me-up",
-    title: "Levitating",
-    artist: "Dua Lipa",
-    bpm: "103 BPM",
-    valence: "94%",
-    spotifyUrl: "https://open.spotify.com/search/Levitating%20Dua%20Lipa",
-  },
-  {
-    freq: "96.4 MHz",
-    mood: "late-night drive",
-    title: "Slow Dancing in the Dark",
-    artist: "Joji",
-    bpm: "88.5 BPM",
-    valence: "72%",
-    spotifyUrl: "https://open.spotify.com/search/Slow%20Dancing%20in%20the%20Dark%20Joji",
-  },
-];
 
 export function Hero() {
-  const player = usePlayerOptional();
-  const playTrack = player?.playTrack || (() => {});
-  const pauseTrack = player?.pauseTrack || (() => {});
-  const currentTrack = player?.currentTrack;
-  const isPlaying = player?.isPlaying || false;
-  const [stationIdx, setStationIdx] = useState(0);
+  const [mounted, setMounted] = useState(false);
 
-  const currentStation = HERO_STATIONS[stationIdx];
-  const isCurrentPlaying = currentTrack?.name === currentStation.title && isPlaying;
-
-  const handleTogglePlay = () => {
-    if (isCurrentPlaying) {
-      pauseTrack();
-    } else {
-      playTrack({
-        id: currentStation.title,
-        name: currentStation.title,
-        artist: currentStation.artist,
-        spotifyUrl: currentStation.spotifyUrl,
-      });
-    }
-  };
-
-  const handleNextStation = () => {
-    setStationIdx((prev) => (prev + 1) % HERO_STATIONS.length);
-  };
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <section className="relative overflow-hidden bg-[#080811] text-white pt-20 pb-16 lg:pt-28 lg:pb-24 border-b border-[#16162A]">
@@ -133,120 +81,93 @@ export function Hero() {
             </div>
           </motion.div>
 
-          {/* Right Column: Interactive Live Player Card */}
+          {/* Right Column: Pure Live Animated Soundscape Spectrum Card */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="lg:col-span-5"
           >
-            <div className="p-6 rounded-3xl bg-[#0E0E1B] border-2 border-[#1E1E38] shadow-2xl space-y-4 text-left relative overflow-hidden group">
+            <div className="p-6 rounded-3xl bg-[#0E0E1B] border-2 border-[#1E1E38] shadow-2xl space-y-6 text-left relative overflow-hidden">
               
-              {/* Card Sub-Header & Live Frequency */}
+              {/* Card Top Technical Header */}
               <div className="flex items-center justify-between font-mono text-xs text-slate-400 border-b border-[#1E1E38] pb-3">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-[#1DB954] animate-ping" />
-                  <span className="text-[#1DB954] font-bold">NOW TUNING INTO</span>
+                  <span className="text-[#1DB954] font-bold tracking-wider">LIVE ACOUSTIC SIGNAL</span>
                 </div>
-                <button
-                  onClick={handleNextStation}
-                  className="uppercase text-xs font-bold text-[#1DB954] hover:text-[#1ed760] transition-colors flex items-center gap-1 bg-[#052317] px-2.5 py-1 rounded-md border border-[#10B981]/30 cursor-pointer"
-                >
-                  <span>{currentStation.freq}</span>
-                  <span>↻</span>
-                </button>
+                <span className="text-slate-400 text-[11px] font-mono">44.1 kHz • STEREO</span>
               </div>
 
-              {/* Station Song Info & Animated Music Symbol Icon Box */}
-              <div className="flex items-center gap-4 py-2">
+              {/* Center Pure Animated Visualizer Orb & Waveform */}
+              <div className="flex items-center justify-center py-4 relative">
                 
-                {/* Glowing Spotify Music Playing Icon Box */}
-                <div
-                  onClick={handleTogglePlay}
-                  className="relative w-16 h-16 rounded-2xl bg-[#052317] border-2 border-[#10B981]/40 flex items-center justify-center shadow-[0_0_20px_rgba(29,185,84,0.3)] shrink-0 cursor-pointer overflow-hidden group/box"
-                >
-                  {/* Glowing Sound Pulse Rings */}
-                  <div className="absolute inset-0 bg-[#1DB954]/10 rounded-2xl animate-pulse" />
+                {/* Glowing Concentric Animated Pulse Circles */}
+                <div className="relative w-36 h-36 flex items-center justify-center">
+                  
+                  {/* Outer Outer Ring */}
+                  <motion.div
+                    className="absolute inset-0 rounded-full border border-[#1DB954]/20"
+                    animate={{ scale: [1, 1.25, 1], opacity: [0.3, 0.7, 0.3] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                  />
 
-                  {/* Animated Soundwave Bars inside Box */}
-                  <div className="flex items-end gap-1 h-7 z-10">
+                  {/* Middle Ring */}
+                  <motion.div
+                    className="absolute inset-2 rounded-full border-2 border-[#1DB954]/40"
+                    animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0.9, 0.4] }}
+                    transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+                  />
+
+                  {/* Core Orb with Equalizer Bars */}
+                  <div className="w-24 h-24 rounded-full bg-[#052317] border-2 border-[#1DB954] shadow-[0_0_30px_rgba(29,185,84,0.4)] flex items-center justify-center gap-1.5 z-10">
                     <motion.span
-                      className="w-1 bg-[#1DB954] rounded-full"
-                      animate={{ height: isPlaying ? ["20%", "100%", "40%", "100%"] : ["40%", "80%", "40%"] }}
-                      transition={{ duration: 0.6, repeat: Infinity, repeatType: "mirror" }}
+                      className="w-1.5 bg-[#1DB954] rounded-full"
+                      animate={{ height: ["25%", "90%", "30%", "100%", "25%"] }}
+                      transition={{ duration: 0.7, repeat: Infinity, repeatType: "mirror" }}
                     />
                     <motion.span
-                      className="w-1 bg-[#1ed760] rounded-full"
-                      animate={{ height: isPlaying ? ["60%", "20%", "100%", "30%"] : ["80%", "30%", "80%"] }}
+                      className="w-1.5 bg-[#1ed760] rounded-full"
+                      animate={{ height: ["70%", "20%", "100%", "40%", "70%"] }}
                       transition={{ duration: 0.5, repeat: Infinity, repeatType: "mirror" }}
                     />
                     <motion.span
-                      className="w-1 bg-[#10B981] rounded-full"
-                      animate={{ height: isPlaying ? ["100%", "40%", "80%", "20%"] : ["50%", "90%", "50%"] }}
-                      transition={{ duration: 0.7, repeat: Infinity, repeatType: "mirror" }}
+                      className="w-1.5 bg-[#10B981] rounded-full"
+                      animate={{ height: ["100%", "40%", "85%", "15%", "100%"] }}
+                      transition={{ duration: 0.8, repeat: Infinity, repeatType: "mirror" }}
+                    />
+                    <motion.span
+                      className="w-1.5 bg-[#34D399] rounded-full"
+                      animate={{ height: ["35%", "85%", "20%", "75%", "35%"] }}
+                      transition={{ duration: 0.6, repeat: Infinity, repeatType: "mirror" }}
                     />
                   </div>
-
-                  {/* Play / Pause Icon Overlay on Hover */}
-                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover/box:opacity-100 flex items-center justify-center transition-opacity z-20">
-                    <div className="w-8 h-8 rounded-full bg-[#1DB954] text-black flex items-center justify-center shadow-lg">
-                      <svg className="w-4 h-4 fill-current ml-0.5" viewBox="0 0 24 24">
-                        {isCurrentPlaying ? (
-                          <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
-                        ) : (
-                          <path d="M8 5v14l11-7z" />
-                        )}
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-0.5">
-                    <span className="text-[10px] font-mono uppercase tracking-widest text-[#1DB954] font-bold">
-                      {currentStation.mood}
-                    </span>
-                  </div>
-                  <h4 className="text-lg font-bold text-white truncate">{currentStation.title}</h4>
-                  <p className="text-xs text-slate-400 truncate">{currentStation.artist}</p>
                 </div>
               </div>
 
-              {/* Live Frequency Station Dial Buttons */}
-              <div className="grid grid-cols-3 gap-2 pt-1 font-mono text-[10px]">
-                {HERO_STATIONS.map((st, idx) => (
-                  <button
-                    key={st.freq}
-                    onClick={() => setStationIdx(idx)}
-                    className={`py-1.5 px-2 rounded-xl text-center border transition-all ${
-                      stationIdx === idx
-                        ? "bg-[#1DB954] text-black font-bold border-[#1DB954] shadow-[0_0_15px_rgba(29,185,84,0.4)]"
-                        : "bg-[#121222] text-slate-400 border-[#232342] hover:text-white"
-                    }`}
-                  >
-                    {st.freq}
-                  </button>
-                ))}
-              </div>
+              {/* Bottom Multi-Channel Soundbar Spectrum Analyzer */}
+              <div className="space-y-2 pt-2">
+                <div className="flex items-center justify-between text-[10px] font-mono text-slate-500 uppercase tracking-widest">
+                  <span>SPECTRUM ANALYZER</span>
+                  <span className="text-[#1DB954] font-bold">REALTIME TUNING</span>
+                </div>
 
-              {/* Animated Equalizer Sound Bars */}
-              <div className="flex items-end gap-1 h-8 pt-2">
-                {Array.from({ length: 28 }).map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className="flex-1 rounded-full bg-[#1DB954]"
-                    animate={{
-                      height: isCurrentPlaying
-                        ? ["15%", "100%", "30%", "85%", "15%"]
-                        : ["20%", "60%", "30%", "70%", "20%"],
-                    }}
-                    transition={{
-                      duration: isCurrentPlaying ? 0.4 + (i % 4) * 0.1 : 0.8 + (i % 5) * 0.15,
-                      repeat: Infinity,
-                      repeatType: "mirror",
-                    }}
-                  />
-                ))}
+                <div className="flex items-end gap-1 h-10">
+                  {Array.from({ length: 32 }).map((_, i) => (
+                    <motion.div
+                      key={i}
+                      className="flex-1 rounded-full bg-[#1DB954]"
+                      animate={{
+                        height: ["15%", "100%", "30%", "85%", "15%"],
+                      }}
+                      transition={{
+                        duration: 0.4 + (i % 6) * 0.12,
+                        repeat: Infinity,
+                        repeatType: "mirror",
+                      }}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </motion.div>
