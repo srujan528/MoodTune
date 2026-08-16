@@ -11,47 +11,66 @@ export function Hero() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-[#080811] text-white pt-20 pb-16 lg:pt-28 lg:pb-24 border-b border-[#16162A]">
-      {/* Ambient Grid Background */}
-      <div 
-        className="absolute inset-0 opacity-[0.12] pointer-events-none"
-        style={{
-          backgroundImage: `linear-gradient(#1DB95415 1px, transparent 1px), linear-gradient(90deg, #1DB95415 1px, transparent 1px)`,
-          backgroundSize: `48px 48px`,
-        }}
-      />
+    <section className="relative overflow-hidden bg-[#07080E] text-white pt-16 pb-16 lg:pt-24 lg:pb-24 border-b border-[#141522]">
+      {/* Background Soundwave Graphic Visualizer */}
+      <div className="absolute inset-0 flex items-center justify-center opacity-25 pointer-events-none overflow-hidden">
+        <div className="flex items-center gap-1 w-full max-w-5xl h-48 px-4 justify-between">
+          {Array.from({ length: 96 }).map((_, i) => {
+            // Create a realistic sin wave distribution
+            const centerDist = Math.abs(i - 48) / 48;
+            const heightPercent = Math.max(10, (1 - centerDist * 0.7) * (30 + Math.sin(i * 0.3) * 50));
+            return (
+              <motion.div
+                key={i}
+                className="w-1 rounded-full bg-gradient-to-t from-purple-900/40 via-[#1DB954]/60 to-purple-500/40"
+                animate={{
+                  height: [`${heightPercent * 0.6}%`, `${heightPercent}%`, `${heightPercent * 0.4}%`, `${heightPercent}%`],
+                }}
+                transition={{
+                  duration: 1.5 + (i % 7) * 0.2,
+                  repeat: Infinity,
+                  repeatType: "mirror",
+                  ease: "easeInOut",
+                }}
+              />
+            );
+          })}
+        </div>
+      </div>
 
-      {/* Ambient Spotify Green Radial Glow */}
-      <div className="absolute top-1/4 left-1/3 w-[600px] h-[600px] bg-[#1DB954]/10 rounded-full blur-[160px] pointer-events-none" />
+      {/* Top Right Section Tag */}
+      <div className="absolute top-8 right-8 hidden sm:flex items-center gap-2 text-[10px] font-mono tracking-widest text-[#1DB954] uppercase">
+        <span className="w-1.5 h-1.5 rounded-full bg-[#1DB954] animate-pulse" />
+        <span>MOOD SIGNAL / 01</span>
+      </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-[440px]">
           
           {/* Left Column: Headline & Subtitle */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="lg:col-span-7 space-y-8 text-left"
+            className="lg:col-span-8 space-y-7 text-left"
           >
             {/* Top Badge */}
-            <div className="inline-flex items-center gap-3 text-xs font-mono tracking-widest text-[#1DB954] uppercase">
+            <div className="inline-flex items-center gap-3 text-xs font-mono tracking-widest text-[#1DB954] uppercase font-semibold">
               <span className="w-6 h-0.5 bg-[#1DB954]" />
               <span>YOUR PERSONAL MUSIC COMPASS</span>
               <span>——————</span>
             </div>
 
-            {/* Headline */}
+            {/* Headline matching screenshot */}
             <h1 className="text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight leading-[1.05] text-white">
               Music that gets <br />
-              your{" "}
-              <span className="bg-gradient-to-r from-[#1DB954] via-emerald-300 to-teal-200 bg-clip-text text-transparent italic font-serif font-normal">
-                mood.
+              <span className="text-[#a78bfa] font-serif font-normal italic">
+                your mood.
               </span>
             </h1>
 
             {/* Subtitle */}
-            <p className="text-lg sm:text-xl text-slate-300 font-normal max-w-xl leading-relaxed">
+            <p className="text-base sm:text-lg text-slate-300 font-normal max-w-md leading-relaxed">
               Tell us how you&apos;re feeling. We&apos;ll find the music that fits.
             </p>
 
@@ -59,20 +78,20 @@ export function Hero() {
             <div className="flex flex-wrap items-center gap-4 pt-2">
               <a
                 href="#mood-discovery"
-                className="px-8 py-4 rounded-full bg-[#1DB954] hover:bg-[#1ed760] text-black font-bold text-base transition-all duration-300 flex items-center gap-2 shadow-[0_0_30px_rgba(29,185,84,0.4)] hover:shadow-[0_0_40px_rgba(29,185,84,0.6)]"
+                className="px-7 py-3.5 rounded-full bg-[#c2f0c2] hover:bg-[#a3e635] text-black font-bold text-xs tracking-wider uppercase transition-all duration-300 flex items-center gap-2 shadow-[0_0_25px_rgba(194,240,194,0.4)] hover:shadow-[0_0_35px_rgba(163,230,53,0.6)]"
               >
-                <span>Find my vibe</span>
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                <span>FIND MY VIBE</span>
+                <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
                   <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </a>
 
               <a
                 href="#playlist"
-                className="px-8 py-4 rounded-full bg-[#121222] hover:bg-[#1A1A32] border border-[#232342] text-slate-200 font-semibold text-base transition-all duration-300 flex items-center gap-2"
+                className="px-6 py-3 rounded-full bg-[#10111D] hover:bg-[#181A2D] border border-[#22243A] text-slate-200 font-semibold text-xs transition-all duration-300 flex items-center gap-2"
               >
-                <div className="w-6 h-6 rounded-full bg-[#1DB954]/20 text-[#1DB954] flex items-center justify-center">
-                  <svg className="w-3.5 h-3.5 fill-current ml-0.5" viewBox="0 0 24 24">
+                <div className="w-5 h-5 rounded-full bg-white/10 text-white flex items-center justify-center">
+                  <svg className="w-3 h-3 fill-current ml-0.5" viewBox="0 0 24 24">
                     <path d="M8 5v14l11-7z" />
                   </svg>
                 </div>
@@ -81,114 +100,68 @@ export function Hero() {
             </div>
           </motion.div>
 
-          {/* Right Column: Pure Live Animated Soundscape Spectrum Card */}
+          {/* Right Column: Floating Bottom-Right NOW TUNING INTO Widget matching target screenshot */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="lg:col-span-5"
+            className="lg:col-span-4 flex justify-end lg:pt-28"
           >
-            <div className="p-6 rounded-3xl bg-[#0E0E1B] border-2 border-[#1E1E38] shadow-2xl space-y-6 text-left relative overflow-hidden">
+            <div className="p-3.5 rounded-2xl bg-[#0B0C16]/90 border border-[#1E2035] shadow-2xl backdrop-blur-md flex items-center gap-3.5 text-left w-full max-w-xs">
               
-              {/* Card Top Technical Header */}
-              <div className="flex items-center justify-between font-mono text-xs text-slate-400 border-b border-[#1E1E38] pb-3">
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[#1DB954] animate-ping" />
-                  <span className="text-[#1DB954] font-bold tracking-wider">LIVE ACOUSTIC SIGNAL</span>
-                </div>
-                <span className="text-slate-400 text-[11px] font-mono">44.1 kHz • STEREO</span>
+              {/* Retro Brown/Sunset Album Art Square */}
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-700 via-yellow-800 to-amber-950 border border-amber-600/30 flex items-center justify-center shrink-0 shadow-md relative overflow-hidden">
+                <div className="w-5 h-5 rounded-md bg-amber-500/40 border border-amber-400/50" />
               </div>
 
-              {/* Center Pure Animated Visualizer Orb & Waveform */}
-              <div className="flex items-center justify-center py-4 relative">
-                
-                {/* Glowing Concentric Animated Pulse Circles */}
-                <div className="relative w-36 h-36 flex items-center justify-center">
-                  
-                  {/* Outer Outer Ring */}
-                  <motion.div
-                    className="absolute inset-0 rounded-full border border-[#1DB954]/20"
-                    animate={{ scale: [1, 1.25, 1], opacity: [0.3, 0.7, 0.3] }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                  />
-
-                  {/* Middle Ring */}
-                  <motion.div
-                    className="absolute inset-2 rounded-full border-2 border-[#1DB954]/40"
-                    animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0.9, 0.4] }}
-                    transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-                  />
-
-                  {/* Core Orb with Equalizer Bars */}
-                  <div className="w-24 h-24 rounded-full bg-[#052317] border-2 border-[#1DB954] shadow-[0_0_30px_rgba(29,185,84,0.4)] flex items-center justify-center gap-1.5 z-10">
-                    <motion.span
-                      className="w-1.5 bg-[#1DB954] rounded-full"
-                      animate={{ height: ["25%", "90%", "30%", "100%", "25%"] }}
-                      transition={{ duration: 0.7, repeat: Infinity, repeatType: "mirror" }}
-                    />
-                    <motion.span
-                      className="w-1.5 bg-[#1ed760] rounded-full"
-                      animate={{ height: ["70%", "20%", "100%", "40%", "70%"] }}
-                      transition={{ duration: 0.5, repeat: Infinity, repeatType: "mirror" }}
-                    />
-                    <motion.span
-                      className="w-1.5 bg-[#10B981] rounded-full"
-                      animate={{ height: ["100%", "40%", "85%", "15%", "100%"] }}
-                      transition={{ duration: 0.8, repeat: Infinity, repeatType: "mirror" }}
-                    />
-                    <motion.span
-                      className="w-1.5 bg-[#34D399] rounded-full"
-                      animate={{ height: ["35%", "85%", "20%", "75%", "35%"] }}
-                      transition={{ duration: 0.6, repeat: Infinity, repeatType: "mirror" }}
-                    />
-                  </div>
-                </div>
+              <div className="flex-1 min-w-0">
+                <span className="text-[9px] font-mono uppercase tracking-widest text-slate-400 block mb-0.5">
+                  NOW TUNING INTO
+                </span>
+                <h4 className="text-xs font-bold text-white truncate">something mellow</h4>
               </div>
 
-              {/* Bottom Multi-Channel Soundbar Spectrum Analyzer */}
-              <div className="space-y-2 pt-2">
-                <div className="flex items-center justify-between text-[10px] font-mono text-slate-500 uppercase tracking-widest">
-                  <span>SPECTRUM ANALYZER</span>
-                  <span className="text-[#1DB954] font-bold">REALTIME TUNING</span>
-                </div>
-
-                <div className="flex items-end gap-1 h-10">
-                  {Array.from({ length: 32 }).map((_, i) => (
-                    <motion.div
-                      key={i}
-                      className="flex-1 rounded-full bg-[#1DB954]"
-                      animate={{
-                        height: ["15%", "100%", "30%", "85%", "15%"],
-                      }}
-                      transition={{
-                        duration: 0.4 + (i % 6) * 0.12,
-                        repeat: Infinity,
-                        repeatType: "mirror",
-                      }}
-                    />
-                  ))}
-                </div>
+              {/* Animated Equalizer Soundbars */}
+              <div className="flex items-center gap-0.5 h-4 shrink-0">
+                <motion.span
+                  className="w-0.5 bg-[#1DB954] rounded-full"
+                  animate={{ height: ["20%", "100%", "30%", "80%"] }}
+                  transition={{ duration: 0.5, repeat: Infinity, repeatType: "mirror" }}
+                />
+                <motion.span
+                  className="w-0.5 bg-[#1ed760] rounded-full"
+                  animate={{ height: ["80%", "20%", "90%", "40%"] }}
+                  transition={{ duration: 0.4, repeat: Infinity, repeatType: "mirror" }}
+                />
+                <motion.span
+                  className="w-0.5 bg-[#10B981] rounded-full"
+                  animate={{ height: ["40%", "90%", "20%", "100%"] }}
+                  transition={{ duration: 0.6, repeat: Infinity, repeatType: "mirror" }}
+                />
+                <motion.span
+                  className="w-0.5 bg-[#34D399] rounded-full"
+                  animate={{ height: ["100%", "30%", "70%", "20%"] }}
+                  transition={{ duration: 0.45, repeat: Infinity, repeatType: "mirror" }}
+                />
               </div>
             </div>
           </motion.div>
         </div>
 
-        {/* Bottom Info Row */}
-        <div className="pt-16 grid grid-cols-1 sm:grid-cols-3 gap-6 border-t border-[#18182E] text-left text-xs font-mono text-slate-400">
+        {/* Bottom Info Row matching screenshot */}
+        <div className="pt-16 grid grid-cols-1 sm:grid-cols-3 gap-6 border-t border-[#141522] text-left text-xs font-mono text-slate-400">
           <div className="flex items-center gap-2">
-            <svg className="w-4 h-4 text-[#1DB954]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z"/>
-            </svg>
-            <span>Personalised for the moment you&apos;re in.</span>
+            <span className="text-slate-400">🎧</span>
+            <span className="text-slate-400">Personalised for the moment you&apos;re in.</span>
           </div>
 
-          <div className="text-center sm:text-center text-slate-500 uppercase tracking-widest">
+          <div className="text-center sm:text-center text-slate-500 uppercase tracking-widest text-[10px]">
             SOUNDTRACKING THE IN-BETWEEN
           </div>
 
           <div className="flex items-center justify-between sm:justify-end gap-4">
-            <span className="text-[#1DB954] font-bold">01 —— 03</span>
-            <span className="text-slate-500">37° 46&apos; N / 122° 25&apos; W</span>
+            <span className="text-slate-500">01 —— 03</span>
+            <span className="text-slate-500 text-[10px]">37° 46&apos; N / 122° 25&apos; W</span>
           </div>
         </div>
       </div>
