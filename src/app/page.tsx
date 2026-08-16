@@ -5,6 +5,8 @@ import {
   Hero,
   MoodSelector,
   PlaylistPreview,
+  SimilarSongsFinder,
+  AcousticTunerSliders,
   HowItWorks,
   FinalCTA,
 } from "@/components/landing";
@@ -27,6 +29,8 @@ export default function LandingPage() {
           <MoodSelector onMoodSelect={handleMoodSelect} selectedMoodId={selectedMoodId} />
         </div>
         <PlaylistPreview selectedMoodId={selectedMoodId} />
+        <SimilarSongsFinder />
+        <AcousticTunerSliders />
         <HowItWorks selectedMoodId={selectedMoodId} />
         <FinalCTA selectedMoodId={selectedMoodId} />
       </div>

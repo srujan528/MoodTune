@@ -5,3 +5,5 @@ export { PlaylistPreview } from "./PlaylistPreview";
 export { MoodChipSelector } from "./MoodChip";
 export { HowItWorks } from "./HowItWorks";
 export { FinalCTA } from "./FinalCTA";
+export { SimilarSongsFinder } from "./SimilarSongsFinder";
+export { AcousticTunerSliders } from "./AcousticTunerSliders";
