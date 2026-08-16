@@ -296,15 +296,22 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
 
     // Fallback: HTML5 Audio preview with real track lookup
     let previewUrl = track.previewUrl || track.preview_url;
+    let albumImageUrl = track.albumImageUrl || track.cover || (track.album && track.album.images && track.album.images[0]?.url);
 
-    if (!previewUrl && track.name && track.artist) {
+    if ((!previewUrl || !albumImageUrl) && track.name && track.artist) {
       try {
         const query = encodeURIComponent(`${track.name} ${track.artist}`);
         const res = await fetch(`https://itunes.apple.com/search?term=${query}&media=music&limit=1`);
         if (res.ok) {
           const data = await res.json();
-          if (data.results?.[0]?.previewUrl) {
-            previewUrl = data.results[0].previewUrl;
+          if (data.results?.[0]) {
+            const item = data.results[0];
+            if (!previewUrl && item.previewUrl) {
+              previewUrl = item.previewUrl;
+            }
+            if (!albumImageUrl && item.artworkUrl100) {
+              albumImageUrl = item.artworkUrl100.replace("100x100bb", "600x600bb");
+            }
           }
         }
       } catch (e) {
@@ -328,11 +335,17 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
     audio.src = previewUrl;
     audio.volume = state.volume;
 
+    const fullTrack = {
+      ...track,
+      previewUrl,
+      albumImageUrl: albumImageUrl || track.albumImageUrl || "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&auto=format&fit=crop&q=80",
+    };
+
     try {
       await audio.play();
       setState((prev) => ({
         ...prev,
-        currentTrack: { ...track },
+        currentTrack: fullTrack,
         isPlaying: true,
         progress: 0,
         duration: (audio.duration || 180) * 1000,
@@ -349,7 +362,7 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
     // Always update NowPlayingBar even if browser autoplay restrictions prevent audio
     setState((prev) => ({
       ...prev,
-      currentTrack: { ...track },
+      currentTrack: fullTrack,
       isPlaying: false,
       progress: 0,
       duration: track.duration || 180000,
@@ -359,11 +372,15 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
   };
 
   const pauseTrack = async () => {
+    // Unconditionally pause HTML5 audio
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
+    setState((prev) => ({ ...prev, isPlaying: false }));
+    isPlayingRef.current = false;
+    if (intervalRef.current) clearInterval(intervalRef.current);
+
     if (state.engine === "html5") {
-      audioRef.current?.pause();
-      setState((prev) => ({ ...prev, isPlaying: false }));
-      isPlayingRef.current = false;
-      if (intervalRef.current) clearInterval(intervalRef.current);
       return;
     }
 
@@ -376,14 +393,8 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
           Authorization: `Bearer ${await getAccessToken()}`,
         },
       });
-
-      setState((prev) => ({ ...prev, isPlaying: false }));
-      isPlayingRef.current = false;
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
     } catch (error) {
-      console.error("Error pausing track:", error);
+      console.error("Error pausing Spotify track:", error);
     }
   };
 

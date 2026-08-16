@@ -1,8 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { getMoodConfig } from "@/config/mood-config";
-import { useEffect, useState, useRef } from "react";
 import { usePlayer } from "@/components/player/PlayerContext";
 
 const RECOMMENDATION_DATA: Record<string, {
@@ -12,37 +12,54 @@ const RECOMMENDATION_DATA: Record<string, {
     genre: string;
     track: string;
     cover: string;
-    previewUrl: string;
   }>;
   explanation: string;
 }> = {
   "just-vibing": {
     mood: "Just vibing",
     artists: [
-      { name: "Khruangbin", genre: "Thai-funk", track: "Time (You and I)", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/bf/16/c0/bf16c024-e9ed-c77a-ecae-8bfefbf3f6ef/656605151566.jpg/600x600bb.jpg", previewUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
-      { name: "Men I Trust", genre: "Dream pop", track: "Show Me How", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/d9/38/2e/d9382e88-6625-635e-c4bb-eaefc60965e6/artwork.jpg/600x600bb.jpg", previewUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
-      { name: "Tame Impala", genre: "Psychedelic pop", track: "The Less I Know The Better", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/bf/f6/28/bff628e8-d6cb-022e-a5bf-8547a4b08709/15UMGIM81958.rgb.jpg/600x600bb.jpg", previewUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" },
-      { name: "Rex Orange County", genre: "Bedroom pop", track: "Sunflower", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/4a/01/a3/4a01a355-6b58-e395-5847-a417643b1854/190295240455.jpg/600x600bb.jpg", previewUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" },
+      { name: "Khruangbin", genre: "Thai-funk", track: "Time (You and I)", cover: "https://i.scdn.co/image/ab67616d0000b273aa55d14fa0c5f21d374465d6" },
+      { name: "Men I Trust", genre: "Dream pop", track: "Show Me How", cover: "https://i.scdn.co/image/ab67616d0000b273a25ef14f85e4edee45bc62c0" },
+      { name: "Tame Impala", genre: "Psychedelic pop", track: "The Less I Know The Better", cover: "https://i.scdn.co/image/ab67616d0000b2739e495fb707973f13908f7e64" },
+      { name: "Rex Orange County", genre: "Bedroom pop", track: "Sunflower", cover: "https://i.scdn.co/image/ab67616d0000b2735749f7e53f1910243e8a4a58" },
     ],
     explanation: "These tracks share warm production, relaxed tempos, and melodies that feel effortless — music that fits a good mood without demanding attention.",
   },
   "need-pick-me-up": {
     mood: "Need a pick-me-up",
     artists: [
-      { name: "Dua Lipa", genre: "Dance-pop", track: "Levitating", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/4a/01/a3/4a01a355-6b58-e395-5847-a417643b1854/190295240455.jpg/600x600bb.jpg", previewUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3" },
-      { name: "Harry Styles", genre: "Pop-rock", track: "As It Was", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/be/89/3e/be893e15-5460-394c-cb14-ee1855a8be90/196589006935.jpg/600x600bb.jpg", previewUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3" },
-      { name: "Lizzo", genre: "Pop/R&B", track: "About Damn Time", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/d5/43/d8/d543d838-8c17-1065-274e-6e270a48a90d/075679744418.jpg/600x600bb.jpg", previewUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3" },
+      { name: "Dua Lipa", genre: "Dance-pop", track: "Levitating", cover: "https://i.scdn.co/image/ab67616d0000b2732049e6f332968396d2e3a1f8" },
+      { name: "Harry Styles", genre: "Pop-rock", track: "As It Was", cover: "https://i.scdn.co/image/ab67616d0000b273b46f74097655d070539cb143" },
+      { name: "Lizzo", genre: "Pop/R&B", track: "About Damn Time", cover: "https://i.scdn.co/image/ab67616d0000b273e82d7d5d28b9394625b041cf" },
     ],
     explanation: "Upbeat tempos, major keys, and bright production — these tracks share the energy and lift that can shift a heavy moment.",
   },
   "something-mellow": {
     mood: "Something mellow",
     artists: [
-      { name: "Khruangbin", genre: "Thai-funk", track: "Texas Sun", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/bf/16/c0/bf16c024-e9ed-c77a-ecae-8bfefbf3f6ef/656605151566.jpg/600x600bb.jpg", previewUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
-      { name: "Mac DeMarco", genre: "Indie rock", track: "Chamber of Reflection", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/eb/03/49/eb0349ca-4700-1c09-7d88-b4b9b9909fb5/817949019688.jpg/600x600bb.jpg", previewUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3" },
-      { name: "Beach House", genre: "Dream pop", track: "Space Song", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/ee/17/ef/ee17efdb-01eb-c5a4-ee4f-56df01691238/098787114068.jpg/600x600bb.jpg", previewUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" },
+      { name: "Khruangbin & Leon Bridges", genre: "Thai-funk", track: "Texas Sun", cover: "https://i.scdn.co/image/ab67616d0000b273aa55d14fa0c5f21d374465d6" },
+      { name: "Mac DeMarco", genre: "Indie rock", track: "Chamber of Reflection", cover: "https://i.scdn.co/image/ab67616d0000b2738f657a79e43f114c0a5e81d7" },
+      { name: "Beach House", genre: "Dream pop", track: "Space Song", cover: "https://i.scdn.co/image/ab67616d0000b27329432655767b93836d10db9f" },
     ],
     explanation: "Low energy, gentle dynamics, warm textures — these artists share slow tempos (70-90 BPM), soft production, and a sense of ease.",
+  },
+  "in-my-feelings": {
+    mood: "In my feelings",
+    artists: [
+      { name: "Adele", genre: "Soul/pop", track: "Someone Like You", cover: "https://i.scdn.co/image/ab67616d0000b2732118bf9b198b05a95ded6300" },
+      { name: "Billie Eilish", genre: "Alt-pop", track: "When the Party's Over", cover: "https://i.scdn.co/image/ab67616d0000b27350a3160e0388d011f0a1042e" },
+      { name: "Lord Huron", genre: "Indie folk", track: "The Night We Met", cover: "https://i.scdn.co/image/ab67616d0000b273ef47f07bb6b696e57922d56a" },
+    ],
+    explanation: "Minor keys, sparse arrangements, raw vocal delivery — these artists capture the sound of sitting with difficult emotions.",
+  },
+  "late-night-drive": {
+    mood: "Late-night drive",
+    artists: [
+      { name: "Joji", genre: "Lo-fi/R&B", track: "Slow Dancing in the Dark", cover: "https://i.scdn.co/image/ab67616d0000b2733b1e7a57a0ec94a11f26f254" },
+      { name: "The Weeknd", genre: "R&B/pop", track: "Call Out My Name", cover: "https://i.scdn.co/image/ab67616d0000b2731f91b790d96d9255743a6d1c" },
+      { name: "Cigarettes After Sex", genre: "Ambient pop", track: "Apocalypse", cover: "https://i.scdn.co/image/ab67616d0000b273cc26543d8339f4088924b17b" },
+    ],
+    explanation: "Slower tempos, minor keys, atmospheric production — these artists create the intimate, reflective space that late nights call for.",
   },
 };
 
@@ -89,14 +106,16 @@ export function RecommendationReveal({ selectedMoodId }: { selectedMoodId: strin
 function ArtistCarousel({
   artists,
 }: {
-  artists: Array<{ name: string; genre: string; track: string; cover: string; previewUrl: string }>;
+  artists: Array<{ name: string; genre: string; track: string; cover: string }>;
 }) {
-  const { playTrack, currentTrack, isPlaying } = usePlayer();
+  const { playTrack, pauseTrack, currentTrack, isPlaying } = usePlayer();
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
       {artists.map((item) => {
-        const isCurrentPlaying = currentTrack?.id === item.track && isPlaying;
+        const isCurrentPlaying = currentTrack?.name === item.track && isPlaying;
+        const [imgSrc, setImgSrc] = useState(item.cover);
+
         return (
           <motion.div
             key={item.track}
@@ -105,20 +124,28 @@ function ArtistCarousel({
           >
             <div className="relative aspect-square rounded-xl overflow-hidden bg-[#16162E]">
               <img
-                src={item.cover}
+                src={imgSrc}
                 alt={item.track}
+                onError={() =>
+                  setImgSrc(
+                    "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&auto=format&fit=crop&q=80"
+                  )
+                }
                 className="w-full h-full object-cover"
               />
               <button
-                onClick={() =>
-                  playTrack({
-                    id: item.track,
-                    name: item.track,
-                    artist: item.name,
-                    albumImageUrl: item.cover,
-                    previewUrl: item.previewUrl,
-                  })
-                }
+                onClick={() => {
+                  if (isCurrentPlaying) {
+                    pauseTrack();
+                  } else {
+                    playTrack({
+                      id: item.track,
+                      name: item.track,
+                      artist: item.name,
+                      albumImageUrl: item.cover,
+                    });
+                  }
+                }}
                 className="absolute inset-0 bg-black/40 hover:bg-black/20 transition-all flex items-center justify-center group"
                 aria-label={`Play ${item.track}`}
               >
