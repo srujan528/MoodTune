@@ -62,32 +62,10 @@ export function AcousticMorphingCanvas() {
   const [activeTrack, setActiveTrack] = useState(SPECTRUM_TRACKS[0]);
   const { playTrack, currentTrack, isPlaying } = usePlayer();
 
-  // Calculate closest track based on Euclidean distance in Valence/Energy space
-  useEffect(() => {
-    const valenceVal = position.xPercent;
-    const energyVal = position.yPercent;
-
-    let closest = SPECTRUM_TRACKS[0];
-    let minDistance = Infinity;
-
-    SPECTRUM_TRACKS.forEach((track) => {
-      const dx = track.valence - valenceVal;
-      const dy = track.energy - energyVal;
-      const distance = Math.sqrt(dx * dx + dy * dy);
-      if (distance < minDistance) {
-        minDistance = distance;
-        closest = track;
-      }
-    });
-
-    setActiveTrack(closest);
-  }, [position]);
-
   const handleDrag = (_: any, info: any) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     
-    // Compute normalized coordinates (0 to 100)
     let x = info.point.x - rect.left;
     let y = info.point.y - rect.top;
 
@@ -95,10 +73,27 @@ export function AcousticMorphingCanvas() {
     y = Math.max(0, Math.min(rect.height, y));
 
     const xPercent = Math.round((x / rect.width) * 100);
-    // Y axis inverted (Top is High Energy = 100%)
     const yPercent = Math.round((1 - y / rect.height) * 100);
 
-    setPosition({ xPercent, yPercent });
+    setPosition((prev) => {
+      if (prev.xPercent === xPercent && prev.yPercent === yPercent) return prev;
+      return { xPercent, yPercent };
+    });
+
+    let closest = SPECTRUM_TRACKS[0];
+    let minDistance = Infinity;
+
+    SPECTRUM_TRACKS.forEach((track) => {
+      const dx = track.valence - xPercent;
+      const dy = track.energy - yPercent;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      if (distance < minDistance) {
+        minDistance = distance;
+        closest = track;
+      }
+    });
+
+    setActiveTrack((prev) => (prev.id === closest.id ? prev : closest));
   };
 
   const handlePlayActive = () => {
