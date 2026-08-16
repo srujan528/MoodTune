@@ -8,7 +8,6 @@ import {
   PlaylistPreview,
   FinalCTA,
 } from "@/components/landing";
-import { BentoGridSection } from "@/components/landing/BentoGridSection";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import { PlayerProvider } from "@/components/player/PlayerContext";
 
@@ -29,7 +28,6 @@ export default function LandingPage() {
         </div>
         {selectedMoodId && <RecommendationReveal selectedMoodId={selectedMoodId} />}
         {selectedMoodId && <PlaylistPreview selectedMoodId={selectedMoodId} />}
-        <BentoGridSection />
         <FinalCTA selectedMoodId={selectedMoodId} />
       </div>
     </PlayerProvider>
