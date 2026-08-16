@@ -17,26 +17,26 @@ const PLAYLIST_DATA: Record<string, {
   "just-vibing": {
     mood: "Just vibing",
     tracks: [
-      { id: "1", title: "Time (You and I)", artist: "Khruangbin", duration: "3:57", cover: "https://i.scdn.co/image/ab67616d0000b273aa55d14fa0c5f21d374465d6" },
-      { id: "2", title: "Show Me How", artist: "Men I Trust", duration: "3:24", cover: "https://i.scdn.co/image/ab67616d0000b273a25ef14f85e4edee45bc62c0" },
-      { id: "3", title: "The Less I Know The Better", artist: "Tame Impala", duration: "3:36", cover: "https://i.scdn.co/image/ab67616d0000b2739e495fb707973f13908f7e64" },
-      { id: "4", title: "Sunflower", artist: "Rex Orange County", duration: "3:15", cover: "https://i.scdn.co/image/ab67616d0000b2735749f7e53f1910243e8a4a58" },
+      { id: "1", title: "Time (You and I)", artist: "Khruangbin", duration: "3:57", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/bf/16/c0/bf16c024-e9ed-c77a-ecae-8bfefbf3f6ef/656605151566.jpg/600x600bb.jpg" },
+      { id: "2", title: "Show Me How", artist: "Men I Trust", duration: "3:24", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/d9/38/2e/d9382e88-6625-635e-c4bb-eaefc60965e6/artwork.jpg/600x600bb.jpg" },
+      { id: "3", title: "The Less I Know The Better", artist: "Tame Impala", duration: "3:36", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/bf/f6/28/bff628e8-d6cb-022e-a5bf-8547a4b08709/15UMGIM81958.rgb.jpg/600x600bb.jpg" },
+      { id: "4", title: "Sunflower", artist: "Rex Orange County", duration: "3:15", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/4a/01/a3/4a01a355-6b58-e395-5847-a417643b1854/190295240455.jpg/600x600bb.jpg" },
     ],
   },
   "need-pick-me-up": {
     mood: "Need a pick-me-up",
     tracks: [
-      { id: "1", title: "Levitating", artist: "Dua Lipa", duration: "3:23", cover: "https://i.scdn.co/image/ab67616d0000b2732049e6f332968396d2e3a1f8" },
-      { id: "2", title: "As It Was", artist: "Harry Styles", duration: "2:47", cover: "https://i.scdn.co/image/ab67616d0000b273b46f74097655d070539cb143" },
-      { id: "3", title: "About Damn Time", artist: "Lizzo", duration: "3:10", cover: "https://i.scdn.co/image/ab67616d0000b273e82d7d5d28b9394625b041cf" },
+      { id: "1", title: "Levitating", artist: "Dua Lipa", duration: "3:23", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/4a/01/a3/4a01a355-6b58-e395-5847-a417643b1854/190295240455.jpg/600x600bb.jpg" },
+      { id: "2", title: "As It Was", artist: "Harry Styles", duration: "2:47", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/be/89/3e/be893e15-5460-394c-cb14-ee1855a8be90/196589006935.jpg/600x600bb.jpg" },
+      { id: "3", title: "About Damn Time", artist: "Lizzo", duration: "3:10", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/d5/43/d8/d543d838-8c17-1065-274e-6e270a48a90d/075679744418.jpg/600x600bb.jpg" },
     ],
   },
   "something-mellow": {
     mood: "Something mellow",
     tracks: [
-      { id: "1", title: "Texas Sun", artist: "Khruangbin & Leon Bridges", duration: "4:12", cover: "https://i.scdn.co/image/ab67616d0000b273aa55d14fa0c5f21d374465d6" },
-      { id: "2", title: "Chamber of Reflection", artist: "Mac DeMarco", duration: "3:48", cover: "https://i.scdn.co/image/ab67616d0000b2738f657a79e43f114c0a5e81d7" },
-      { id: "3", title: "Space Song", artist: "Beach House", duration: "5:21", cover: "https://i.scdn.co/image/ab67616d0000b27329432655767b93836d10db9f" },
+      { id: "1", title: "Texas Sun", artist: "Khruangbin & Leon Bridges", duration: "4:12", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/bf/16/c0/bf16c024-e9ed-c77a-ecae-8bfefbf3f6ef/656605151566.jpg/600x600bb.jpg" },
+      { id: "2", title: "Chamber of Reflection", artist: "Mac DeMarco", duration: "3:48", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/eb/03/49/eb0349ca-4700-1c09-7d88-b4b9b9909fb5/817949019688.jpg/600x600bb.jpg" },
+      { id: "3", title: "Space Song", artist: "Beach House", duration: "5:21", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/ee/17/ef/ee17efdb-01eb-c5a4-ee4f-56df01691238/098787114068.jpg/600x600bb.jpg" },
     ],
   },
 };
@@ -93,29 +93,13 @@ export function PlaylistPreview({ selectedMoodId }: { selectedMoodId: string | n
         </div>
 
         <div className="space-y-2">
-          {data.tracks.map((track, index) => {
-            const isCurrentPlaying = currentTrack?.name === track.title && isPlaying;
-            return (
-              <PlaylistTrackItem
-                key={track.id}
-                track={track}
-                index={index + 1}
-                isCurrentPlaying={isCurrentPlaying}
-                onTogglePlay={() => {
-                  if (isCurrentPlaying) {
-                    pauseTrack();
-                  } else {
-                    playTrack({
-                      id: track.title,
-                      name: track.title,
-                      artist: track.artist,
-                      albumImageUrl: track.cover,
-                    });
-                  }
-                }}
-              />
-            );
-          })}
+          {data.tracks.map((track, index) => (
+            <PlaylistTrackItem
+              key={track.id}
+              track={track}
+              index={index + 1}
+            />
+          ))}
         </div>
       </div>
     </section>
@@ -125,15 +109,27 @@ export function PlaylistPreview({ selectedMoodId }: { selectedMoodId: string | n
 function PlaylistTrackItem({
   track,
   index,
-  isCurrentPlaying,
-  onTogglePlay,
 }: {
   track: { id: string; title: string; artist: string; duration: string; cover: string };
   index: number;
-  isCurrentPlaying: boolean;
-  onTogglePlay: () => void;
 }) {
+  const { playTrack, pauseTrack, currentTrack, isPlaying } = usePlayer();
   const [imgSrc, setImgSrc] = useState(track.cover);
+
+  const isCurrentPlaying = currentTrack?.name === track.title && isPlaying;
+
+  const onTogglePlay = () => {
+    if (isCurrentPlaying) {
+      pauseTrack();
+    } else {
+      playTrack({
+        id: track.title,
+        name: track.title,
+        artist: track.artist,
+        albumImageUrl: track.cover,
+      });
+    }
+  };
 
   return (
     <div
@@ -145,11 +141,16 @@ function PlaylistTrackItem({
         <img
           src={imgSrc}
           alt={track.title}
-          onError={() =>
-            setImgSrc(
-              "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&auto=format&fit=crop&q=80"
-            )
-          }
+          onError={() => {
+            fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(track.title + " " + track.artist)}&media=music&limit=1`)
+              .then((res) => res.json())
+              .then((data) => {
+                if (data.results?.[0]?.artworkUrl100) {
+                  setImgSrc(data.results[0].artworkUrl100.replace("100x100bb", "600x600bb"));
+                }
+              })
+              .catch(() => {});
+          }}
           className="w-10 h-10 rounded-lg object-cover"
         />
         <div>
