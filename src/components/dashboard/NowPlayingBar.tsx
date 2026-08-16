@@ -87,7 +87,13 @@ export function NowPlayingBar() {
                 {currentTrack.artist}
               </motion.p>
               <a
-                href={currentTrack.spotifyUrl || `https://open.spotify.com/track/${currentTrack.id}`}
+                href={
+                  currentTrack.spotifyUrl && currentTrack.spotifyUrl.startsWith("http")
+                    ? currentTrack.spotifyUrl
+                    : currentTrack.id && currentTrack.id.length > 15 && !currentTrack.id.includes(" ")
+                    ? `https://open.spotify.com/track/${currentTrack.id}`
+                    : `https://open.spotify.com/search/${encodeURIComponent(currentTrack.name + " " + (currentTrack.artist || ""))}`
+                }
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1 text-xs text-[#1DB954] hover:underline font-medium"
