@@ -4,8 +4,8 @@ import { useState } from "react";
 import {
   Hero,
   MoodSelector,
-  RecommendationReveal,
   PlaylistPreview,
+  HowItWorks,
   FinalCTA,
 } from "@/components/landing";
 import { CustomCursor } from "@/components/ui/CustomCursor";
@@ -26,8 +26,8 @@ export default function LandingPage() {
         <div id="mood-selector">
           <MoodSelector onMoodSelect={handleMoodSelect} selectedMoodId={selectedMoodId} />
         </div>
-        {selectedMoodId && <RecommendationReveal selectedMoodId={selectedMoodId} />}
-        {selectedMoodId && <PlaylistPreview selectedMoodId={selectedMoodId} />}
+        <PlaylistPreview selectedMoodId={selectedMoodId} />
+        <HowItWorks selectedMoodId={selectedMoodId} />
         <FinalCTA selectedMoodId={selectedMoodId} />
       </div>
     </PlayerProvider>

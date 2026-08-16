@@ -4,24 +4,19 @@ import { motion } from "framer-motion";
 
 const STEPS = [
   {
-    number: "01",
-    title: "Tell us how you feel",
-    description: "Pick from 10 curated moods — Happy, Heartbroken, Late Night, Focus, and more. Or describe your feeling in your own words for nuanced recommendations.",
+    step: "01",
+    title: "Pick your mood",
+    desc: "Tell MoodTune what you're feeling right now. From mellow to high-energy.",
   },
   {
-    number: "02",
-    title: "MoodTune understands the vibe",
-    description: "Our AI analyzes your mood using valence, energy, tempo, danceability, and lyrical themes. It understands the emotional DNA of music — not just genre tags.",
+    step: "02",
+    title: "We build your mix",
+    desc: "Our acoustic engine compiles a custom track list tailored to your exact emotional frequency.",
   },
   {
-    number: "03",
-    title: "We discover matching music",
-    description: "We search Spotify's 100M+ catalog using audio features that match your mood profile. Results arrive in under a second with personalized explanations for every track.",
-  },
-  {
-    number: "04",
-    title: "Your soundtrack comes together",
-    description: "Get a curated playlist with explanations for every track. Save to Spotify, share with friends, or play instantly. Your mood, your soundtrack.",
+    step: "03",
+    title: "Press play",
+    desc: "Stream 30-second previews instantly or connect Spotify to save the full playlist.",
   },
 ];
 
@@ -30,9 +25,10 @@ export function HowItWorks({ selectedMoodId }: { selectedMoodId?: string | null 
     <section
       id="how-it-works"
       className="relative py-20 lg:py-28 bg-[#080811] text-white border-b border-[#16162A]"
-      aria-labelledby="how-heading"
+      aria-labelledby="how-it-works-heading"
     >
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 space-y-12">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-12">
+        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -40,38 +36,36 @@ export function HowItWorks({ selectedMoodId }: { selectedMoodId?: string | null 
           transition={{ duration: 0.6 }}
           className="text-left space-y-3"
         >
-          <div className="text-xs font-mono tracking-widest text-slate-400 uppercase">
-            03 / HOW IT WORKS
+          <div className="text-xs font-mono tracking-widest text-[#1DB954] uppercase font-bold">
+            03 / THE SIMPLE PART
           </div>
-          <h2 id="how-heading" className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
-            From feeling to soundtrack.
+          <h2 id="how-it-works-heading" className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white">
+            Less searching. More finding.
           </h2>
-          <p className="text-base sm:text-lg text-slate-300 max-w-xl font-normal leading-relaxed">
-            Four seamless steps. No complexity, just results.
-          </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {STEPS.map((step, index) => (
+        {/* 3 Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {STEPS.map((item, index) => (
             <motion.div
-              key={step.number}
+              key={item.step}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="p-6 rounded-2xl bg-[#0E0E1B] border border-[#1C1C32] flex flex-col justify-between space-y-4"
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              className="p-8 rounded-3xl bg-[#0E0E1B] border border-[#1C1C32] text-left space-y-4 hover:border-[#1DB954]/50 transition-colors"
             >
-              <div>
-                <span className="text-xs font-mono text-[#6E36E4] font-bold tracking-widest uppercase block mb-3">
-                  STEP {step.number}
-                </span>
-                <h3 className="text-lg font-bold text-white mb-2">
-                  {step.title}
-                </h3>
-                <p className="text-xs text-slate-400 leading-relaxed font-sans">
-                  {step.description}
-                </p>
+              <div className="text-sm font-mono font-bold text-[#1DB954]">
+                {item.step}
               </div>
+
+              <h3 className="text-2xl font-bold text-white tracking-tight">
+                {item.title}
+              </h3>
+
+              <p className="text-sm text-slate-400 font-sans leading-relaxed">
+                {item.desc}
+              </p>
             </motion.div>
           ))}
         </div>

@@ -1,136 +1,47 @@
+"use client";
+
 import Link from "next/link";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
-  const footerLinks = {
-    product: [
-      { label: "Features", href: "/#features" },
-      { label: "How It Works", href: "/#how-it-works" },
-      { label: "Pricing", href: "/pricing" },
-      { label: "API Docs", href: "/docs" },
-    ],
-    company: [
-      { label: "About", href: "/about" },
-      { label: "Blog", href: "/blog" },
-      { label: "Careers", href: "/careers" },
-      { label: "Contact", href: "/contact" },
-    ],
-    legal: [
-      { label: "Privacy", href: "/privacy" },
-      { label: "Terms", href: "/terms" },
-      { label: "Cookie Policy", href: "/cookies" },
-    ],
-    social: [
-      { label: "Twitter", href: "https://twitter.com/moodtune", external: true, icon: <TwitterIcon /> },
-      { label: "GitHub", href: "https://github.com/moodtune", external: true, icon: <GitHubIcon /> },
-      { label: "Discord", href: "https://discord.gg/moodtune", external: true, icon: <DiscordIcon /> },
-    ],
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  function TwitterIcon() {
-    return <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.915L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>;
-  }
-  function GitHubIcon() {
-    return <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" /></svg>;
-  }
-  function DiscordIcon() {
-    return <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.675 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.083.083 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 1 .077-.037c.213 0 .425.013.637.038a15.317 15.317 0 0 0 3.164 0c.212-.025.424-.038.636-.038a.077.077 0 0 1 .077.037 14.12 14.12 0 0 0 1.227 1.994.077.077 0 0 0 .084.028 19.839 19.839 0 0 0 6.001-3.03.077.077 0 0 0 .032-.054c.417-4.477-.41-9.005-3.555-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" /></svg>;
-  }
-
   return (
-    <footer className="border-t bg-white/5 backdrop-blur-sm" role="contentinfo">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-        <div className="xl:grid xl:grid-cols-4 xl:gap-8">
-          <div className="xl:col-span-1 space-y-8">
-            <Link href="/" className="flex items-center gap-2" aria-label="MoodTune Home">
-              <svg
-                className="h-8 w-8 text-primary"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                aria-hidden="true"
-              >
-                <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z" />
-                <path d="M8 14s1.5 2 4 2 4-2 4-2" />
-                <line x1="9" x2="9.01" y1="9" y2="9" />
-                <line x1="15" x2="15.01" y1="9" y2="9" />
-              </svg>
-              <span className="text-xl font-bold text-foreground">MoodTune</span>
-            </Link>
-            <p className="text-sm text-muted-foreground max-w-xs">
-              Discover music that matches your mood. AI-powered recommendations with explanations.
-            </p>
-            <div className="flex gap-3">
-              {footerLinks.social.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-muted-foreground transition-all duration-200 hover:bg-primary/10 hover:border-primary/30 hover:text-primary"
-                  aria-label={social.label}
-                >
-                  {social.icon}
-                </a>
-              ))}
-            </div>
+    <footer className="bg-[#080811] text-white py-12 border-t border-[#16162A]" role="contentinfo">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6 text-sm text-slate-400 font-medium">
+        
+        {/* Left: Logo */}
+        <Link href="/" className="flex items-center gap-2.5" aria-label="MoodTune Home">
+          <div className="flex items-end gap-0.5 h-4">
+            <span className="w-1 h-2.5 bg-[#1DB954] animate-pulse" />
+            <span className="w-1 h-4 bg-[#1ed760] animate-pulse delay-75" />
+            <span className="w-1 h-2 bg-[#10B981] animate-pulse delay-150" />
           </div>
+          <span className="text-lg font-bold text-white tracking-tight">MoodTune</span>
+        </Link>
 
-          <div>
-            <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">Product</h3>
-            <ul className="space-y-3" role="list">
-              {footerLinks.product.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground hover:text-primary"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">Company</h3>
-            <ul className="space-y-3" role="list">
-              {footerLinks.company.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground hover:text-primary"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">Legal</h3>
-            <ul className="space-y-3" role="list">
-              {footerLinks.legal.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground hover:text-primary"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+        {/* Center: Copyright */}
+        <div className="text-xs font-mono text-slate-500">
+          &copy; {currentYear} MoodTune. All rights reserved.
         </div>
 
-        <div className="mt-12 border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-muted-foreground">
-            &copy; {currentYear} MoodTune. All rights reserved.
-          </p>
+        {/* Right Nav Links & Back to Top */}
+        <div className="flex items-center gap-6">
+          <Link href="#how-it-works" className="hover:text-white transition-colors">
+            How it works
+          </Link>
+          <Link href="#playlist" className="hover:text-white transition-colors">
+            Try demo
+          </Link>
+          <button
+            onClick={scrollToTop}
+            className="hover:text-[#1DB954] transition-colors flex items-center gap-1 font-mono text-xs"
+          >
+            Back to top ↑
+          </button>
         </div>
       </div>
     </footer>

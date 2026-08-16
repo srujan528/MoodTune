@@ -67,8 +67,8 @@ export function Header({ user: userProp }: HeaderProps) {
         }`}
         aria-label="Main navigation"
       >
-        <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6 lg:px-8">
-          {/* Logo with Spotify Green Animated Equalizer Icon */}
+        <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+          {/* Left: Logo with Equalizer */}
           <div className="flex items-center gap-8">
             <Link href="/" className="flex items-center gap-2.5" aria-label="MoodTune Home">
               <div className="flex items-end gap-0.5 h-4">
@@ -89,8 +89,8 @@ export function Header({ user: userProp }: HeaderProps) {
             </div>
           </div>
 
-          {/* Right Nav Actions */}
-          <div className="flex items-center gap-4">
+          {/* Right: Actions */}
+          <div className="flex items-center gap-3">
             {user ? (
               <div className="flex items-center gap-3">
                 {user.spotify_avatar_url ? (
@@ -110,22 +110,19 @@ export function Header({ user: userProp }: HeaderProps) {
             ) : (
               <>
                 <button
-                  onClick={(e) => handleConnectSpotify(e, "/auth/spotify")}
-                  className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-[#1DB954] hover:bg-[#1ed760] text-black transition-colors shadow-sm cursor-pointer"
-                >
-                  Connect Spotify
-                </button>
-                <button
                   onClick={(e) => handleConnectSpotify(e, "/login")}
-                  className="text-sm font-medium text-slate-400 hover:text-white transition-colors cursor-pointer"
+                  className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-[#121222] hover:bg-[#1A1A32] border border-[#232342] text-slate-200 transition-colors"
                 >
-                  Sign in
+                  Sign in with Google
                 </button>
                 <Link
                   href="#mood-discovery"
-                  className="px-5 py-2.5 rounded-xl bg-[#1DB954] hover:bg-[#1ed760] text-black text-sm font-bold transition-all duration-200 shadow-[0_0_20px_rgba(29,185,84,0.4)]"
+                  className="px-5 py-2.5 rounded-full bg-[#1DB954] hover:bg-[#1ed760] text-black text-xs font-bold transition-all duration-200 flex items-center gap-1.5 shadow-[0_0_20px_rgba(29,185,84,0.4)]"
                 >
-                  Find my vibe
+                  <span>Find my vibe</span>
+                  <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                    <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
                 </Link>
               </>
             )}

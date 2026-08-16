@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import {
   Hero,
   MoodSelector,
-  RecommendationReveal,
   PlaylistPreview,
+  HowItWorks,
   FinalCTA,
 } from "@/components/landing";
 import { CustomCursor } from "@/components/ui/CustomCursor";
@@ -83,8 +83,8 @@ export default function DashboardPage() {
             moodSessionLoading={moodSessionLoading}
           />
         </div>
-        {selectedMoodId && <RecommendationReveal selectedMoodId={selectedMoodId} />}
-        {selectedMoodId && <PlaylistPreview selectedMoodId={selectedMoodId} />}
+        <PlaylistPreview selectedMoodId={selectedMoodId} />
+        <HowItWorks selectedMoodId={selectedMoodId} />
         <FinalCTA selectedMoodId={selectedMoodId} />
         <NowPlayingBar />
       </div>
