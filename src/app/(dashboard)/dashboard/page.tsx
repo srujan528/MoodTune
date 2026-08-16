@@ -7,11 +7,9 @@ import {
   MoodSelector,
   RecommendationReveal,
   PlaylistPreview,
-  HowItWorks,
   FinalCTA,
 } from "@/components/landing";
 import { BentoGridSection } from "@/components/landing/BentoGridSection";
-import { AcousticMorphingCanvas } from "@/components/landing/AcousticMorphingCanvas";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import { NowPlayingBar } from "@/components/dashboard/NowPlayingBar";
 import { PlayerProvider } from "@/components/player/PlayerContext";
@@ -86,11 +84,9 @@ export default function DashboardPage() {
             moodSessionLoading={moodSessionLoading}
           />
         </div>
-        <AcousticMorphingCanvas />
         {selectedMoodId && <RecommendationReveal selectedMoodId={selectedMoodId} />}
         {selectedMoodId && <PlaylistPreview selectedMoodId={selectedMoodId} />}
         <BentoGridSection />
-        <HowItWorks selectedMoodId={selectedMoodId} />
         <FinalCTA selectedMoodId={selectedMoodId} />
         <NowPlayingBar />
       </div>
