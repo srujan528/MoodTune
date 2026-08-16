@@ -8,7 +8,7 @@ export function MoodSelector({ onMoodSelect, selectedMoodId, moodSessionLoading 
   return (
     <section
       id="mood-discovery"
-      className="relative py-8 sm:py-12 lg:py-16"
+      className="relative py-16 sm:py-20 lg:py-24 bg-[#0A0908] border-b border-[#2A2622]"
       aria-labelledby="mood-heading"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -17,13 +17,16 @@ export function MoodSelector({ onMoodSelect, selectedMoodId, moodSessionLoading 
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center mb-8 sm:mb-10"
+          className="text-center mb-10 sm:mb-12"
         >
-          <h2 id="mood-heading" className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground mb-2">
+          <span className="inline-block text-xs font-mono text-[#EAB308] uppercase tracking-widest bg-[#1A1714] px-4 py-1.5 rounded-full border border-[#332E28] mb-4">
+            VIBE SELECTOR
+          </span>
+          <h2 id="mood-heading" className="text-3xl sm:text-5xl font-serif font-bold tracking-tight text-[#F3EFE6] mb-3">
             What are you in the mood for?
           </h2>
-          <p className="text-sm sm:text-base text-muted-foreground/70 max-w-xl mx-auto">
-            Pick a vibe. We&apos;ll take it from there.
+          <p className="text-sm sm:text-base font-sans text-[#A39E93] max-w-xl mx-auto">
+            Select a state of mind to calibrate your custom soundtrack.
           </p>
         </motion.div>
 

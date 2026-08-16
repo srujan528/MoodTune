@@ -73,16 +73,16 @@ export function MoodChip({ mood, isSelected, onSelect, isLoading }: MoodChipProp
       whileTap={!prefersReducedMotion ? { scale: 0.95 } : undefined}
       style={{
         scale: prefersReducedMotion ? (isSelected ? 1.02 : 1) : springScale,
-        backgroundColor: isSelected ? accentHex : `rgba(${accentRgb}, ${springBg})`,
-        borderColor: isSelected ? accentHex : `rgba(${accentRgb}, ${springBorder})`,
-        boxShadow: isSelected ? `0 0 24px ${accentHex}40, 0 4px 16px rgba(0,0,0,0.3)` : undefined,
+        backgroundColor: isSelected ? "#EAB308" : "#161412",
+        borderColor: isSelected ? "#EAB308" : "#2E2924",
+        boxShadow: isSelected ? "0 4px 20px rgba(234, 179, 8, 0.25)" : undefined,
       }}
       className={cn(
-        "relative inline-flex items-center gap-2 rounded-full px-6 py-3.5 text-sm sm:text-base font-semibold transition-all duration-300 backdrop-blur-md shadow-md",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950",
-        "bg-white/[0.04] border border-white/15 text-white hover:bg-white/10 hover:border-white/30",
+        "relative inline-flex items-center gap-2.5 rounded-xl px-5 py-3 text-xs font-mono tracking-wider uppercase transition-all duration-200 border",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#EAB308]",
+        "text-[#F3EFE6] hover:border-[#423C36] hover:bg-[#201D1A]",
         "disabled:opacity-50 disabled:cursor-not-allowed",
-        isSelected && "text-black font-bold border-transparent"
+        isSelected && "text-[#0A0908] font-bold border-transparent"
       )}
       aria-pressed={isSelected}
       aria-label={mood.label}
