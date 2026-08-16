@@ -6,6 +6,7 @@ import { usePlayer } from "@/components/player/PlayerContext";
 
 const PLAYLIST_DATA: Record<string, {
   mood: string;
+  moodCoverImage: string;
   tracks: Array<{
     id: string;
     title: string;
@@ -17,6 +18,7 @@ const PLAYLIST_DATA: Record<string, {
 }> = {
   "just-vibing": {
     mood: "Just vibing",
+    moodCoverImage: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&auto=format&fit=crop&q=80",
     tracks: [
       { id: "1", title: "Time (You and I)", artist: "Khruangbin", duration: "4:34", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/bf/16/c0/bf16c024-e9ed-c77a-ecae-8bfefbf3f6ef/656605151566.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Time%20(You%20and%20I)%20Khruangbin" },
       { id: "2", title: "Show Me How", artist: "Men I Trust", duration: "3:35", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/d9/38/2e/d9382e88-6625-635e-c4bb-eaefc60965e6/artwork.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Show%20Me%20How%20Men%20I%20Trust" },
@@ -27,6 +29,7 @@ const PLAYLIST_DATA: Record<string, {
   },
   "need-pick-me-up": {
     mood: "Need a pick-me-up",
+    moodCoverImage: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&auto=format&fit=crop&q=80",
     tracks: [
       { id: "1", title: "Levitating", artist: "Dua Lipa", duration: "3:23", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/4a/01/a3/4a01a355-6b58-e395-5847-a417643b1854/190295240455.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Levitating%20Dua%20Lipa" },
       { id: "2", title: "As It Was", artist: "Harry Styles", duration: "2:47", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/be/89/3e/be893e15-5460-394c-cb14-ee1855a8be90/196589006935.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/As%20It%20Was%20Harry%20Styles" },
@@ -37,6 +40,7 @@ const PLAYLIST_DATA: Record<string, {
   },
   "something-mellow": {
     mood: "Something mellow",
+    moodCoverImage: "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=800&auto=format&fit=crop&q=80",
     tracks: [
       { id: "1", title: "Texas Sun", artist: "Khruangbin & Leon Bridges", duration: "4:12", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/bf/16/c0/bf16c024-e9ed-c77a-ecae-8bfefbf3f6ef/656605151566.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Texas%20Sun%20Khruangbin" },
       { id: "2", title: "Chamber of Reflection", artist: "Mac DeMarco", duration: "3:48", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/eb/03/49/eb0349ca-4700-1c09-7d88-b4b9b9909fb5/817949019688.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Chamber%20of%20Reflection%20Mac%20DeMarco" },
@@ -47,6 +51,7 @@ const PLAYLIST_DATA: Record<string, {
   },
   "in-my-feelings": {
     mood: "In my feelings",
+    moodCoverImage: "https://images.unsplash.com/photo-1499209974431-9dac3ada00d7?w=800&auto=format&fit=crop&q=80",
     tracks: [
       { id: "1", title: "Someone Like You", artist: "Adele", duration: "4:45", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/31/3d/8c/313d8c1c-3b3b-8515-3d96-5f80bfebc6f0/886443315629.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Someone%20Like%20You%20Adele" },
       { id: "2", title: "When the Party's Over", artist: "Billie Eilish", duration: "3:16", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/bf/b1/7d/bfb17d3b-e01d-5b8d-294b-9e450b7b1341/19UMGIM08436.rgb.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/When%20the%20Party's%20Over%20Billie%20Eilish" },
@@ -57,6 +62,7 @@ const PLAYLIST_DATA: Record<string, {
   },
   "late-night-drive": {
     mood: "Late-night drive",
+    moodCoverImage: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=800&auto=format&fit=crop&q=80",
     tracks: [
       { id: "1", title: "Slow Dancing in the Dark", artist: "Joji", duration: "3:29", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/c3/0f/59/c30f5926-4447-49d6-32d8-bf5b271d7986/859728343759_cover.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Slow%20Dancing%20in%20the%20Dark%20Joji" },
       { id: "2", title: "Call Out My Name", artist: "The Weeknd", duration: "3:48", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/1e/85/55/1e8555c8-1e4a-9040-5221-5a02568600d8/18UMGIM19246.rgb.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Call%20Out%20My%20Name%20The%20Weeknd" },
@@ -67,6 +73,7 @@ const PLAYLIST_DATA: Record<string, {
   },
   "locked-in": {
     mood: "Locked in",
+    moodCoverImage: "https://images.unsplash.com/photo-1483412033650-1015ddeb83d1?w=800&auto=format&fit=crop&q=80",
     tracks: [
       { id: "1", title: "Resonance", artist: "HOME", duration: "3:32", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/eb/03/49/eb0349ca-4700-1c09-7d88-b4b9b9909fb5/817949019688.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Resonance%20HOME" },
       { id: "2", title: "Weightless", artist: "Marconi Union", duration: "8:00", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/ee/17/ef/ee17efdb-01eb-c5a4-ee4f-56df01691238/098787114068.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Weightless%20Marconi%20Union" },
@@ -75,6 +82,7 @@ const PLAYLIST_DATA: Record<string, {
   },
   "getting-things-done": {
     mood: "Getting things done",
+    moodCoverImage: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800&auto=format&fit=crop&q=80",
     tracks: [
       { id: "1", title: "Da Funk", artist: "Daft Punk", duration: "5:28", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/4a/01/a3/4a01a355-6b58-e395-5847-a417643b1854/190295240455.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Da%20Funk%20Daft%20Punk" },
       { id: "2", title: "Starboy", artist: "The Weeknd", duration: "3:50", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/1e/85/55/1e8555c8-1e4a-9040-5221-5a02568600d8/18UMGIM19246.rgb.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Starboy%20The%20Weeknd" },
@@ -83,6 +91,7 @@ const PLAYLIST_DATA: Record<string, {
   },
   "need-some-energy": {
     mood: "Need some energy",
+    moodCoverImage: "https://images.unsplash.com/photo-1469488865564-c2de10f69f96?w=800&auto=format&fit=crop&q=80",
     tracks: [
       { id: "1", title: "Blinding Lights", artist: "The Weeknd", duration: "3:20", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/1e/85/55/1e8555c8-1e4a-9040-5221-5a02568600d8/18UMGIM19246.rgb.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Blinding%20Lights%20The%20Weeknd" },
       { id: "2", title: "Can't Hold Us", artist: "Macklemore & Ryan Lewis", duration: "4:18", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/4a/01/a3/4a01a355-6b58-e395-5847-a417643b1854/190295240455.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Cant%20Hold%20Us" },
@@ -91,6 +100,7 @@ const PLAYLIST_DATA: Record<string, {
   },
   "slow-sunday": {
     mood: "Slow Sunday",
+    moodCoverImage: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=800&auto=format&fit=crop&q=80",
     tracks: [
       { id: "1", title: "Banana Pancakes", artist: "Jack Johnson", duration: "3:12", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/bf/16/c0/bf16c024-e9ed-c77a-ecae-8bfefbf3f6ef/656605151566.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Banana%20Pancakes%20Jack%20Johnson" },
       { id: "2", title: "Sunday Morning", artist: "Maroon 5", duration: "4:02", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/be/89/3e/be893e15-5460-394c-cb14-ee1855a8be90/196589006935.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Sunday%20Morning%20Maroon%205" },
@@ -99,6 +109,7 @@ const PLAYLIST_DATA: Record<string, {
   },
   "feeling-good": {
     mood: "Feeling good",
+    moodCoverImage: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=80",
     tracks: [
       { id: "1", title: "Sunroof", artist: "Nicky Youre & dazy", duration: "2:43", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/4a/01/a3/4a01a355-6b58-e395-5847-a417643b1854/190295240455.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Sunroof%20Nicky%20Youre" },
       { id: "2", title: "Happy", artist: "Pharrell Williams", duration: "3:53", cover: "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/d5/43/d8/d543d838-8c17-1065-274e-6e270a48a90d/075679744418.jpg/600x600bb.jpg", spotifyUrl: "https://open.spotify.com/search/Happy%20Pharrell" },
@@ -111,6 +122,7 @@ export function PlaylistPreview({ selectedMoodId }: { selectedMoodId: string | n
   const activeMoodId = selectedMoodId || "something-mellow";
   const data = PLAYLIST_DATA[activeMoodId] || PLAYLIST_DATA["just-vibing"];
   const moodConfig = getMoodConfig(activeMoodId);
+  const [coverImgSrc, setCoverImgSrc] = useState(data.moodCoverImage);
 
   return (
     <section
@@ -152,27 +164,45 @@ export function PlaylistPreview({ selectedMoodId }: { selectedMoodId: string | n
           {/* Grid Layout: Retro Album Art Left, Tracklist Right */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
-            {/* Left Retro Album Artwork Card */}
+            {/* Left Retro Album Artwork Card with Photo Background */}
             <div className="lg:col-span-4 space-y-4">
-              <div className="aspect-square rounded-2xl bg-gradient-to-br from-amber-600 via-emerald-800 to-indigo-950 p-6 flex flex-col justify-between border border-[#26264A] shadow-xl relative overflow-hidden">
-                <div className="flex justify-between items-start text-xs font-mono text-white/80">
-                  <span>MOODTUNE</span>
-                  <span>VOL. 01</span>
+              <div className="aspect-square rounded-2xl p-6 flex flex-col justify-between border border-[#26264A] shadow-2xl relative overflow-hidden group">
+                
+                {/* Background Photo Image */}
+                <img
+                  src={data.moodCoverImage}
+                  alt={moodConfig.label}
+                  onError={() => setCoverImgSrc("https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=800&auto=format&fit=crop&q=80")}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+
+                {/* Dark Gradient Overlay for Readability */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/30 backdrop-blur-[1px]" />
+
+                {/* Glassmorphism Top Badges */}
+                <div className="relative z-10 flex justify-between items-start text-xs font-mono text-white/90">
+                  <span className="px-2.5 py-1 rounded-md bg-black/50 border border-white/10 backdrop-blur-md font-bold tracking-widest">
+                    MOODTUNE
+                  </span>
+                  <span className="px-2.5 py-1 rounded-md bg-black/50 border border-white/10 backdrop-blur-md font-bold tracking-widest text-[#1DB954]">
+                    VOL. 01
+                  </span>
                 </div>
 
-                <div className="space-y-1 text-white">
-                  <span className="text-[10px] font-mono tracking-widest uppercase text-emerald-300 block">
+                {/* Glassmorphism Bottom Title & Details */}
+                <div className="relative z-10 space-y-1.5 text-white">
+                  <span className="text-[10px] font-mono tracking-widest uppercase text-[#1DB954] font-bold block bg-[#052317]/80 w-max px-2 py-0.5 rounded border border-[#10B981]/30">
                     CURATED SIGNAL
                   </span>
-                  <h3 className="text-2xl font-black tracking-tight">{moodConfig.label}</h3>
-                  <p className="text-xs text-white/70 font-mono">{data.tracks.length} TRACKS • READY TO STREAM</p>
+                  <h3 className="text-3xl font-black tracking-tight text-white drop-shadow-md">{moodConfig.label}</h3>
+                  <p className="text-xs text-slate-300 font-mono drop-shadow">{data.tracks.length} TRACKS • READY TO STREAM</p>
                 </div>
               </div>
             </div>
 
             {/* Right Tracklist */}
             <div className="lg:col-span-8 space-y-3">
-              <div className="text-xs font-mono uppercase text-slate-500 tracking-wider mb-2">
+              <div className="text-xs font-mono uppercase text-slate-400 tracking-wider mb-2">
                 MOODTUNE PRESENTS / {moodConfig.label} Mix
               </div>
 
