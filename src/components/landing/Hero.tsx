@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { VinylDeck } from "@/components/ui/VinylDeck";
 
 export function Hero() {
   const [mounted, setMounted] = useState(false);
@@ -12,88 +11,86 @@ export function Hero() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-[#0D0C0A] border-b border-[#2A2622] pt-20 pb-16 lg:pt-28 lg:pb-24">
-      {/* Background Micro Grid Texture */}
-      <div className="absolute inset-0 bg-[radial-gradient(#ffffff04_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
+    <section className="relative overflow-hidden bg-[#080811] text-white pt-24 pb-20 lg:pt-32 lg:pb-28 border-b border-[#16162A]">
+      {/* Background Grid Pattern */}
+      <div 
+        className="absolute inset-0 opacity-[0.15] pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(#26264A 1px, transparent 1px), linear-gradient(90deg, #26264A 1px, transparent 1px)`,
+          backgroundSize: `48px 48px`,
+        }}
+      />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      {/* Subtle Ambient Radial Glow */}
+      <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-purple-900/15 rounded-full blur-[140px] pointer-events-none" />
+
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="mx-auto max-w-4xl text-center"
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-3xl text-left space-y-8"
         >
-          {/* Brand Tag */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="inline-flex items-center gap-2 rounded-full bg-[#181613] border border-[#332E28] px-4 py-1.5 text-xs font-mono tracking-widest uppercase text-[#EAB308] mb-6"
-          >
-            <span className="w-2 h-2 rounded-full bg-[#EAB308] animate-pulse" />
-            <span>ANALOG MOOD CURATION • SPOTIFY READY</span>
-          </motion.div>
+          {/* Small Top Badge / Equalizer Indicator */}
+          <div className="inline-flex items-center gap-3 text-xs font-mono tracking-widest text-slate-400 uppercase">
+            <span>NOW PLAYING / YOUR MOOD</span>
+            <span className="text-[#6E36E4] font-bold">——————</span>
+            <div className="flex items-end gap-0.5 h-3">
+              <span className="w-0.5 h-2 bg-[#6E36E4] animate-pulse" />
+              <span className="w-0.5 h-3 bg-[#8B5CF6] animate-pulse delay-75" />
+              <span className="w-0.5 h-1.5 bg-[#EC4899] animate-pulse delay-150" />
+            </div>
+          </div>
 
-          {/* Headline - Human & Direct */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-4xl sm:text-6xl lg:text-7xl font-serif font-extrabold tracking-tight text-[#F3EFE6] leading-[1.08] mb-6"
-          >
-            Music for how you{" "}
-            <span className="italic font-normal text-[#EAB308] underline decoration-[#EAB308]/40 underline-offset-8">
-              actually feel
-            </span>{" "}
-            right now.
-          </motion.h1>
+          {/* Main Headline from Lovable */}
+          <h1 className="text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight leading-[1.05] text-white">
+            Music that gets <br />
+            your{" "}
+            <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-amber-300 bg-clip-text text-transparent italic font-serif font-normal">
+              mood.
+            </span>
+          </h1>
 
           {/* Subtitle */}
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.35 }}
-            className="text-base sm:text-lg text-[#A39E93] max-w-2xl mx-auto leading-relaxed font-sans"
-          >
-            No algorithmic generic filler. MoodTune matches acoustic valence, tempo, and emotional resonance to generate curated Spotify soundtracks tailored to your state of mind.
-          </motion.p>
+          <p className="text-lg sm:text-xl text-slate-300 font-normal max-w-xl leading-relaxed">
+            Tell us how you&apos;re feeling. We&apos;ll find the music that fits.
+          </p>
 
-          {/* Action CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="mt-8 flex flex-wrap items-center justify-center gap-4"
-          >
+          {/* Buttons */}
+          <div className="flex flex-wrap items-center gap-4 pt-2">
             <a
-              href="#mood-selector"
-              className="px-8 py-4 rounded-xl bg-[#EAB308] hover:bg-[#FACC15] text-[#0A0908] font-mono text-xs font-bold uppercase tracking-wider transition-all duration-200 shadow-[0_4px_20px_rgba(234,179,8,0.25)] flex items-center gap-2"
+              href="#mood-discovery"
+              className="px-8 py-4 rounded-xl bg-[#6E36E4] hover:bg-[#7E46F4] text-white font-semibold text-base transition-all duration-300 shadow-[0_0_30px_rgba(110,54,228,0.5)] hover:shadow-[0_0_40px_rgba(126,70,244,0.7)]"
             >
-              <span>SELECT YOUR MOOD</span>
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
+              Find my vibe
             </a>
 
             <a
-              href="#features"
-              className="px-8 py-4 rounded-xl bg-[#161412] hover:bg-[#201D1A] border border-[#2E2924] text-[#F3EFE6] font-mono text-xs font-medium uppercase tracking-wider transition-all duration-200"
+              href="#demo"
+              className="px-8 py-4 rounded-xl bg-[#121222] hover:bg-[#1A1A32] border border-[#232342] text-slate-200 font-semibold text-base transition-all duration-300"
             >
-              READ LINER NOTES
+              Try a demo
             </a>
-          </motion.div>
+          </div>
+
+          {/* Stats Bar at Bottom of Hero */}
+          <div className="pt-12 grid grid-cols-1 sm:grid-cols-3 gap-6 border-t border-[#18182E] text-left">
+            <div>
+              <div className="text-xl sm:text-2xl font-bold text-white font-mono">10 moods</div>
+              <div className="text-xs text-slate-400 mt-0.5">hand-tuned, no genre lists</div>
+            </div>
+
+            <div>
+              <div className="text-xl sm:text-2xl font-bold text-white font-mono">~4 seconds</div>
+              <div className="text-xs text-slate-400 mt-0.5">from feeling to full mix</div>
+            </div>
+
+            <div>
+              <div className="text-xl sm:text-2xl font-bold text-white font-mono">Spotify native</div>
+              <div className="text-xs text-slate-400 mt-0.5">plays in your library</div>
+            </div>
+          </div>
         </motion.div>
-
-        {/* Tactile Analog Vinyl Turntable Widget */}
-        {mounted && (
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.6 }}
-          >
-            <VinylDeck />
-          </motion.div>
-        )}
       </div>
     </section>
   );

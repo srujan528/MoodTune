@@ -6,60 +6,58 @@ export function FinalCTA({ selectedMoodId }: { selectedMoodId?: string | null })
   return (
     <section
       id="final-cta"
-      className="relative py-24 bg-[#0A0908] text-center font-sans overflow-hidden"
+      className="relative py-24 lg:py-32 bg-[#080811] text-white text-center overflow-hidden"
       aria-labelledby="final-cta-heading"
     >
-      <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      {/* Background Grid Pattern */}
+      <div 
+        className="absolute inset-0 opacity-[0.1] pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(#26264A 1px, transparent 1px), linear-gradient(90deg, #26264A 1px, transparent 1px)`,
+          backgroundSize: `48px 48px`,
+        }}
+      />
+
+      <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 space-y-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
+          className="space-y-6"
         >
-          <span className="inline-block text-xs font-mono text-[#EAB308] uppercase tracking-widest bg-[#1A1714] px-4 py-1.5 rounded-full border border-[#332E28] mb-6">
-            START LISTENING
-          </span>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#121224] border border-[#232344] text-xs font-mono tracking-widest uppercase text-[#8B5CF6]">
+            <span>START YOUR SESSION</span>
+          </div>
 
           <h2
             id="final-cta-heading"
-            className="text-4xl sm:text-6xl font-serif font-extrabold tracking-tight text-[#F3EFE6] leading-[1.1] mb-6"
+            className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-[1.1]"
           >
-            Find a soundtrack for this{" "}
-            <span className="italic font-normal text-[#EAB308] underline decoration-[#EAB308]/40 underline-offset-8">
-              exact moment
+            Find something that <br />
+            <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-amber-300 bg-clip-text text-transparent italic font-serif font-normal">
+              fits the moment.
             </span>
-            .
           </h2>
 
-          <p className="text-base sm:text-lg text-[#A39E93] max-w-xl mx-auto mb-10 leading-relaxed">
-            Pick a vibe, press play, and let MoodTune match your state of mind. Free to use with zero setup required.
+          <p className="text-lg sm:text-xl text-slate-300 max-w-xl mx-auto font-normal leading-relaxed">
+            Pick a vibe and let MoodTune take it from there. Free to use with zero setup required.
           </p>
 
-          <div className="flex flex-wrap items-center justify-center gap-4">
+          <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
             <a
-              href="#mood-selector"
-              className="px-8 py-4 rounded-xl bg-[#EAB308] hover:bg-[#FACC15] text-[#0A0908] font-mono text-xs font-bold uppercase tracking-wider transition-all duration-200 shadow-[0_4px_20px_rgba(234,179,8,0.25)] flex items-center gap-2"
+              href="#mood-discovery"
+              className="px-8 py-4 rounded-xl bg-[#6E36E4] hover:bg-[#7E46F4] text-white font-semibold text-base transition-all duration-300 shadow-[0_0_30px_rgba(110,54,228,0.5)]"
             >
-              <span>PICK YOUR MOOD</span>
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
+              Find my vibe
             </a>
 
             <a
               href="/auth/spotify"
-              className="px-8 py-4 rounded-xl bg-[#161412] hover:bg-[#201D1A] border border-[#2E2924] text-[#F3EFE6] font-mono text-xs font-medium uppercase tracking-wider transition-all duration-200"
+              className="px-8 py-4 rounded-xl bg-[#121222] hover:bg-[#1A1A32] border border-[#232342] text-white font-semibold text-base transition-all duration-300"
             >
-              CONNECT SPOTIFY
+              Connect Spotify
             </a>
-          </div>
-
-          <div className="mt-12 flex items-center justify-center gap-6 text-xs font-mono text-[#A39E93]">
-            <span>NO CREATIVE BUZZWORDS</span>
-            <span>•</span>
-            <span>100% ACOUSTIC RESIDUAL MATCHING</span>
-            <span>•</span>
-            <span>SPOTIFY CONNECTED</span>
           </div>
         </motion.div>
       </div>

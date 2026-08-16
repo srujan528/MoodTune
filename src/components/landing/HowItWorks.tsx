@@ -5,23 +5,23 @@ import { motion } from "framer-motion";
 const STEPS = [
   {
     number: "01",
-    title: "Select your emotional state",
-    description: "Pick from 10 curated mood states — from Late-Night Drive to Slow Sunday. No complex forms or quizzes.",
+    title: "Tell us how you feel",
+    description: "Pick from 10 curated moods — Happy, Heartbroken, Late Night, Focus, and more. Or describe your feeling in your own words for nuanced recommendations.",
   },
   {
     number: "02",
-    title: "Acoustic valence & tempo match",
-    description: "Our recommendation engine translates your mood into acoustic metrics — valence, energy dynamics, tempo, and instrumental density.",
+    title: "MoodTune understands the vibe",
+    description: "Our AI analyzes your mood using valence, energy, tempo, danceability, and lyrical themes. It understands the emotional DNA of music — not just genre tags.",
   },
   {
     number: "03",
-    title: "Instant Spotify catalog resolution",
-    description: "We query 100M+ tracks and resolve official high-resolution album artwork and exact audio previews in under a second.",
+    title: "We discover matching music",
+    description: "We search Spotify's 100M+ catalog using audio features that match your mood profile. Results arrive in under a second with personalized explanations for every track.",
   },
   {
     number: "04",
-    title: "Stream & save your soundtrack",
-    description: "Play 30-second previews directly or connect Spotify to stream full songs and save your mood playlist straight to your library.",
+    title: "Your soundtrack comes together",
+    description: "Get a curated playlist with explanations for every track. Save to Spotify, share with friends, or play instantly. Your mood, your soundtrack.",
   },
 ];
 
@@ -29,32 +29,29 @@ export function HowItWorks({ selectedMoodId }: { selectedMoodId?: string | null 
   return (
     <section
       id="how-it-works"
-      className="relative py-24 bg-[#0D0C0A] border-b border-[#2A2622]"
+      className="relative py-20 lg:py-28 bg-[#080811] text-white border-b border-[#16162A]"
       aria-labelledby="how-heading"
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 space-y-12">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
-          className="mx-auto max-w-3xl text-center mb-16"
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-left space-y-3"
         >
-          <span className="inline-block text-xs font-mono text-[#EAB308] uppercase tracking-widest bg-[#1A1714] px-4 py-1.5 rounded-full border border-[#332E28] mb-4">
-            CURATION PROCESS
-          </span>
-          <h2 id="how-heading" className="text-3xl sm:text-5xl font-serif font-bold tracking-tight text-[#F3EFE6] leading-[1.1] mb-6">
-            From state of mind to{" "}
-            <span className="italic font-normal text-[#EAB308] underline decoration-[#EAB308]/40 underline-offset-8">
-              soundtrack
-            </span>
+          <div className="text-xs font-mono tracking-widest text-slate-400 uppercase">
+            03 / HOW IT WORKS
+          </div>
+          <h2 id="how-heading" className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+            From feeling to soundtrack.
           </h2>
-          <p className="text-base sm:text-lg text-[#A39E93] leading-relaxed font-sans">
-            Four intentional steps designed for effortless listening.
+          <p className="text-base sm:text-lg text-slate-300 max-w-xl font-normal leading-relaxed">
+            Four seamless steps. No complexity, just results.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {STEPS.map((step, index) => (
             <motion.div
               key={step.number}
@@ -62,16 +59,16 @@ export function HowItWorks({ selectedMoodId }: { selectedMoodId?: string | null 
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="p-6 rounded-2xl bg-[#141210] border border-[#2E2924] flex flex-col justify-between space-y-4"
+              className="p-6 rounded-2xl bg-[#0E0E1B] border border-[#1C1C32] flex flex-col justify-between space-y-4"
             >
               <div>
-                <span className="text-xs font-mono text-[#EAB308] tracking-widest uppercase block mb-3">
+                <span className="text-xs font-mono text-[#6E36E4] font-bold tracking-widest uppercase block mb-3">
                   STEP {step.number}
                 </span>
-                <h3 className="text-xl font-serif font-bold text-[#F3EFE6] mb-2">
+                <h3 className="text-lg font-bold text-white mb-2">
                   {step.title}
                 </h3>
-                <p className="text-xs text-[#A39E93] leading-relaxed font-sans">
+                <p className="text-xs text-slate-400 leading-relaxed font-sans">
                   {step.description}
                 </p>
               </div>
