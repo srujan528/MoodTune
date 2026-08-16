@@ -15,7 +15,7 @@ export function MoodSelector({
   return (
     <section
       id="mood-discovery"
-      className="relative py-20 lg:py-28 bg-[#080811] text-white border-b border-[#16162A]"
+      className="relative py-24 lg:py-32 bg-[#080811] text-white border-b border-[#16162A]"
       aria-labelledby="mood-heading"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-12">
@@ -40,9 +40,9 @@ export function MoodSelector({
           </motion.div>
 
           {/* Right Sidebar Widget */}
-          <div className="lg:col-span-4 p-5 rounded-2xl bg-[#0E0E1B] border border-[#1C1C32] flex items-center gap-4 text-left">
-            <div className="w-12 h-12 rounded-full border-2 border-[#1DB954] border-dashed flex items-center justify-center shrink-0 animate-[spin_12s_linear_infinite]">
-              <div className="w-4 h-4 rounded-full bg-[#1DB954]" />
+          <div className="lg:col-span-4 p-5 rounded-2xl bg-[#0E0E1B] border border-[#1C1C32] flex items-center gap-4 text-left shadow-lg">
+            <div className="w-11 h-11 rounded-full border-2 border-[#1DB954] border-dashed flex items-center justify-center shrink-0 animate-[spin_12s_linear_infinite]">
+              <div className="w-3.5 h-3.5 rounded-full bg-[#1DB954]" />
             </div>
             <div>
               <p className="text-xs text-slate-300 font-sans leading-snug">

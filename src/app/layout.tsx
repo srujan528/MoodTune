@@ -1,28 +1,35 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans, Geist_Mono, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout";
 import { Footer } from "@/components/layout";
 import { ToastProvider } from "@/components/ui";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const plusJakartaSans = Plus_Jakarta_Sans({
+  variable: "--font-sans-custom",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+});
+
+const playfairDisplay = Playfair_Display({
+  variable: "--font-serif-custom",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+  variable: "--font-mono-custom",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://127.0.0.1:3000"),
   title: {
-    default: "MoodTune - Discover Music That Matches Your Mood",
+    default: "MoodTune — Discover Music That Matches Your Vibe",
     template: "%s | MoodTune",
   },
-  description: "AI-powered music discovery that recommends songs based on your mood and explains every recommendation. Powered by Spotify.",
-  keywords: ["music discovery", "mood-based recommendations", "Spotify", "AI music", "personalized playlists"],
+  description: "Personalized music discovery that matches your exact emotional frequency. Powered by Spotify.",
+  keywords: ["music discovery", "mood recommendations", "Spotify", "curated playlists"],
   authors: [{ name: "MoodTune Team" }],
   creator: "MoodTune",
   publisher: "MoodTune",
@@ -32,21 +39,21 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://moodtune.app",
     siteName: "MoodTune",
-    title: "MoodTune - Discover Music That Matches Your Mood",
-    description: "AI-powered music discovery that recommends songs based on your mood and explains every recommendation.",
+    title: "MoodTune — Discover Music That Matches Your Vibe",
+    description: "Personalized music discovery that matches your exact emotional frequency.",
     images: [
       {
-      url: "/og-image.png",
-      width: 1200,
-      height: 630,
-      alt: "MoodTune - Mood-based music discovery",
-    },
-  ],
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "MoodTune — Mood-based music discovery",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "MoodTune - Discover Music That Matches Your Mood",
-    description: "AI-powered music discovery that recommends songs based on your mood and explains every recommendation.",
+    title: "MoodTune — Discover Music That Matches Your Vibe",
+    description: "Personalized music discovery that matches your exact emotional frequency.",
     images: ["/og-image.png"],
     creator: "@moodtune",
   },
@@ -60,8 +67,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
+    { media: "(prefers-color-scheme: light)", color: "#07080E" },
+    { media: "(prefers-color-scheme: dark)", color: "#07080E" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -74,12 +81,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
+    <html
+      lang="en"
+      className={`${plusJakartaSans.variable} ${playfairDisplay.variable} ${geistMono.variable} h-full antialiased dark`}
+    >
       <head>
         <link rel="preconnect" href="https://api.spotify.com" />
         <link rel="dns-prefetch" href="https://api.spotify.com" />
       </head>
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col bg-[#07080E] text-slate-100 selection:bg-[#1DB954]/30 selection:text-[#1DB954]">
         <ToastProvider>
           <Header />
           <main className="flex-1">{children}</main>
