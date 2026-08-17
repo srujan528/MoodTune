@@ -1,6 +1,5 @@
 import { env } from "@/config/env";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
-import { createUserSpotifyClient } from "@/lib/spotify/client";
 import { NextRequest, NextResponse } from "next/server";
 
 function getRedirectUri(request: NextRequest): string {
@@ -56,34 +55,19 @@ export async function GET(request: NextRequest) {
   const code = searchParams.get("code");
   const state = searchParams.get("state");
   const error = searchParams.get("error");
-  const stateCookie = request.cookies.get("spotify_auth_state")?.value;
   const origin = getOrigin(request);
   const redirectUri = getRedirectUri(request);
 
   const supabase = await createServerSupabaseClient();
 
   if (error) {
+    console.error("Spotify auth error param:", error);
     return NextResponse.redirect(new URL("/dashboard?error=spotify_auth_denied", origin));
   }
 
-  if (!code || !state) {
-    return NextResponse.redirect(new URL("/dashboard?error=missing_code_or_state", origin));
-  }
-
-  const { data: { user } } = await supabase.auth.getUser();
-
-  if (user) {
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("spotify_auth_state")
-      .eq("id", user.id)
-      .single();
-
-    if (profile?.spotify_auth_state && profile.spotify_auth_state !== state) {
-      if (stateCookie && stateCookie !== state) {
-        return NextResponse.redirect(new URL("/dashboard?error=invalid_state", origin));
-      }
-    }
+  if (!code) {
+    console.error("Missing code in Spotify callback");
+    return NextResponse.redirect(new URL("/dashboard?error=missing_code", origin));
   }
 
   try {
@@ -103,29 +87,44 @@ export async function GET(request: NextRequest) {
     });
 
     if (!tokenResponse.ok) {
-      const errorData = await tokenResponse.json();
-      console.error("Spotify token error:", errorData);
+      const errorText = await tokenResponse.text();
+      console.error("Spotify token exchange failed:", tokenResponse.status, errorText);
       return NextResponse.redirect(new URL("/dashboard?error=token_exchange_failed", origin));
     }
 
     const tokenData = await tokenResponse.json();
 
-    const spotifyClient = createUserSpotifyClient(tokenData.access_token);
-    const spotifyUser = await spotifyClient.currentUser.profile();
+    let spotifyUser: any = null;
+    try {
+      const meRes = await fetch("https://api.spotify.com/v1/me", {
+        headers: { Authorization: `Bearer ${tokenData.access_token}` },
+      });
+      if (meRes.ok) {
+        spotifyUser = await meRes.json();
+      }
+    } catch (e) {
+      console.error("Error fetching Spotify profile:", e);
+    }
 
-    if (user) {
-      await supabase
-        .from("profiles")
-        .update({
-          spotify_id: spotifyUser.id,
-          spotify_display_name: spotifyUser.display_name,
-          spotify_avatar_url: spotifyUser.images?.[0]?.url ?? null,
-          spotify_access_token: tokenData.access_token,
-          spotify_refresh_token: tokenData.refresh_token,
-          spotify_token_expires_at: new Date(Date.now() + tokenData.expires_in * 1000).toISOString(),
-          spotify_auth_state: null,
-        })
-        .eq("id", user.id);
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (user && spotifyUser) {
+      try {
+        await supabase
+          .from("profiles")
+          .update({
+            spotify_id: spotifyUser.id,
+            spotify_display_name: spotifyUser.display_name,
+            spotify_avatar_url: spotifyUser.images?.[0]?.url ?? null,
+            spotify_access_token: tokenData.access_token,
+            spotify_refresh_token: tokenData.refresh_token,
+            spotify_token_expires_at: new Date(Date.now() + tokenData.expires_in * 1000).toISOString(),
+            spotify_auth_state: null,
+          })
+          .eq("id", user.id);
+      } catch (err) {
+        console.error("Profile update error:", err);
+      }
     }
 
     const response = NextResponse.redirect(new URL("/dashboard", origin));
@@ -138,7 +137,7 @@ export async function GET(request: NextRequest) {
     });
     return response;
   } catch (error) {
-    console.error("Spotify callback error:", error);
+    console.error("Spotify callback unhandled error:", error);
     return NextResponse.redirect(new URL("/dashboard?error=callback_error", origin));
   }
 }
