@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-export function Hero() {
+export function Hero({ user }: { user?: any }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {

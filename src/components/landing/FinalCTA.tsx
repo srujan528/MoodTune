@@ -4,9 +4,9 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ParticlePortalModal } from "@/components/ui/ParticlePortalModal";
 
-export function FinalCTA({ selectedMoodId, isLoggedIn }: { selectedMoodId?: string | null; isLoggedIn?: boolean }) {
+export function FinalCTA({ selectedMoodId, isLoggedIn, user }: { selectedMoodId?: string | null; isLoggedIn?: boolean; user?: any }) {
   const [showPortal, setShowPortal] = useState(false);
-  const [userLoggedIn, setUserLoggedIn] = useState(isLoggedIn || false);
+  const [userLoggedIn, setUserLoggedIn] = useState(isLoggedIn || !!user || false);
 
   useEffect(() => {
     if (isLoggedIn !== undefined) {

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { getMoodConfig } from "@/config/mood-config";
 import { usePlayer } from "@/components/player/PlayerContext";
+import { ParticlePortalModal } from "@/components/ui/ParticlePortalModal";
 
 const PLAYLIST_DATA: Record<string, {
   mood: string;
@@ -118,108 +119,153 @@ const PLAYLIST_DATA: Record<string, {
   },
 };
 
-export function PlaylistPreview({ selectedMoodId }: { selectedMoodId: string | null }) {
+export function PlaylistPreview({ selectedMoodId, user }: { selectedMoodId: string | null; user?: any }) {
   const activeMoodId = selectedMoodId || "something-mellow";
   const data = PLAYLIST_DATA[activeMoodId] || PLAYLIST_DATA["just-vibing"];
   const moodConfig = getMoodConfig(activeMoodId);
   const [coverImgSrc, setCoverImgSrc] = useState(data.moodCoverImage);
+  const [showPortal, setShowPortal] = useState(false);
+
+  const handleSignInClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setShowPortal(true);
+  };
 
   return (
-    <section
-      id="playlist"
-      className="relative py-20 lg:py-28 bg-[#080811] text-white border-b border-[#16162A]"
-      aria-labelledby="playlist-heading"
-    >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10">
-        
-        {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 text-left">
-          <div className="space-y-3">
-            <div className="text-xs font-mono tracking-widest text-[#1DB954] uppercase font-bold">
-              02 / MADE FOR RIGHT NOW
-            </div>
-            <h2 id="playlist-heading" className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white">
-              Your mood. Your mix.
-            </h2>
-            <p className="text-base text-slate-300">
-              A living playlist that follows where your head is at.
-            </p>
-          </div>
-        </div>
+    <>
+      <ParticlePortalModal
+        isOpen={showPortal}
+        targetUrl="/login"
+        title="CONNECTING TO SPOTIFY"
+      />
 
-        {/* Target Styled Playlist Card Container */}
-        <div className="rounded-3xl bg-[#0E0E1B] border-2 border-[#1E1E38] overflow-hidden shadow-2xl p-6 sm:p-8 space-y-6 text-left">
+      <section
+        id="playlist"
+        className="relative py-20 lg:py-28 bg-[#080811] text-white border-b border-[#16162A]"
+        aria-labelledby="playlist-heading"
+      >
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10">
           
-          {/* Top Mix Sub-header */}
-          <div className="flex items-center justify-between border-b border-[#1E1E38] pb-4 font-mono text-xs text-slate-400">
-            <div className="flex items-center gap-2">
-              <span className="text-[#1DB954] font-bold">((o)) MIX / 001</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#1DB954] animate-ping" />
-              <span className="text-[#1DB954] font-bold uppercase">live demo</span>
+          {/* Section Header */}
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 text-left">
+            <div className="space-y-3">
+              <div className="text-xs font-mono tracking-widest text-[#1DB954] uppercase font-bold">
+                02 / MADE FOR RIGHT NOW
+              </div>
+              <h2 id="playlist-heading" className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white">
+                Your mood. Your mix.
+              </h2>
+              <p className="text-base text-slate-300">
+                A living playlist that follows where your head is at.
+              </p>
             </div>
           </div>
 
-          {/* Grid Layout: Retro Album Art Left, Tracklist Right */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          {/* Target Styled Playlist Card Container */}
+          <div className="rounded-3xl bg-[#0E0E1B] border-2 border-[#1E1E38] overflow-hidden shadow-2xl p-6 sm:p-8 space-y-6 text-left">
             
-            {/* Left Retro Album Artwork Card with Photo Background */}
-            <div className="lg:col-span-4 space-y-4">
-              <div className="aspect-square rounded-2xl p-6 flex flex-col justify-between border border-[#26264A] shadow-2xl relative overflow-hidden group">
-                
-                {/* Background Photo Image */}
-                <img
-                  src={data.moodCoverImage}
-                  alt={moodConfig.label}
-                  onError={() => setCoverImgSrc("https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=800&auto=format&fit=crop&q=80")}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-
-                {/* Dark Gradient Overlay for Readability */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/30 backdrop-blur-[1px]" />
-
-                {/* Glassmorphism Top Badges */}
-                <div className="relative z-10 flex justify-between items-start text-xs font-mono text-white/90">
-                  <span className="px-2.5 py-1 rounded-md bg-black/50 border border-white/10 backdrop-blur-md font-bold tracking-widest">
-                    MOODTUNE
-                  </span>
-                  <span className="px-2.5 py-1 rounded-md bg-black/50 border border-white/10 backdrop-blur-md font-bold tracking-widest text-[#1DB954]">
-                    VOL. 01
-                  </span>
-                </div>
-
-                {/* Glassmorphism Bottom Title & Details */}
-                <div className="relative z-10 space-y-1.5 text-white">
-                  <span className="text-[10px] font-mono tracking-widest uppercase text-[#1DB954] font-bold block bg-[#052317]/80 w-max px-2 py-0.5 rounded border border-[#10B981]/30">
-                    CURATED SIGNAL
-                  </span>
-                  <h3 className="text-3xl font-black tracking-tight text-white drop-shadow-md">{moodConfig.label}</h3>
-                  <p className="text-xs text-slate-300 font-mono drop-shadow">{data.tracks.length} TRACKS • READY TO STREAM</p>
-                </div>
+            {/* Top Mix Sub-header */}
+            <div className="flex items-center justify-between border-b border-[#1E1E38] pb-4 font-mono text-xs text-slate-400">
+              <div className="flex items-center gap-2">
+                <span className="text-[#1DB954] font-bold">((o)) MIX / 001</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#1DB954] animate-ping" />
+                <span className="text-[#1DB954] font-bold uppercase">
+                  {user ? "AUTHENTICATED STREAM" : "SIGN IN REQUIRED"}
+                </span>
               </div>
             </div>
 
-            {/* Right Tracklist */}
-            <div className="lg:col-span-8 space-y-3">
-              <div className="text-xs font-mono uppercase text-slate-400 tracking-wider mb-2">
-                MOODTUNE PRESENTS / {moodConfig.label} Mix
+            {/* Grid Layout: Retro Album Art Left, Tracklist Right */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              
+              {/* Left Retro Album Artwork Card with Photo Background */}
+              <div className="lg:col-span-4 space-y-4">
+                <div className="aspect-square rounded-2xl p-6 flex flex-col justify-between border border-[#26264A] shadow-2xl relative overflow-hidden group">
+                  
+                  {/* Background Photo Image */}
+                  <img
+                    src={coverImgSrc}
+                    alt={moodConfig.label}
+                    onError={() => setCoverImgSrc("https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=800&auto=format&fit=crop&q=80")}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+
+                  {/* Dark Gradient Overlay for Readability */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/30 backdrop-blur-[1px]" />
+
+                  {/* Glassmorphism Top Badges */}
+                  <div className="relative z-10 flex justify-between items-start text-xs font-mono text-white/90">
+                    <span className="px-2.5 py-1 rounded-md bg-black/50 border border-white/10 backdrop-blur-md font-bold tracking-widest">
+                      MOODTUNE
+                    </span>
+                    <span className="px-2.5 py-1 rounded-md bg-black/50 border border-white/10 backdrop-blur-md font-bold tracking-widest text-[#1DB954]">
+                      VOL. 01
+                    </span>
+                  </div>
+
+                  {/* Glassmorphism Bottom Title & Details */}
+                  <div className="relative z-10 space-y-1.5 text-white">
+                    <span className="text-[10px] font-mono tracking-widest uppercase text-[#1DB954] font-bold block bg-[#052317]/80 w-max px-2 py-0.5 rounded border border-[#10B981]/30">
+                      CURATED SIGNAL
+                    </span>
+                    <h3 className="text-3xl font-black tracking-tight text-white drop-shadow-md">{moodConfig.label}</h3>
+                    <p className="text-xs text-slate-300 font-mono drop-shadow">
+                      {user ? `${data.tracks.length} TRACKS • STREAMING UNLOCKED` : "🔒 SIGN IN TO UNLOCK TRACKS"}
+                    </p>
+                  </div>
+                </div>
               </div>
 
-              <div className="space-y-2">
-                {data.tracks.map((track, index) => (
-                  <PlaylistTrackItem
-                    key={track.id}
-                    track={track}
-                    index={index + 1}
-                  />
-                ))}
-              </div>
+              {/* Right Tracklist or Sign In Gate */}
+              {!user ? (
+                <div className="lg:col-span-8 flex flex-col items-center justify-center p-8 sm:p-12 rounded-2xl bg-[#121222]/90 border border-[#232342] text-center space-y-5 min-h-[320px]">
+                  <div className="w-16 h-16 rounded-2xl bg-[#1DB954]/20 border border-[#1DB954]/40 flex items-center justify-center text-[#1DB954] shadow-[0_0_30px_rgba(29,185,84,0.3)] animate-pulse">
+                    <svg className="w-8 h-8 fill-current" viewBox="0 0 24 24">
+                      <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+                    </svg>
+                  </div>
+
+                  <div className="space-y-2 max-w-md">
+                    <h4 className="text-xl font-extrabold text-white">Sign In to Listen & Play Songs</h4>
+                    <p className="text-xs text-slate-400 leading-relaxed">
+                      Connect your Spotify account to reveal mood recommendations, stream full song previews, and save custom playlists.
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={handleSignInClick}
+                    className="px-7 py-3.5 rounded-full bg-[#1DB954] hover:bg-[#1ed760] text-black font-extrabold text-xs tracking-wider uppercase transition-all flex items-center gap-2 shadow-[0_0_25px_rgba(29,185,84,0.5)] hover:scale-105"
+                  >
+                    <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                      <path d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.899 4.62-1.02 8.52-.6 11.64 1.32.42.18.479.659.301 1.019zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.18-1.38-.72-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.72 1.62.54.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" />
+                    </svg>
+                    <span>Connect Spotify to Unlock</span>
+                  </button>
+                </div>
+              ) : (
+                <div className="lg:col-span-8 space-y-3">
+                  <div className="text-xs font-mono uppercase text-slate-400 tracking-wider mb-2">
+                    MOODTUNE PRESENTS / {moodConfig.label} Mix
+                  </div>
+
+                  <div className="space-y-2">
+                    {data.tracks.map((track, index) => (
+                      <PlaylistTrackItem
+                        key={track.id}
+                        track={track}
+                        index={index + 1}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }
 
