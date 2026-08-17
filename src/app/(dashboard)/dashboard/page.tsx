@@ -27,9 +27,12 @@ export default function DashboardPage() {
         if (res.ok) {
           const data = await res.json();
           setUser(data);
+        } else {
+          setUser(null);
         }
       } catch (error) {
         console.error("Error fetching user:", error);
+        setUser(null);
       } finally {
         setLoading(false);
       }
@@ -75,7 +78,7 @@ export default function DashboardPage() {
     <PlayerProvider>
       <div className="bg-[#07080E] text-foreground min-h-screen selection:bg-[#1DB954]/30 selection:text-[#1DB954] overflow-x-hidden pb-24">
         <CustomCursor />
-        <Hero />
+        <Hero user={user} />
         <div id="mood-selector">
           <MoodSelector
             onMoodSelect={handleMoodSelect}
@@ -83,9 +86,9 @@ export default function DashboardPage() {
             moodSessionLoading={moodSessionLoading}
           />
         </div>
-        <PlaylistPreview selectedMoodId={selectedMoodId} />
+        <PlaylistPreview selectedMoodId={selectedMoodId} user={user} />
         <HowItWorks selectedMoodId={selectedMoodId} />
-        <FinalCTA selectedMoodId={selectedMoodId} isLoggedIn={true} />
+        <FinalCTA selectedMoodId={selectedMoodId} user={user} />
         <NowPlayingBar />
       </div>
     </PlayerProvider>
