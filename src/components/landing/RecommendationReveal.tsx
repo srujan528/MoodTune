@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { getMoodConfig } from "@/config/mood-config";
 import { usePlayer } from "@/components/player/PlayerContext";
+import { ParticlePortalModal } from "@/components/ui/ParticlePortalModal";
 
 const RECOMMENDATION_DATA: Record<string, {
   mood: string;
@@ -64,43 +65,84 @@ const RECOMMENDATION_DATA: Record<string, {
   },
 };
 
-export function RecommendationReveal({ selectedMoodId }: { selectedMoodId: string | null }) {
+export function RecommendationReveal({ selectedMoodId, user }: { selectedMoodId: string | null; user?: any }) {
+  const [showPortal, setShowPortal] = useState(false);
   if (!selectedMoodId) return null;
 
   const data = RECOMMENDATION_DATA[selectedMoodId] || RECOMMENDATION_DATA["something-mellow"];
   const moodConfig = getMoodConfig(selectedMoodId);
 
-  return (
-    <section
-      id="recommendations"
-      className="relative py-12 lg:py-16 bg-[#080811] text-white border-b border-[#16162A]"
-      aria-labelledby="rec-heading"
-    >
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 space-y-8">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="flex items-center justify-between"
-        >
-          <div>
-            <div className="text-xs font-mono tracking-widest text-slate-400 uppercase mb-1">
-              02 / THE RESULT
-            </div>
-            <h2 id="rec-heading" className="text-3xl font-extrabold tracking-tight text-white">
-              Made for this moment
-            </h2>
-            <p className="text-sm text-slate-400">
-              Based on your <span className="text-[#1DB954] font-semibold">{moodConfig.label}</span> mood
-            </p>
-          </div>
-        </motion.div>
+  const handleSignInClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setShowPortal(true);
+  };
 
-        <ArtistCarousel artists={data.artists} />
-        <ExplanationCard explanation={data.explanation} />
-      </div>
-    </section>
+  return (
+    <>
+      <ParticlePortalModal
+        isOpen={showPortal}
+        targetUrl="/login"
+        title="CONNECTING TO SPOTIFY"
+      />
+
+      <section
+        id="recommendations"
+        className="relative py-12 lg:py-16 bg-[#080811] text-white border-b border-[#16162A]"
+        aria-labelledby="rec-heading"
+      >
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 space-y-8">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="flex items-center justify-between"
+          >
+            <div>
+              <div className="text-xs font-mono tracking-widest text-slate-400 uppercase mb-1">
+                02 / THE RESULT
+              </div>
+              <h2 id="rec-heading" className="text-3xl font-extrabold tracking-tight text-white">
+                Made for this moment
+              </h2>
+              <p className="text-sm text-slate-400">
+                Based on your <span className="text-[#1DB954] font-semibold">{moodConfig.label}</span> mood
+              </p>
+            </div>
+          </motion.div>
+
+          {!user ? (
+            <div className="p-8 sm:p-12 rounded-2xl bg-[#0E0E1B] border-2 border-[#1E1E38] text-center space-y-5 shadow-2xl">
+              <div className="w-16 h-16 rounded-2xl bg-[#1DB954]/20 border border-[#1DB954]/40 flex items-center justify-center text-[#1DB954] mx-auto animate-pulse shadow-[0_0_30px_rgba(29,185,84,0.3)]">
+                <svg className="w-8 h-8 fill-current" viewBox="0 0 24 24">
+                  <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+                </svg>
+              </div>
+              <div className="space-y-2 max-w-md mx-auto">
+                <h3 className="text-2xl font-extrabold text-white">Sign In to Unlock Recommendations</h3>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  Connect your Spotify account to reveal mood recommendations, stream track previews, and listen on Spotify.
+                </p>
+              </div>
+              <button
+                onClick={handleSignInClick}
+                className="px-7 py-3.5 rounded-full bg-[#1DB954] hover:bg-[#1ed760] text-black font-extrabold text-xs tracking-wider uppercase transition-all inline-flex items-center gap-2 shadow-[0_0_25px_rgba(29,185,84,0.5)] hover:scale-105"
+              >
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                  <path d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.899 4.62-1.02 8.52-.6 11.64 1.32.42.18.479.659.301 1.019zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.18-1.38-.72-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.72 1.62.54.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" />
+                </svg>
+                <span>Connect Spotify to Unlock</span>
+              </button>
+            </div>
+          ) : (
+            <>
+              <ArtistCarousel artists={data.artists} />
+              <ExplanationCard explanation={data.explanation} />
+            </>
+          )}
+        </div>
+      </section>
+    </>
   );
 }
 

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import {
   Hero,
   MoodSelector,
+  RecommendationReveal,
   PlaylistPreview,
   HowItWorks,
   FinalCTA,
@@ -44,6 +45,7 @@ export default function LandingPage() {
         <div id="mood-selector">
           <MoodSelector onMoodSelect={handleMoodSelect} selectedMoodId={selectedMoodId} />
         </div>
+        {selectedMoodId && <RecommendationReveal selectedMoodId={selectedMoodId} user={user} />}
         <PlaylistPreview selectedMoodId={selectedMoodId} user={user} />
         <HowItWorks selectedMoodId={selectedMoodId} />
         <FinalCTA selectedMoodId={selectedMoodId} user={user} />

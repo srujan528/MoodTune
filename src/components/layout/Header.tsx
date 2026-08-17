@@ -105,9 +105,16 @@ export function Header({ user: userProp }: HeaderProps) {
                 <span className="text-xs font-semibold text-[#1DB954] max-w-[90px] sm:max-w-[140px] truncate">
                   {user.spotify_display_name || user.full_name || "User"}
                 </span>
-                <Link href="/logout" className="text-xs font-medium text-slate-300 hover:text-white transition-colors">
+                <a
+                  href="/logout"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.location.href = "/logout";
+                  }}
+                  className="text-xs font-medium text-slate-300 hover:text-white transition-colors cursor-pointer"
+                >
                   Sign out
-                </Link>
+                </a>
               </div>
             ) : (
               <>
@@ -166,14 +173,18 @@ export function Header({ user: userProp }: HeaderProps) {
               Try demo
             </Link>
             {user ? (
-              <Link
+              <a
                 href="/logout"
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full text-left flex items-center justify-between text-sm font-semibold text-red-400 py-2 border-t border-white/10 mt-2"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setMobileMenuOpen(false);
+                  window.location.href = "/logout";
+                }}
+                className="w-full text-left flex items-center justify-between text-sm font-semibold text-red-400 py-2 border-t border-white/10 mt-2 cursor-pointer"
               >
                 <span>Sign Out ({user.spotify_display_name || user.full_name || "User"})</span>
                 <span className="font-mono">↳</span>
-              </Link>
+              </a>
             ) : (
               <button
                 onClick={(e) => {
