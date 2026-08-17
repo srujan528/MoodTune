@@ -16,6 +16,20 @@ const SCOPES = [
   "user-read-currently-playing",
 ].join(" ");
 
+function getRedirectUri(request: NextRequest): string {
+  if (
+    process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI &&
+    !process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI.includes("127.0.0.1") &&
+    !process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI.includes("localhost")
+  ) {
+    return process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI;
+  }
+  const host = request.headers.get("x-forwarded-host") || request.headers.get("host");
+  const proto = request.headers.get("x-forwarded-proto") || (host?.includes("localhost") || host?.includes("127.0.0.1") ? "http" : "https");
+  const origin = host ? `${proto}://${host}` : request.nextUrl.origin;
+  return `${origin}/auth/spotify/callback`;
+}
+
 export async function GET(request: NextRequest) {
   const state = crypto.randomUUID();
   const supabase = await createServerSupabaseClient();
@@ -31,11 +45,13 @@ export async function GET(request: NextRequest) {
     }
   }
 
+  const redirectUri = getRedirectUri(request);
+
   const params = new URLSearchParams({
     response_type: "code",
     client_id: env.SPOTIFY_CLIENT_ID,
     scope: SCOPES,
-    redirect_uri: env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI,
+    redirect_uri: redirectUri,
     state,
     show_dialog: "true",
   });

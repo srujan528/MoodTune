@@ -3,21 +3,43 @@ import { createServerSupabaseClient } from "@/lib/supabase/server";
 import { createUserSpotifyClient } from "@/lib/spotify/client";
 import { NextRequest, NextResponse } from "next/server";
 
+function getRedirectUri(request: NextRequest): string {
+  if (
+    process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI &&
+    !process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI.includes("127.0.0.1") &&
+    !process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI.includes("localhost")
+  ) {
+    return process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI;
+  }
+  const host = request.headers.get("x-forwarded-host") || request.headers.get("host");
+  const proto = request.headers.get("x-forwarded-proto") || (host?.includes("localhost") || host?.includes("127.0.0.1") ? "http" : "https");
+  const origin = host ? `${proto}://${host}` : request.nextUrl.origin;
+  return `${origin}/auth/spotify/callback`;
+}
+
+function getOrigin(request: NextRequest): string {
+  const host = request.headers.get("x-forwarded-host") || request.headers.get("host");
+  const proto = request.headers.get("x-forwarded-proto") || (host?.includes("localhost") || host?.includes("127.0.0.1") ? "http" : "https");
+  return host ? `${proto}://${host}` : request.nextUrl.origin;
+}
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const code = searchParams.get("code");
   const state = searchParams.get("state");
   const error = searchParams.get("error");
   const stateCookie = request.cookies.get("spotify_auth_state")?.value;
+  const origin = getOrigin(request);
+  const redirectUri = getRedirectUri(request);
 
   const supabase = await createServerSupabaseClient();
 
   if (error) {
-    return NextResponse.redirect(new URL("/dashboard?error=spotify_auth_denied", request.url));
+    return NextResponse.redirect(new URL("/dashboard?error=spotify_auth_denied", origin));
   }
 
   if (!code || !state) {
-    return NextResponse.redirect(new URL("/dashboard?error=missing_code_or_state", request.url));
+    return NextResponse.redirect(new URL("/dashboard?error=missing_code_or_state", origin));
   }
 
   const { data: { user } } = await supabase.auth.getUser();
@@ -32,7 +54,7 @@ export async function GET(request: NextRequest) {
 
     if (profile?.spotify_auth_state && profile.spotify_auth_state !== state) {
       if (stateCookie && stateCookie !== state) {
-        return NextResponse.redirect(new URL("/dashboard?error=invalid_state", request.url));
+        return NextResponse.redirect(new URL("/dashboard?error=invalid_state", origin));
       }
     }
   }
@@ -49,14 +71,14 @@ export async function GET(request: NextRequest) {
       body: new URLSearchParams({
         grant_type: "authorization_code",
         code,
-        redirect_uri: env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI,
+        redirect_uri: redirectUri,
       }),
     });
 
     if (!tokenResponse.ok) {
       const errorData = await tokenResponse.json();
       console.error("Spotify token error:", errorData);
-      return NextResponse.redirect(new URL("/dashboard?error=token_exchange_failed", request.url));
+      return NextResponse.redirect(new URL("/dashboard?error=token_exchange_failed", origin));
     }
 
     const tokenData = await tokenResponse.json();
@@ -79,7 +101,7 @@ export async function GET(request: NextRequest) {
         .eq("id", user.id);
     }
 
-    const response = NextResponse.redirect(new URL("/dashboard", request.url));
+    const response = NextResponse.redirect(new URL("/dashboard", origin));
     response.cookies.set("spotify_access_token", tokenData.access_token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -90,6 +112,6 @@ export async function GET(request: NextRequest) {
     return response;
   } catch (error) {
     console.error("Spotify callback error:", error);
-    return NextResponse.redirect(new URL("/dashboard?error=callback_error", request.url));
+    return NextResponse.redirect(new URL("/dashboard?error=callback_error", origin));
   }
 }
