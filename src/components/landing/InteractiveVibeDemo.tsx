@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
+import { ParticlePortalModal } from "@/components/ui/ParticlePortalModal";
 
 const DEMO_VIBES = [
   {
@@ -63,12 +64,17 @@ const DEMO_VIBES = [
   },
 ];
 
-export function InteractiveVibeDemo() {
+export function InteractiveVibeDemo({ user }: { user?: any }) {
   const [selectedVibe, setSelectedVibe] = useState(DEMO_VIBES[0]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioObj, setAudioObj] = useState<HTMLAudioElement | null>(null);
+  const [showPortal, setShowPortal] = useState(false);
 
   const handlePlayToggle = (vibe = selectedVibe) => {
+    if (!user) {
+      setShowPortal(true);
+      return;
+    }
     if (isPlaying && selectedVibe.id === vibe.id && audioObj) {
       audioObj.pause();
       setIsPlaying(false);
@@ -86,123 +92,131 @@ export function InteractiveVibeDemo() {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto mt-12">
-      {/* Vibe Selection Chips */}
-      <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
-        {DEMO_VIBES.map((vibe) => {
-          const active = selectedVibe.id === vibe.id;
-          return (
-            <motion.button
-              key={vibe.id}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => {
-                setSelectedVibe(vibe);
-                if (isPlaying) handlePlayToggle(vibe);
-              }}
-              style={{
-                borderColor: active ? vibe.color : "rgba(255, 255, 255, 0.15)",
-                backgroundColor: active ? `${vibe.color}25` : "rgba(255, 255, 255, 0.03)",
-                boxShadow: active ? `0 0 20px ${vibe.color}40` : undefined,
-              }}
-              className="px-5 py-2.5 rounded-full border text-sm font-semibold text-white flex items-center gap-2 backdrop-blur-md transition-all"
+    <>
+      <ParticlePortalModal
+        isOpen={showPortal}
+        targetUrl="/login"
+        title="CONNECTING TO SPOTIFY"
+      />
+
+      <div className="w-full max-w-4xl mx-auto mt-12">
+        {/* Vibe Selection Chips */}
+        <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
+          {DEMO_VIBES.map((vibe) => {
+            const active = selectedVibe.id === vibe.id;
+            return (
+              <motion.button
+                key={vibe.id}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => {
+                  setSelectedVibe(vibe);
+                  if (isPlaying) handlePlayToggle(vibe);
+                }}
+                style={{
+                  borderColor: active ? vibe.color : "rgba(255, 255, 255, 0.15)",
+                  backgroundColor: active ? `${vibe.color}25` : "rgba(255, 255, 255, 0.03)",
+                  boxShadow: active ? `0 0 20px ${vibe.color}40` : undefined,
+                }}
+                className="px-5 py-2.5 rounded-full border text-sm font-semibold text-white flex items-center gap-2 backdrop-blur-md transition-all"
+              >
+                <span>{vibe.icon}</span>
+                <span>{vibe.label}</span>
+              </motion.button>
+            );
+          })}
+        </div>
+
+        {/* Live Interactive Player Card */}
+        <SpotlightCard className="bg-slate-950/80 border-white/15 p-6 sm:p-8 rounded-3xl shadow-2xl relative overflow-hidden">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={selectedVibe.id}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.3 }}
+              className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center"
             >
-              <span>{vibe.icon}</span>
-              <span>{vibe.label}</span>
-            </motion.button>
-          );
-        })}
-      </div>
-
-      {/* Live Interactive Player Card */}
-      <SpotlightCard className="bg-slate-950/80 border-white/15 p-6 sm:p-8 rounded-3xl shadow-2xl relative overflow-hidden">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={selectedVibe.id}
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.3 }}
-            className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center"
-          >
-            {/* Left: Album Artwork */}
-            <div className="md:col-span-4 relative group rounded-2xl overflow-hidden aspect-square border border-white/10 shadow-xl">
-              <img
-                src={selectedVibe.cover}
-                alt={selectedVibe.track}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-center justify-center">
-                <motion.button
-                  whileHover={{ scale: 1.15 }}
-                  whileTap={{ scale: 0.9 }}
-                  onClick={() => handlePlayToggle()}
-                  className="w-14 h-14 rounded-full bg-gradient-to-r from-violet-500 to-emerald-400 text-white flex items-center justify-center shadow-lg"
-                >
-                  <svg className="w-6 h-6 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-                    {isPlaying ? (
-                      <>
-                        <rect x="6" y="4" width="4" height="16" />
-                        <rect x="14" y="4" width="4" height="16" />
-                      </>
-                    ) : (
-                      <path d="M8 5v14l11-7z" />
-                    )}
-                  </svg>
-                </motion.button>
-              </div>
-            </div>
-
-            {/* Right: Track Details & AI Insights */}
-            <div className="md:col-span-8 space-y-4">
-              <div className="flex items-center justify-between">
-                <span
-                  className="px-3 py-1 rounded-full text-xs font-mono font-bold"
-                  style={{
-                    backgroundColor: `${selectedVibe.color}20`,
-                    color: selectedVibe.color,
-                    border: `1px solid ${selectedVibe.color}40`,
-                  }}
-                >
-                  {selectedVibe.energy} • {selectedVibe.bpm}
-                </span>
-                <span className="text-xs font-mono text-muted-foreground">AI MATCH 98%</span>
+              {/* Left: Album Artwork */}
+              <div className="md:col-span-4 relative group rounded-2xl overflow-hidden aspect-square border border-white/10 shadow-xl">
+                <img
+                  src={selectedVibe.cover}
+                  alt={selectedVibe.track}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-center justify-center">
+                  <motion.button
+                    whileHover={{ scale: 1.15 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => handlePlayToggle()}
+                    className="w-14 h-14 rounded-full bg-gradient-to-r from-violet-500 to-emerald-400 text-white flex items-center justify-center shadow-lg"
+                  >
+                    <svg className="w-6 h-6 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                      {isPlaying ? (
+                        <>
+                          <rect x="6" y="4" width="4" height="16" />
+                          <rect x="14" y="4" width="4" height="16" />
+                        </>
+                      ) : (
+                        <path d="M8 5v14l11-7z" />
+                      )}
+                    </svg>
+                  </motion.button>
+                </div>
               </div>
 
-              <div>
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-white">{selectedVibe.track}</h3>
-                <p className="text-base text-muted-foreground font-medium">{selectedVibe.artist} — {selectedVibe.album}</p>
-              </div>
-
-              {/* Animated Equalizer Wave */}
-              <div className="flex items-end gap-1 h-8 py-1">
-                {Array.from({ length: 28 }, (_, i) => (
-                  <motion.div
-                    key={i}
-                    className="flex-1 rounded-full"
-                    style={{ backgroundColor: selectedVibe.color }}
-                    animate={
-                      isPlaying
-                        ? { height: ["20%", "100%", "30%", "85%", "20%"] }
-                        : { height: "20%" }
-                    }
-                    transition={{
-                      duration: 0.8 + (i % 5) * 0.2,
-                      repeat: isPlaying ? Infinity : 0,
-                      repeatType: "mirror",
+              {/* Right: Track Details & AI Insights */}
+              <div className="md:col-span-8 space-y-4">
+                <div className="flex items-center justify-between">
+                  <span
+                    className="px-3 py-1 rounded-full text-xs font-mono font-bold"
+                    style={{
+                      backgroundColor: `${selectedVibe.color}20`,
+                      color: selectedVibe.color,
+                      border: `1px solid ${selectedVibe.color}40`,
                     }}
-                  />
-                ))}
-              </div>
+                  >
+                    {selectedVibe.energy} • {selectedVibe.bpm}
+                  </span>
+                  <span className="text-xs font-mono text-muted-foreground">AI MATCH 98%</span>
+                </div>
 
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-xs text-muted-foreground leading-relaxed">
-                <span className="font-semibold text-white block mb-1">✨ AI Recommendation Reason:</span>
-                {selectedVibe.explanation}
+                <div>
+                  <h3 className="text-2xl sm:text-3xl font-extrabold text-white">{selectedVibe.track}</h3>
+                  <p className="text-base text-muted-foreground font-medium">{selectedVibe.artist} — {selectedVibe.album}</p>
+                </div>
+
+                {/* Animated Equalizer Wave */}
+                <div className="flex items-end gap-1 h-8 py-1">
+                  {Array.from({ length: 28 }, (_, i) => (
+                    <motion.div
+                      key={i}
+                      className="flex-1 rounded-full"
+                      style={{ backgroundColor: selectedVibe.color }}
+                      animate={
+                        isPlaying
+                          ? { height: ["20%", "100%", "30%", "85%", "20%"] }
+                          : { height: "20%" }
+                      }
+                      transition={{
+                        duration: 0.8 + (i % 5) * 0.2,
+                        repeat: isPlaying ? Infinity : 0,
+                        repeatType: "mirror",
+                      }}
+                    />
+                  ))}
+                </div>
+
+                <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-xs text-muted-foreground leading-relaxed">
+                  <span className="font-semibold text-white block mb-1">✨ AI Recommendation Reason:</span>
+                  {selectedVibe.explanation}
+                </div>
               </div>
-            </div>
-          </motion.div>
-        </AnimatePresence>
-      </SpotlightCard>
-    </div>
+            </motion.div>
+          </AnimatePresence>
+        </SpotlightCard>
+      </div>
+    </>
   );
 }

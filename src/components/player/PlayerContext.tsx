@@ -237,6 +237,18 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
   //  playTrack — tries Spotify first, falls back to HTML5 Audio
   // ───────────────────────────────────────────────
   const playTrack = async (track: any) => {
+    try {
+      const userCheck = await fetch("/api/user");
+      if (!userCheck.ok) {
+        console.warn("[PlayerContext] User not authenticated. Redirecting to login.");
+        window.location.href = "/login";
+        return;
+      }
+    } catch (err) {
+      window.location.href = "/login";
+      return;
+    }
+
     if (!track || typeof track !== "object" || !track.id) {
       console.warn("[PlayerContext] playTrack called with invalid or empty track argument:", track);
       if (state.currentTrack) {
