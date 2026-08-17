@@ -1,8 +1,10 @@
 import { createServerSupabaseClient } from "@/lib/supabase/server";
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function POST() {
   const supabase = await createServerSupabaseClient();
+  const cookieStore = await cookies();
 
   const { data: { user } } = await supabase.auth.getUser();
   if (user) {
@@ -21,6 +23,11 @@ export async function POST() {
   }
 
   await supabase.auth.signOut();
+  cookieStore.delete("spotify_access_token");
+  cookieStore.delete("spotify_auth_state");
 
-  return NextResponse.json({ success: true });
+  const response = NextResponse.json({ success: true });
+  response.cookies.delete("spotify_access_token");
+  response.cookies.delete("spotify_auth_state");
+  return response;
 }

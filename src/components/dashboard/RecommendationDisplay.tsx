@@ -205,15 +205,19 @@ function RecommendationCard({ rec, index, moodColor, onPlay, playerReady }: { re
     }
   };
 
+  const spotifyUrl =
+    rec.track.external_urls?.spotify ||
+    rec.track.spotifyUrl ||
+    `https://open.spotify.com/search/${encodeURIComponent(rec.track.name + " " + (rec.track.artist || ""))}`;
+
   return (
     <motion.article
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.05 }}
-      className="group relative"
-      whileHover={{ y: -4 }}
+      className="group relative flex flex-col bg-[#0E0E1B] border border-[#1E1E38] rounded-xl overflow-hidden shadow-lg"
     >
-      <div className="relative aspect-square rounded-xl overflow-hidden bg-slate-900 border border-white/10">
+      <div className="relative aspect-square w-full bg-slate-900 overflow-hidden">
         <div
           className="absolute inset-0 bg-gradient-to-br z-10 pointer-events-none"
           style={{
@@ -233,53 +237,50 @@ function RecommendationCard({ rec, index, moodColor, onPlay, playerReady }: { re
           <div className="absolute inset-0 flex flex-col items-center justify-center p-4 bg-slate-900/90 text-center">
             <span className="text-3xl mb-1">🎵</span>
             <span className="text-xs font-semibold text-white truncate max-w-full">{rec.track.name}</span>
-            <span className="text-[10px] text-muted-foreground truncate max-w-full">{rec.track.artist}</span>
+            <span className="text-[10px] text-slate-400 truncate max-w-full">{rec.track.artist}</span>
           </div>
         )}
-        <motion.div
-          className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        />
-        <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-4 group-hover:translate-y-0">
-          <div>
-            <h3 className="font-semibold text-foreground text-sm sm:text-base truncate">{rec.track.name}</h3>
-            <p className="text-xs text-muted-foreground/80 truncate">{rec.track.artist}</p>
-          </div>
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
+      </div>
+
+      {/* Track Info & Spotify Link */}
+      <div className="p-3 flex flex-col justify-between flex-1 space-y-2.5">
+        <div>
+          <h3 className="font-bold text-white text-xs sm:text-sm truncate">{rec.track.name}</h3>
+          <p className="text-[11px] text-slate-400 truncate mt-0.5">
+            {rec.track.artist || rec.track.artists?.map((a: any) => a.name).join(", ")}
+          </p>
+        </div>
+
+        <div className="flex items-center gap-1.5 pt-2 border-t border-[#1C1C32]">
+          <button
             onClick={() => onPlay(rec)}
             disabled={!playerReady}
-            className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
-            aria-label={`Play ${rec.track.name}`}
+            className="flex-1 py-1.5 px-2 rounded-lg bg-white/10 hover:bg-white/20 text-white text-[11px] font-semibold flex items-center justify-center gap-1 transition-colors"
           >
-            <svg className="h-5 w-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <svg className="w-3 h-3 fill-current" viewBox="0 0 24 24">
               <path d="M8 5v14l11-7z" />
             </svg>
-          </motion.button>
+            <span>Play</span>
+          </button>
+
+          <a
+            href={spotifyUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-1 py-1.5 px-2 rounded-lg bg-[#1DB954]/15 hover:bg-[#1DB954]/25 border border-[#1DB954]/40 text-[#1DB954] text-[11px] font-bold flex items-center justify-center gap-1 transition-colors"
+          >
+            <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+              <path d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.899 4.62-1.02 8.52-.6 11.64 1.32.42.18.479.659.301 1.019zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.18-1.38-.72-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.72 1.62.54.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" />
+            </svg>
+            <span>Spotify</span>
+          </a>
         </div>
       </div>
 
       {(rec.aiReason || rec.matchFactors?.length) && (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 + index * 0.05 }}
-          className="mt-3 p-3 rounded-lg bg-white/5 border border-white/10 text-xs text-muted-foreground"
-        >
-          {rec.aiReason && <p className="mb-2">{rec.aiReason}</p>}
-          {rec.matchFactors?.length && (
-            <div className="flex flex-wrap gap-1">
-              {rec.matchFactors.map((factor: string, i: number) => (
-                <span
-                  key={i}
-                  className="px-2 py-0.5 rounded text-xs bg-primary/20 text-primary/80"
-                >
-                  {factor}
-                </span>
-              ))}
-            </div>
-          )}
-        </motion.div>
+        <div className="p-2.5 bg-black/40 text-[10px] text-slate-400 border-t border-[#1C1C32]">
+          {rec.aiReason && <p className="line-clamp-2">{rec.aiReason}</p>}
+        </div>
       )}
     </motion.article>
   );

@@ -165,13 +165,22 @@ export function Header({ user: userProp }: HeaderProps) {
             >
               Try demo
             </Link>
-            {!user && (
+            {user ? (
+              <Link
+                href="/logout"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full text-left flex items-center justify-between text-sm font-semibold text-red-400 py-2 border-t border-white/10 mt-2"
+              >
+                <span>Sign Out ({user.spotify_display_name || user.full_name || "User"})</span>
+                <span className="font-mono">↳</span>
+              </Link>
+            ) : (
               <button
                 onClick={(e) => {
                   setMobileMenuOpen(false);
                   handleConnectSpotify(e, "/login");
                 }}
-                className="w-full text-left flex items-center gap-2 text-sm font-semibold text-[#1DB954] py-1"
+                className="w-full text-left flex items-center gap-2 text-sm font-semibold text-[#1DB954] py-1.5 border-t border-white/10 mt-2"
               >
                 <span>→] Sign In / Register</span>
               </button>

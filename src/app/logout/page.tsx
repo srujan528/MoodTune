@@ -1,8 +1,10 @@
 import { createServerSupabaseClient } from "@/lib/supabase/server";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export default async function LogoutPage() {
   const supabase = await createServerSupabaseClient();
+  const cookieStore = await cookies();
 
   const { data: { user } } = await supabase.auth.getUser();
 
@@ -22,6 +24,8 @@ export default async function LogoutPage() {
   }
 
   await supabase.auth.signOut();
+  cookieStore.delete("spotify_access_token");
+  cookieStore.delete("spotify_auth_state");
 
   redirect("/");
 }
