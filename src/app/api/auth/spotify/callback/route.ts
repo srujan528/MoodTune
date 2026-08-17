@@ -28,16 +28,8 @@ function getRedirectUri(request: NextRequest): string {
   if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
     return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}/auth/spotify/callback`;
   }
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}/auth/spotify/callback`;
-  }
 
-  const origin = request.nextUrl.origin;
-  if (origin && !origin.includes("127.0.0.1") && !origin.includes("localhost")) {
-    return `${origin}/auth/spotify/callback`;
-  }
-
-  return "http://localhost:3000/auth/spotify/callback";
+  return "https://song-recommender-seven.vercel.app/auth/spotify/callback";
 }
 
 function getOrigin(request: NextRequest): string {
@@ -55,16 +47,8 @@ function getOrigin(request: NextRequest): string {
   if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
     return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
   }
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`;
-  }
 
-  const origin = request.nextUrl.origin;
-  if (origin && !origin.includes("127.0.0.1") && !origin.includes("localhost")) {
-    return origin;
-  }
-
-  return "http://localhost:3000";
+  return "https://song-recommender-seven.vercel.app";
 }
 
 export async function GET(request: NextRequest) {
