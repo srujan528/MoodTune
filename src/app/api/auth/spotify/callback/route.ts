@@ -4,23 +4,67 @@ import { createUserSpotifyClient } from "@/lib/spotify/client";
 import { NextRequest, NextResponse } from "next/server";
 
 function getRedirectUri(request: NextRequest): string {
+  const envUri = process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI;
   if (
-    process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI &&
-    !process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI.includes("127.0.0.1") &&
-    !process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI.includes("localhost")
+    envUri &&
+    !envUri.includes("127.0.0.1") &&
+    !envUri.includes("localhost") &&
+    envUri.startsWith("http")
   ) {
-    return process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI;
+    return envUri;
   }
-  const host = request.headers.get("x-forwarded-host") || request.headers.get("host");
+
+  let host = request.headers.get("x-forwarded-host") || request.headers.get("host");
+  if (host && host.includes(",")) {
+    host = host.split(",")[0].trim();
+  }
+
   const proto = request.headers.get("x-forwarded-proto") || (host?.includes("localhost") || host?.includes("127.0.0.1") ? "http" : "https");
-  const origin = host ? `${proto}://${host}` : request.nextUrl.origin;
-  return `${origin}/auth/spotify/callback`;
+
+  if (host && !host.includes("127.0.0.1") && !host.includes("localhost")) {
+    return `${proto}://${host}/auth/spotify/callback`;
+  }
+
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}/auth/spotify/callback`;
+  }
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}/auth/spotify/callback`;
+  }
+
+  const origin = request.nextUrl.origin;
+  if (origin && !origin.includes("127.0.0.1") && !origin.includes("localhost")) {
+    return `${origin}/auth/spotify/callback`;
+  }
+
+  return "http://localhost:3000/auth/spotify/callback";
 }
 
 function getOrigin(request: NextRequest): string {
-  const host = request.headers.get("x-forwarded-host") || request.headers.get("host");
+  let host = request.headers.get("x-forwarded-host") || request.headers.get("host");
+  if (host && host.includes(",")) {
+    host = host.split(",")[0].trim();
+  }
+
   const proto = request.headers.get("x-forwarded-proto") || (host?.includes("localhost") || host?.includes("127.0.0.1") ? "http" : "https");
-  return host ? `${proto}://${host}` : request.nextUrl.origin;
+
+  if (host && !host.includes("127.0.0.1") && !host.includes("localhost")) {
+    return `${proto}://${host}`;
+  }
+
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  }
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+
+  const origin = request.nextUrl.origin;
+  if (origin && !origin.includes("127.0.0.1") && !origin.includes("localhost")) {
+    return origin;
+  }
+
+  return "http://localhost:3000";
 }
 
 export async function GET(request: NextRequest) {
